@@ -1,0 +1,39 @@
+{
+  "version": "1",
+  "generatedAt": "2026-06-24T00:48:03.939Z",
+  "project": {
+    "state": "pre-ai",
+    "structure": "monorepo",
+    "teamSize": "small"
+  },
+  "detected": {
+    "languages": [
+      "typescript"
+    ],
+    "frameworks": [
+      "vite"
+    ],
+    "packageManagers": [
+      "npm"
+    ],
+    "sourceDirectories": [
+      "src",
+      "app"
+    ],
+    "migrationDirectories": [],
+    "contractFiles": [],
+    "infrastructureFiles": [],
+    "testDirectories": []
+  },
+  "suggestions": {
+    "possibleDomains": [
+      "layout",
+      "routes"
+    ],
+    "openQuestions": [
+      "Confirm whether the 'layout' domain reflects a real bounded context.",
+      "Confirm whether the 'routes' domain reflects a real bounded context.",
+      "No test directory detected — confirm how this project is tested."
+    ]
+  }
+}

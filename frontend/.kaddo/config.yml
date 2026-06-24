@@ -1,0 +1,27 @@
+version: 1
+project:
+  name: frontend
+  state: pre-ai
+  structure: monorepo
+  language: es
+  domains:
+    - "# layout"
+    - "# routes"
+team:
+  size: small
+knowledge:
+  default_level: K2
+guard:
+  silent_without_ownership: true
+scan:
+  language: typescript
+  framework: vite
+  packageManager: npm
+  codeDirs:
+    - src
+    - app
+module_agents:
+  installed: true
+  installed_at: 2026-06-24
+modules:
+  - agents
