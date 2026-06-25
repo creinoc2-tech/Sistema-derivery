@@ -3,12 +3,19 @@ import { Button } from '#/components/ui/button'
 import { Link } from '@tanstack/react-router'
 import { ShoppingBag } from 'lucide-react'
 import Navbar from './navbar'
+import CartSheet from '#/components/containers/store/cart/cart-sheet'
+
+const navigationItems = [
+  { to: '/', label: 'Home' },
+  { to: '/product', label: 'Products' },
+  { to: '/category', label: 'Categories' },
+]
 
 export default function Header() {
   return (
     <header className="@container sticky top-0 z-40 w-full border-b border-dashed bg-background backdrop-blur supports-filter:bg-background/80">
       <div className="@container container mx-auto grid @6xl:grid-cols-3 grid-cols-2 items-center px-4 py-7">
-        <Navbar   />
+        <Navbar items={navigationItems} />
 
         <div className="flex items-center justify-start @6xl:justify-center">
           <Link
@@ -27,15 +34,33 @@ export default function Header() {
               size="icon-lg"
               type="button"
               aria-label="Open Cart"
-               className="relative"
+              className="relative"
             >
               <ShoppingBag className="@7xl:size-6 size-5" />
-                 <span className="-right-1 -top-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-primary font-medium text-[10px] text-primary-foreground">
-                 10
-                </span>
-             </Button>
-
+              <span className="-right-1 -top-1 absolute flex h-5 w-5 items-center justify-center rounded-full bg-primary font-medium text-[10px] text-primary-foreground">
+                10
+              </span>
+            </Button>
+            <CartSheet />
             <ModeToggle />
+
+            {/*
+             {user ? (
+              <UserMenu user={user} />
+            ) : (
+              <Link to="/auth/sign-in">
+                <Button variant="default" size="lg" type="button">
+                  Sign In
+                </Button>
+              </Link>
+            )}
+             */}
+
+            <Link to="/auth/sign-in">
+              <Button variant="default" size="lg" type="button">
+                Sign In
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
