@@ -28,7 +28,7 @@ export default function CartSheet() {
             <ScrollArea className="flex-1 px-6">
               <div className="divide-y">
                 {items.map((item) => (
-                  <CartItem key={item.id} />
+                  <CartItem key={item.id} item={item} />
                 ))}
               </div>
             </ScrollArea>
@@ -64,7 +64,17 @@ export default function CartSheet() {
             </div>
           </>
         ) : (
-          <></>
+          <>
+            <div className="flex h-full flex-col items-center justify-center space-y-2">
+              <ShoppingBag className="h-12 w-12 text-muted-foreground" />
+              <span className="font-medium text-lg text-muted-foreground">
+                Your cart is empty
+              </span>
+               <Button variant="link" onClick={() => setIsOpen(false)}  >
+                 Start Shopping
+               </Button>
+            </div>
+          </>
         )}
       </SheetContent>
     </Sheet>

@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/(store)/_layout/cart')({
+export const Route = createFileRoute('/_layout/cart')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/auth/sign-in"!</div>
+  return <div>Cart page</div>
 }
