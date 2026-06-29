@@ -1,8 +1,9 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import Header from '#/components/base/common/header'
-import Footer from '#/components/Footer'
-import { ThemeProvider } from '#/components/provider/theme-provider'
+ import { ThemeProvider } from '#/components/provider/theme-provider'
 import { Toaster } from 'sonner'
+import Brand from '#/components/base/store/brand'
+import Footer from '#/components/templat/store/footer'
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
@@ -16,6 +17,8 @@ function LayoutComponent() {
         <main className="flex-1">
           <Outlet />
         </main>
+        <Brand />
+        <Footer/>
       </div>
       <Toaster richColors closeButton position="bottom-right" />
     </ThemeProvider>

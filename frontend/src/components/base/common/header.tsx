@@ -48,6 +48,8 @@ export default function Header() {
                 </span>
               )}
             </Button>
+
+            
             <CartSheet />
             <ModeToggle />
 
@@ -64,7 +66,7 @@ export default function Header() {
              */}
 
             <Link to="/auth/sign-in">
-              <Button variant="default" size="lg" type="button">
+              <Button className="ml-2 p-5 text-[14px]" variant="default" size="lg" type="button">
                 Sign In
               </Button>
             </Link>
