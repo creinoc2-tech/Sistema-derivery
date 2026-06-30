@@ -10,8 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useCartStore } from '#/lib/store/cart/cart-store'
+ import { useCartStore } from '#/lib/store/cart/cart-store'
 
 export default function CartSheet() {
   const { isOpen, setIsOpen, totalItems, items, subtotal } = useCartStore()

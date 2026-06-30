@@ -1,5 +1,10 @@
 import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
+import { Button } from '#/components/ui/button'
+import { Menu } from 'lucide-react'
+import { useState } from 'react'
+import MenuSheet from '#/components/containers/store/menu/menu-sheet'
+import { useCartStore } from '#/lib/store/cart/cart-store'
 interface NavItem {
   label: string
   to: string
@@ -17,8 +22,23 @@ export default function Navbar({
   linkClassName = '',
   activeLinkClassName = '',
 }: NavBarProps) {
+    const { setIsOpenMenu } = useCartStore()
   return (
     <nav className={cn(className)}>
+      <Button
+        variant="outline"
+        size="icon-lg"
+        type="button"
+        onClick={() => setIsOpenMenu(true)}
+        aria-label="Open Cart"
+        className="relative"
+      >
+        <Menu className="@7xl:size-6 size-5" />
+      </Button>
+
+      <MenuSheet />
+
+
       {items.map((item) => (
         <Link
           key={item.to}

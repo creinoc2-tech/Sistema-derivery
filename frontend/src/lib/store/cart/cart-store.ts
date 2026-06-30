@@ -16,6 +16,7 @@ export const useCartStore = create<CartState>()(
   persist((set, get) => ({
     items: [],
     isOpen: false,
+    isOpenMenu: false,
     totalItems: 0,
     subtotal: 0,
     shippingMethod: null,
@@ -60,6 +61,7 @@ export const useCartStore = create<CartState>()(
     },
     clearCart: () => set({ items: [], totalItems: 0, subtotal: 0 }),
     setIsOpen: (isOpen) => set({ isOpen }),
+    setIsOpenMenu: (isOpenMenu) => set({ isOpenMenu }),
     toggleOpen: () => set({ isOpen: !get().isOpen }),
     setShippingMethod: (method) => {
       const shippingCost = method ? Number(method.price) : 0

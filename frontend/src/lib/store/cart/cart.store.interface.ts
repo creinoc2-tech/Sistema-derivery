@@ -23,6 +23,10 @@ export interface CartShippingMethod {
 export interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  isOpenMenu: boolean;
+  setIsOpenMenu: (isOpenMenu: boolean) => void;
+
   totalItems: number;
   subtotal: number;
   shippingMethod: CartShippingMethod | null;
@@ -32,7 +36,6 @@ export interface CartState {
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
-  setIsOpen: (isOpen: boolean) => void;
   toggleOpen: () => void;
   setShippingMethod: (method: CartShippingMethod | null) => void;
   setShippingAddress: (address: ShippingAddressInput | null) => void;

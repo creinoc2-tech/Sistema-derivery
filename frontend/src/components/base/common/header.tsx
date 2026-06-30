@@ -6,6 +6,7 @@ import Navbar from './navbar'
 import CartSheet from '#/components/containers/store/cart/cart-sheet'
 import { useCartStore } from '#/lib/store/cart/cart-store'
 import { MobileMenu } from './mobile-menu'
+import { useAuth, UserButton, useUser } from '@clerk/react'
 
 const navigationItems = [
   { to: '/', label: 'Home' },
@@ -14,11 +15,14 @@ const navigationItems = [
 ]
 
 export default function Header() {
-  const { totalItems  , setIsOpen } = useCartStore()
-
+  const { totalItems, setIsOpen } = useCartStore()
+  const { isSignedIn, userId } = useAuth()
+  const { user } = useUser()
   return (
     <header className="@container sticky top-0 z-40 w-full border-b border-dashed bg-background backdrop-blur supports-filter:bg-background/80">
       <div className="@container container mx-auto grid @6xl:grid-cols-3 grid-cols-2 items-center px-4 py-7">
+       
+
         <Navbar items={navigationItems} />
 
         <div className="flex items-center justify-start @6xl:justify-center">
@@ -37,7 +41,7 @@ export default function Header() {
               variant="outline"
               size="icon-lg"
               type="button"
-               onClick={() => setIsOpen(true)}
+              onClick={() => setIsOpen(true)}
               aria-label="Open Cart"
               className="relative"
             >
@@ -49,7 +53,6 @@ export default function Header() {
               )}
             </Button>
 
-            
             <CartSheet />
             <ModeToggle />
 
@@ -65,11 +68,28 @@ export default function Header() {
             )}
              */}
 
-            <Link to="/auth/sign-in">
-              <Button className="ml-2 p-5 text-[14px]" variant="default" size="lg" type="button">
-                Sign In
-              </Button>
-            </Link>
+            {isSignedIn ? (
+              <div className="flex items-center gap-2 ">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: 'w-[20px] h-[20px]', // 48x48 px
+                    },
+                  }}
+                />
+              </div>
+            ) : (
+              <Link to="/auth/sign-in">
+                <Button
+                  className="ml-2 p-5 text-[14px]"
+                  variant="default"
+                  size="lg"
+                  type="button"
+                >
+                   Iniciar sesión
+                </Button>
+              </Link>
+            )}
           </div>
 
           <div className="flex @6xl:hidden">
@@ -87,8 +107,6 @@ export default function Header() {
               }
             />
           </div>
-
-
         </div>
       </div>
     </header>
