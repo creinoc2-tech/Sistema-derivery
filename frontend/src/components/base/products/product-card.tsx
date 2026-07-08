@@ -4,10 +4,11 @@ import { cn } from '#/lib/utils'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '#/components/ui/button'
-import { Eye, Link, Loader2, ShoppingCart, Star } from 'lucide-react'
+import { Eye,  Loader2, ShoppingCart, Star } from 'lucide-react'
 import { toast } from 'sonner'
 import { ColorSwatch } from './color-redio-item'
 import PriceTag from './price-tag'
+import { Link } from '@tanstack/react-router'
 
 interface ProductCardProps {
   product: Product
@@ -117,8 +118,7 @@ export default function ProductCard({
         </div>
 
         {/* Title & Description */}
-        <div className="space-y-2">
-          <Link
+         <Link
             to="/product/$productId"
             params={{ productId: product.id }}
             className="group/title"
@@ -130,13 +130,6 @@ export default function ProductCard({
               {product.name}
             </h3>
           </Link>
-
-          {variant === 'list' && (
-            <p className="line-clamp-2 text-muted-foreground text-sm">
-              {product.description}
-            </p>
-          )}
-        </div>
 
         <div className="flex items-center justify-between border-muted border-t border-dashed pt-3">
           <div className="font-mono text-muted-foreground text-sm">

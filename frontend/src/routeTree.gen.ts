@@ -13,10 +13,18 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as LayoutOrdersRouteImport } from './routes/_layout/orders'
+import { Route as LayoutOrderTrackingRouteImport } from './routes/_layout/order-tracking'
+import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
 import { Route as LayoutCartRouteImport } from './routes/_layout/cart'
 import { Route as LayoutAboutRouteImport } from './routes/_layout/about'
+import { Route as LayoutStoreIndexRouteImport } from './routes/_layout/store/index'
 import { Route as LayoutProductIndexRouteImport } from './routes/_layout/product/index'
+import { Route as LayoutCategoryIndexRouteImport } from './routes/_layout/category/index'
+import { Route as LayoutStoreOrderConfirmationRouteImport } from './routes/_layout/store/order-confirmation'
+import { Route as LayoutStoreSlugRouteImport } from './routes/_layout/store/$slug'
 import { Route as LayoutProductProductIdRouteImport } from './routes/_layout/product/$productId'
+import { Route as LayoutCategorySlugRouteImport } from './routes/_layout/category/$slug'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -37,6 +45,21 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LayoutOrdersRoute = LayoutOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutOrderTrackingRoute = LayoutOrderTrackingRouteImport.update({
+  id: '/order-tracking',
+  path: '/order-tracking',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutCheckoutRoute = LayoutCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutCartRoute = LayoutCartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -47,9 +70,30 @@ const LayoutAboutRoute = LayoutAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutStoreIndexRoute = LayoutStoreIndexRouteImport.update({
+  id: '/store/',
+  path: '/store/',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutProductIndexRoute = LayoutProductIndexRouteImport.update({
   id: '/product/',
   path: '/product/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutCategoryIndexRoute = LayoutCategoryIndexRouteImport.update({
+  id: '/category/',
+  path: '/category/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutStoreOrderConfirmationRoute =
+  LayoutStoreOrderConfirmationRouteImport.update({
+    id: '/store/order-confirmation',
+    path: '/store/order-confirmation',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutStoreSlugRoute = LayoutStoreSlugRouteImport.update({
+  id: '/store/$slug',
+  path: '/store/$slug',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutProductProductIdRoute = LayoutProductProductIdRouteImport.update({
@@ -57,35 +101,64 @@ const LayoutProductProductIdRoute = LayoutProductProductIdRouteImport.update({
   path: '/product/$productId',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutCategorySlugRoute = LayoutCategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/about': typeof LayoutAboutRoute
   '/cart': typeof LayoutCartRoute
+  '/checkout': typeof LayoutCheckoutRoute
+  '/order-tracking': typeof LayoutOrderTrackingRoute
+  '/orders': typeof LayoutOrdersRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/category/$slug': typeof LayoutCategorySlugRoute
   '/product/$productId': typeof LayoutProductProductIdRoute
+  '/store/$slug': typeof LayoutStoreSlugRoute
+  '/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
+  '/category/': typeof LayoutCategoryIndexRoute
   '/product/': typeof LayoutProductIndexRoute
+  '/store/': typeof LayoutStoreIndexRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof LayoutAboutRoute
   '/cart': typeof LayoutCartRoute
+  '/checkout': typeof LayoutCheckoutRoute
+  '/order-tracking': typeof LayoutOrderTrackingRoute
+  '/orders': typeof LayoutOrdersRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/': typeof LayoutIndexRoute
+  '/category/$slug': typeof LayoutCategorySlugRoute
   '/product/$productId': typeof LayoutProductProductIdRoute
+  '/store/$slug': typeof LayoutStoreSlugRoute
+  '/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
+  '/category': typeof LayoutCategoryIndexRoute
   '/product': typeof LayoutProductIndexRoute
+  '/store': typeof LayoutStoreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/about': typeof LayoutAboutRoute
   '/_layout/cart': typeof LayoutCartRoute
+  '/_layout/checkout': typeof LayoutCheckoutRoute
+  '/_layout/order-tracking': typeof LayoutOrderTrackingRoute
+  '/_layout/orders': typeof LayoutOrdersRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/category/$slug': typeof LayoutCategorySlugRoute
   '/_layout/product/$productId': typeof LayoutProductProductIdRoute
+  '/_layout/store/$slug': typeof LayoutStoreSlugRoute
+  '/_layout/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
+  '/_layout/category/': typeof LayoutCategoryIndexRoute
   '/_layout/product/': typeof LayoutProductIndexRoute
+  '/_layout/store/': typeof LayoutStoreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -93,29 +166,53 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/cart'
+    | '/checkout'
+    | '/order-tracking'
+    | '/orders'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/category/$slug'
     | '/product/$productId'
+    | '/store/$slug'
+    | '/store/order-confirmation'
+    | '/category/'
     | '/product/'
+    | '/store/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
     | '/cart'
+    | '/checkout'
+    | '/order-tracking'
+    | '/orders'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/'
+    | '/category/$slug'
     | '/product/$productId'
+    | '/store/$slug'
+    | '/store/order-confirmation'
+    | '/category'
     | '/product'
+    | '/store'
   id:
     | '__root__'
     | '/_layout'
     | '/_layout/about'
     | '/_layout/cart'
+    | '/_layout/checkout'
+    | '/_layout/order-tracking'
+    | '/_layout/orders'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/_layout/'
+    | '/_layout/category/$slug'
     | '/_layout/product/$productId'
+    | '/_layout/store/$slug'
+    | '/_layout/store/order-confirmation'
+    | '/_layout/category/'
     | '/_layout/product/'
+    | '/_layout/store/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -154,6 +251,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_layout/orders': {
+      id: '/_layout/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof LayoutOrdersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/order-tracking': {
+      id: '/_layout/order-tracking'
+      path: '/order-tracking'
+      fullPath: '/order-tracking'
+      preLoaderRoute: typeof LayoutOrderTrackingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/checkout': {
+      id: '/_layout/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof LayoutCheckoutRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/cart': {
       id: '/_layout/cart'
       path: '/cart'
@@ -168,11 +286,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAboutRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/store/': {
+      id: '/_layout/store/'
+      path: '/store'
+      fullPath: '/store/'
+      preLoaderRoute: typeof LayoutStoreIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/product/': {
       id: '/_layout/product/'
       path: '/product'
       fullPath: '/product/'
       preLoaderRoute: typeof LayoutProductIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/category/': {
+      id: '/_layout/category/'
+      path: '/category'
+      fullPath: '/category/'
+      preLoaderRoute: typeof LayoutCategoryIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/store/order-confirmation': {
+      id: '/_layout/store/order-confirmation'
+      path: '/store/order-confirmation'
+      fullPath: '/store/order-confirmation'
+      preLoaderRoute: typeof LayoutStoreOrderConfirmationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/store/$slug': {
+      id: '/_layout/store/$slug'
+      path: '/store/$slug'
+      fullPath: '/store/$slug'
+      preLoaderRoute: typeof LayoutStoreSlugRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/product/$productId': {
@@ -182,23 +328,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProductProductIdRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/category/$slug': {
+      id: '/_layout/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof LayoutCategorySlugRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutAboutRoute: typeof LayoutAboutRoute
   LayoutCartRoute: typeof LayoutCartRoute
+  LayoutCheckoutRoute: typeof LayoutCheckoutRoute
+  LayoutOrderTrackingRoute: typeof LayoutOrderTrackingRoute
+  LayoutOrdersRoute: typeof LayoutOrdersRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCategorySlugRoute: typeof LayoutCategorySlugRoute
   LayoutProductProductIdRoute: typeof LayoutProductProductIdRoute
+  LayoutStoreSlugRoute: typeof LayoutStoreSlugRoute
+  LayoutStoreOrderConfirmationRoute: typeof LayoutStoreOrderConfirmationRoute
+  LayoutCategoryIndexRoute: typeof LayoutCategoryIndexRoute
   LayoutProductIndexRoute: typeof LayoutProductIndexRoute
+  LayoutStoreIndexRoute: typeof LayoutStoreIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAboutRoute: LayoutAboutRoute,
   LayoutCartRoute: LayoutCartRoute,
+  LayoutCheckoutRoute: LayoutCheckoutRoute,
+  LayoutOrderTrackingRoute: LayoutOrderTrackingRoute,
+  LayoutOrdersRoute: LayoutOrdersRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCategorySlugRoute: LayoutCategorySlugRoute,
   LayoutProductProductIdRoute: LayoutProductProductIdRoute,
+  LayoutStoreSlugRoute: LayoutStoreSlugRoute,
+  LayoutStoreOrderConfirmationRoute: LayoutStoreOrderConfirmationRoute,
+  LayoutCategoryIndexRoute: LayoutCategoryIndexRoute,
   LayoutProductIndexRoute: LayoutProductIndexRoute,
+  LayoutStoreIndexRoute: LayoutStoreIndexRoute,
 }
 
 const LayoutRouteWithChildren =

@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_layout/product/')({
   component: RouteComponent,
+   ssr: false,
 })
 
 function RouteComponent() {
