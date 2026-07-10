@@ -13,4 +13,4 @@ categories.get("/:id", zValidator("param", categoryParamsSchema), categoriesHand
 categories.patch("/:id", zValidator("param", categoryParamsSchema), zValidator("json", updateCategorySchema), categoriesHandlers.update);
 categories.delete("/:id", zValidator("param", categoryParamsSchema), categoriesHandlers.remove);
 
-export default categories;
+export { categories as categoriesRoutes };

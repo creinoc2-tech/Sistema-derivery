@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const createCategorySchema = z.object({
   name: z.string().min(2).max(50),
-  restaurantId: z.string().uuid().optional(),
-  slug: z.string()
+  slug: z
+    .string()
     .min(2)
     .max(50)
     .regex(/^[a-z0-9-]+$/, "Solo minúsculas, números y guiones"),
