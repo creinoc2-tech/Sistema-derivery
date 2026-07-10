@@ -3,15 +3,15 @@ import { categoriesService } from "./categories.service";
 
 export const categoriesHandlers = {
   async create(c: Context) {
-    const user = c.get("user");
+  const { restaurantId } = c.req.param();
     const input = c.req.valid("json" as never);
-    const category = await categoriesService.create(user.restaurantId, input);
+    const category = await categoriesService.create(restaurantId!, input);
     return c.json(category, 201);
   },
 
   async list(c: Context) {
-    const user = c.get("user");
-    const list = await categoriesService.listByRestaurant(user.restaurantId);
+    const { restaurantId } = c.req.param();
+    const list = await categoriesService.listByRestaurant(restaurantId!);
     return c.json(list);
   },
 
@@ -23,17 +23,17 @@ export const categoriesHandlers = {
   },
 
   async update(c: Context) {
-    const user = c.get("user");
+    const { restaurantId } = c.req.param();
     const { id } = c.req.valid("param" as never);
     const input = c.req.valid("json" as never);
-    const category = await categoriesService.update(id, user.restaurantId, input);
+    const category = await categoriesService.update(id, restaurantId!, input);
     return c.json(category);
   },
 
   async remove(c: Context) {
-    const user = c.get("user");
+    const { restaurantId } = c.req.param();
     const { id } = c.req.valid("param" as never);
-    await categoriesService.delete(id, user.restaurantId);
+    await categoriesService.delete(id, restaurantId!);
     return c.body(null, 204);
   },
 };
