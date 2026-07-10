@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const createRestaurantSchema = z.object({
+  ownerId: z.string(), 
   name: z.string().min(2).max(100),
   slug: z.string()
     .min(2)

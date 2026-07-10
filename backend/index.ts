@@ -43,4 +43,7 @@ app.onError(errorHandler);
 app.route("/restaurants/:restaurantId/categories", categoriesRoutes);
 app.route("/restaurants", restaurantsRoutes);
 
-export default app;
+export default {
+  port: 4000,
+  fetch: app.fetch,
+};
