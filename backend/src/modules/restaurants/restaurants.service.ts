@@ -1,13 +1,20 @@
 import { AppError } from "../../lib/app-error";
 import { restaurantsRepository } from "./restaurants.repository";
-import type { CreateRestaurantInput, UpdateRestaurantInput } from "./restaurants.schema";
+import type {
+  CreateRestaurantInput,
+  UpdateRestaurantInput,
+} from "./restaurants.schema";
 
 export const restaurantsService = {
   async create(ownerId: string, input: CreateRestaurantInput) {
     const existing = await restaurantsRepository.findBySlug(input.slug);
+
     if (existing) throw new AppError("SLUG_ALREADY_EXISTS", 409);
 
-    const [restaurant] = await restaurantsRepository.create({ ...input, ownerId });
+    const [restaurant] = await restaurantsRepository.create({
+      ...input,
+      ownerId,
+    });
     return restaurant;
   },
 

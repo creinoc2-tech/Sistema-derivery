@@ -16,10 +16,11 @@ export const restaurantsRepository = {
     return db.select().from(restaurants).where(eq(restaurants.id, id)).then((rows) => rows[0]);
   },
 
-  findBySlug(slug: string) {
+  findBySlug(slug: string ) {
     return db.select().from(restaurants).where(eq(restaurants.slug, slug)).then((rows) => rows[0]);
   },
 
+  
   update(id: string, data: Partial<UpdateRestaurantInput>) {
     return db.update(restaurants).set(data).where(eq(restaurants.id, id)).returning();
   },
