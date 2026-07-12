@@ -22,11 +22,16 @@ export const productParamsSchema = z.object({
   id: z.string().uuid(),
 });
 
-export const listProductsQuerySchema = z.object({
+ export const listProductsQuerySchema = z.object({
   categoryId: z.string().uuid().optional(),
-  isAvailable: z.coerce.boolean().optional(),
+  isAvailable: z
+    .preprocess((val) => {
+      if (val === "true") return true;
+      if (val === "false") return false;
+      return val;
+    }, z.boolean())
+    .optional(),
 });
-
 export type CreateProductInput = z.infer<typeof createProductSchema>;
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;
 export type ToggleAvailabilityInput = z.infer<typeof toggleAvailabilitySchema>;
