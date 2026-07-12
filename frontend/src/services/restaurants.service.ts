@@ -24,6 +24,6 @@ export class RestaurantsService {
   }
 
   async updateStatus(id: string, status: 'approved' | 'rejected') {
-    return this.restaurantsRepository.asycUpdateStatus(id, status)
+    return this.restaurantsRepository.updateStatus(id, status)
   }
 }

@@ -25,10 +25,10 @@ export class RestaurantsRepository {
     )
   }
 
-  asycUpdateStatus(id: string, status: 'approved' | 'rejected') {
+  async updateStatus(id: string, status: 'approved' | 'rejected') {
     return httpClient.patch<
       RestaurantModel,
       { status: 'approved' | 'rejected' }
-    >(`/restaurants/${id}/approve`, { status })
+    >(`/restaurants/${id}/status`, { status })
   }
 }
