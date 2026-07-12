@@ -5,8 +5,10 @@ import { categoriesRoutes } from "./src/modules/categories/categories.routes";
 import { swaggerUI } from "@hono/swagger-ui";
 import { restaurantsRoutes } from "./src/modules/restaurants/restaurants.routes";
 import { productsRoutes } from "./src/modules/products/products.routes";
+import { corsMiddleware } from "./src/middlewares/cors";
 
 const app = new Hono();
+app.use("*", corsMiddleware);  
 
 app.onError(errorHandler);
 app.route("/restaurants/:restaurantId/categories", categoriesRoutes);
