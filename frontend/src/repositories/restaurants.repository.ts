@@ -12,9 +12,8 @@ export class RestaurantsRepository {
   }
 
   async list() {
-    return httpClient.get<RestaurantModel[]>('')
+    return httpClient.get<RestaurantModel[]>('/restaurants')
   }
-
   async getOne(id: string) {
     return httpClient.get<RestaurantModel>(`/restaurants/${id}`)
   }
