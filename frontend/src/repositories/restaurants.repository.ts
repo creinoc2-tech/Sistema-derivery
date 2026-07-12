@@ -29,6 +29,6 @@ export class RestaurantsRepository {
     return httpClient.patch<
       RestaurantModel,
       { status: 'approved' | 'rejected' }
-    >(`/restaurants/${id}/status`, { status })
+    >(`/restaurants/${id}/approve`, { status })
   }
 }
