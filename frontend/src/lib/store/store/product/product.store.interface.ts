@@ -1,0 +1,26 @@
+export interface Products {
+  id: string
+  restaurantId: string
+  categoryId: string
+  name: string
+  slug: string
+  description?: string
+  price: string
+  imageUrl?: string
+  isAvailable: boolean
+  createdAt: string
+}
+
+export interface ProductFilters {
+  categoryId?: string
+  isAvailable?: boolean
+}
+
+export type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'newest'
+
+export interface FilterStates {
+  search: string
+  sort: SortOption
+  categoryId: string | null
+  availability: 'all' | 'available' | 'unavailable'
+}
