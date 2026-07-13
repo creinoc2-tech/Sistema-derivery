@@ -1,4 +1,4 @@
-export interface Category {
+export interface Categorias{
   id: string
   restaurantId: string
   name: string
@@ -8,6 +8,6 @@ export interface Category {
   createdAt: string
 }
 
-export interface CategoryFilters {
+export interface CategoriasFilters {
   search?: string
 }

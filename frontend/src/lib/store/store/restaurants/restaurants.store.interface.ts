@@ -4,7 +4,7 @@ export interface Restaurant {
   name: string
   slug: string
   status: 'pending' | 'approved' | 'rejected'
-  stripeAccountId: string | null
+  stripeAccountId?: string
   createdAt: string
 }
 
@@ -12,3 +12,4 @@ export interface RestaurantFilters {
   search: string
   sortBy: 'newest' | 'name'
 }
+
