@@ -4,46 +4,45 @@ interface FeatureGridItemProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  iconClassName?: string;
-  outlineIcon: React.ReactNode;
-  outlineIconClassName?: string;
+  image: string;
   className?: string;
 }
+
 export default function FeatureGridItem({
   title,
   description,
   icon,
-  iconClassName,
-  outlineIcon,
-  outlineIconClassName,
+  image,
   className,
 }: FeatureGridItemProps) {
   return (
     <div
       className={cn(
-        "relative border-dashed @4xl:p-10 @6xl:p-[50px] @7xl:p-[60px] p-[30px]",
-        className
+        "relative overflow-hidden rounded-2xl aspect-square @4xl:aspect-[4/3.7] ",
+        className,
       )}
     >
-      <div
-        className={cn(
-          "@4xl:mb-10 @6xl:mb-[50px] mb-6 @6xl:size-24 size-[76px]",
-          iconClassName
-        )}
-      >
+      {/* Imagen de fondo */}
+      <img
+        src={image}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      {/* Overlay oscuro para legibilidad del texto */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+      {/* Ícono circular */}
+      <div className="absolute top-4 left-4 flex size-10 items-center justify-center rounded-full bg-black/50 text-primary backdrop-blur-sm">
         {icon}
       </div>
-      <div className="space-y-3">
-        <h4 className="@4xl:text-xl @6xl:text-2xl text-lg">{title}</h4>
-        <p>{description}</p>
-      </div>
-      <div
-        className={cn(
-          "absolute top-0 right-0 size-[173px]",
-          outlineIconClassName
-        )}
-      >
-        {outlineIcon}
+
+      {/* Título + descripción */}
+      <div className="absolute bottom-0 left-0 right-0 space-y-1 p-4">
+        <h4 className="text-base font-semibold text-white @4xl:text-lg">
+          {title}
+        </h4>
+        <p className="text-xs text-white/80 @4xl:text-sm">{description}</p>
       </div>
     </div>
   );

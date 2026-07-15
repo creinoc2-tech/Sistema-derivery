@@ -44,7 +44,7 @@ export default function CollectionItem({
         </Button>
       </div>
       <div className="mt-3 space-y-3.5">
-        <Link to={`/product/$productId`}>
+        <Link to={`/product`}>
           <h4 className="font-medium font-mono text-lg">{title}</h4>
         </Link>
         <p className="font-mono text-muted-foreground text-sm">

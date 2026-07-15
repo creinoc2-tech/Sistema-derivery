@@ -1,21 +1,16 @@
 import FeatureGridItem from "#/components/base/common/feature-grid-item";
 import { features } from "#/components/ui/data/feature";
-import { gridCellBorderClasses } from "#/lib/utils";
-   
-export default function FeatureGridContainer() {
-  const columns2 = 2;
-  const columns3 = 3;
 
+export default function FeatureGridContainer() {
   return (
-    <div className="grid @4xl:grid-cols-2 @6xl:grid-cols-3 grid-cols-1">
-      {features.map((feature, index) => (
+    <div className="grid grid-cols-1 gap-4 @4xl:grid-cols-2 @6xl:grid-cols-3 px-10 py-4">
+      {features.map((feature) => (
         <FeatureGridItem
           key={feature.title}
           title={feature.title}
           description={feature.description}
-          icon={<feature.icon />}
-          outlineIcon={<feature.outlineIcon className="text-border" />}
-          className={gridCellBorderClasses(index, columns2, columns3, true)}
+          icon={<feature.icon className="size-6" />}
+          image={feature.image}
         />
       ))}
     </div>
