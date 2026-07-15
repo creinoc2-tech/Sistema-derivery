@@ -35,6 +35,7 @@ export default function Header() {
             Stack
           </Link>
         </div>
+        
         <div className="flex items-center justify-end gap-2">
           <div className="@6xl:flex hidden items-center gap-2">
             <Button

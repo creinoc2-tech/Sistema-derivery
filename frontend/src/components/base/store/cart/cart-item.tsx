@@ -5,9 +5,9 @@ import { Link } from '@tanstack/react-router'
 import { Loader2, Trash2 } from 'lucide-react'
 import { QuantitySelector } from '../../products/details/quantity-selector'
 import { useCartStore } from '#/lib/store/cart/cart-store'
-import type { CartItem } from '#/lib/store/cart/cart.store.interface'
+ import type { CartItems } from '#/lib/store/store/cart/cart.store.interface'
  interface CartItemProps {
-  item: CartItem
+  item: CartItems
   isCompact?: boolean
 }
 
@@ -24,7 +24,7 @@ export default function CartItem({ item, isCompact = false }: CartItemProps) {
         )}
       >
         <img
-          src={item.image}
+          src={item.imageUrl}
           alt={item.name}
           className="size-full object-cover"
         />
@@ -33,13 +33,13 @@ export default function CartItem({ item, isCompact = false }: CartItemProps) {
         <div className="flex justify-between gap-2">
           <div className="space-y-1">
             <h4 className="font-medium leading-none">{item.name}</h4>
-            {(item.size || item.color) && (
+            { /* (item.size || item.color) && (
               <p className="text-muted-foreground text-sm">
                 {item.size && `Size: ${item.size}`}
                 {item.size && item.color && ' | '}
                 {item.color && `Color: ${item.color}`}
               </p>
-            )}
+            ) */}
           </div>
           {!isCompact && (
             <Button
@@ -60,8 +60,7 @@ export default function CartItem({ item, isCompact = false }: CartItemProps) {
               <QuantitySelector
                 value={item.quantity}
                 onChange={(value) => updateQuantity(item.id, value)}
-                max={item.maxQuantity}
-                className="@7xl:h-9"
+                 className="@7xl:h-9"
                 size="sm"
               />
               {isCompact && (

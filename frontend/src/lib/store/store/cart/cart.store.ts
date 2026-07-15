@@ -12,7 +12,7 @@ const calculateTotals = (items: CartItems[]) => {
   return { totalItems, subtotal }
 }
 
-export const useCartStore = create<CartStates>()(
+export const useCartStores = create<CartStates>()(
   persist(
     (set, get) => ({
       items: [],

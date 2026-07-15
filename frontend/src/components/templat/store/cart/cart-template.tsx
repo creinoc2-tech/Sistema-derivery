@@ -8,7 +8,7 @@ import { Link } from '@tanstack/react-router'
 import { ShoppingBag } from 'lucide-react'
 
 export default function CartTemplate() {
-  const { items, isLoading } = useCartStore()
+  const { items } = useCartStore()
   const cartSteps = [
     { label: 'Home', href: '/' },
     { label: 'Cart', isActive: true },
@@ -33,7 +33,7 @@ export default function CartTemplate() {
       ) : (
         <div className="grid @5xl:grid-cols-12 gap-8">
           <div className="@5xl:col-span-8">
-            <CartItemsList />
+           { <CartItemsList />}
           </div>
           <div className="@5xl:col-span-4">
             <CartSummary />

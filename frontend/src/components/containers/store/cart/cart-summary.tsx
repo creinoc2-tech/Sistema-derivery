@@ -2,6 +2,7 @@ import { Button } from '#/components/ui/button'
 import { Separator } from '#/components/ui/separator'
 import { Skeleton } from '#/components/ui/skeleton'
 import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import {
   InputGroup,
   InputGroupAddon,
@@ -12,7 +13,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, CheckCircle2, Loader2, Tag, X } from 'lucide-react'
 
 export default function CartSummary() {
-  const { items, subtotal, isLoading, clearCart, isClearing } = useCartStore()
+  const { items, subtotal, clearCart } = useCartStores()
 
   // Mock discount for now
   const discount = 0

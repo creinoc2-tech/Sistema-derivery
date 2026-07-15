@@ -48,7 +48,7 @@ export default function CollectionItem({
           <h4 className="font-medium font-mono text-lg">{title}</h4>
         </Link>
         <p className="font-mono text-muted-foreground text-sm">
-          Fit: <span className="font-medium text-body-80">{fit}</span> Price:{' '}
+           Restautante <span className="font-medium text-body-80">{fit}</span> Price:{' '}
           <span className="font-medium text-body-80">{price}</span>
         </p>
         <Button
