@@ -7,7 +7,7 @@ import type { ProductModel } from '#/model/product.model'
 export default function CollectionContainer() {
   const columns2 = 2
   const columns3 = 3
-  const { addItem } = useCartStores()
+  const { addItem , items } = useCartStores()
 
   const handleAddCart = async (product: ProductModel) => {
     addItem(
@@ -20,6 +20,7 @@ export default function CollectionContainer() {
       },
       product.restaurantId,
     )
+    console.log('Cart Items:', items) // Log the current cart items after adding
   }
   return (
     <div className="grid @4xl:grid-cols-2 @6xl:grid-cols-3 grid-cols-1">

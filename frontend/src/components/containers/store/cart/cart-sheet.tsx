@@ -11,9 +11,10 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
  import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 
 export default function CartSheet() {
-  const { isOpen, setIsOpen, totalItems, items, subtotal } = useCartStore()
+  const { isOpen, setIsOpen, totalItems, items, subtotal } = useCartStores()
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>

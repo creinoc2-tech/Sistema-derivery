@@ -6,13 +6,14 @@ import { Loader2, Trash2 } from 'lucide-react'
 import { QuantitySelector } from '../../products/details/quantity-selector'
 import { useCartStore } from '#/lib/store/cart/cart-store'
  import type { CartItems } from '#/lib/store/store/cart/cart.store.interface'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
  interface CartItemProps {
   item: CartItems
   isCompact?: boolean
 }
 
 export default function CartItem({ item, isCompact = false }: CartItemProps) {
-  const { updateQuantity, removeItem } = useCartStore()
+  const { updateQuantity, removeItem } = useCartStores()
   return (
     <div
       className={`flex gap-4 py-4 ${isCompact ? 'items-start' : 'items-center'} `}

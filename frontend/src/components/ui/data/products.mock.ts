@@ -21,8 +21,7 @@ const PRODUCT_NAMES: Record<keyof typeof CATEGORY_IDS, string[]> = {
   postres: ['Tiramisú', 'Cheesecake', 'Brownie con Helado'],
 }
 
-const getRandomInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min
+const FIXED_PRICES = [4.50, 8.90, 12.00, 6.75, 15.30, 3.20, 9.99, 7.40, 11.50, 5.60, 6.20, 10.10, 13.50]
 
 const generateProducts = (): ProductModel[] => {
   const products: ProductModel[] = []
@@ -44,12 +43,10 @@ const generateProducts = (): ProductModel[] => {
           name,
           slug,
           description: `${name}, preparado con ingredientes frescos y de calidad.`,
-          price: (getRandomInt(300, 2500) / 100).toFixed(2),
+          price: FIXED_PRICES[counter % FIXED_PRICES.length].toFixed(2),
           imageUrl: `https://placehold.co/600x600?text=${encodeURIComponent(name)}`,
-          isAvailable: Math.random() > 0.15,
-          createdAt: new Date(
-            Date.now() - getRandomInt(0, 10_000_000_000),
-          ).toISOString(),
+          isAvailable: true,
+          createdAt: '2026-01-01T00:00:00.000Z',
         })
 
         counter++
