@@ -4,11 +4,12 @@ import CartItemsList from '#/components/containers/store/cart/cart-items-list'
 import CartSummary from '#/components/containers/store/cart/cart-summary'
 import { Button } from '#/components/ui/button'
 import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import { Link } from '@tanstack/react-router'
 import { ShoppingBag } from 'lucide-react'
 
 export default function CartTemplate() {
-  const { items } = useCartStore()
+  const { items } = useCartStores()
   const cartSteps = [
     { label: 'Home', href: '/' },
     { label: 'Cart', isActive: true },

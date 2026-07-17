@@ -3,6 +3,7 @@ import SearchBar from '#/components/base/products/searchbar'
 import SortDropdown from '#/components/base/products/sort-dropdown'
 import ProductGrid from '#/components/containers/store/product-list/product-grid'
 import { useProductFilters } from '#/lib/store/product/product-filters-store'
+import { useProductFilter } from '#/lib/store/store/product/product.store'
 import FilterSidebar from './filter-sidebar'
 import MobileFilterDrawer from './mobile-filter-drawer'
 
@@ -17,6 +18,13 @@ export default function ProductListingTemplate() {
     products,
     isPending,
   } = useProductFilters()
+
+  const {
+    filters: productFilter,
+    updateFilter: updateProductFilter,
+    products: dataproduct,
+    isPending: isProductPending,
+  } = useProductFilter()
   return (
     <div className="@container container mx-auto px-4 py-8">
       <div className="flex flex-col gap-6">
@@ -35,13 +43,13 @@ export default function ProductListingTemplate() {
             />
             <div className="@4xl:w-75 flex-1">
               <SearchBar
-                value={filters.search}
-                onChange={(val) => updateFilter('search', val)}
+                value={productFilter.search}
+                onChange={(val) => updateProductFilter('search', val)}
               />
             </div>
             <SortDropdown
-              value={filters.sort}
-              onChange={(val) => updateFilter('sort', val)}
+              value={productFilter.sort}
+              onChange={(val) => updateProductFilter('sort', val)}
             />
           </div>
         </div>
@@ -63,7 +71,7 @@ export default function ProductListingTemplate() {
               onClearAll={clearAllFilters}
             />
 
-            <ProductGrid products={products} isLoading={isPending} />
+            <ProductGrid products={dataproduct} isLoading={isProductPending} />
           </main>
         </div>
       </div>

@@ -43,7 +43,7 @@ export default function MobileFilterDrawer({
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="@2xl:w-100 w-75 overflow-y-auto">
-        <SheetHeader className="mb-4">
+        <SheetHeader className="mb-4  ">
           <SheetTitle>Filters ({totalResults})</SheetTitle>
         </SheetHeader>
 

@@ -1,11 +1,11 @@
-export interface Products {
+export interface Productos {
   id: string
   restaurantId: string
   categoryId: string
   name: string
   slug: string
   description?: string
-  price: string
+  price: string | number
   imageUrl?: string
   isAvailable: boolean
   createdAt: string

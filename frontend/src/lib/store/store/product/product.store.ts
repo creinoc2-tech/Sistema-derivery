@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { FilterStates, Products } from './product.store.interface'
-import { ProductController } from '#/controllers/product.controller'
-
-const productController = new ProductController()
+import { useMemo, useState } from 'react'
+import type { FilterStates, Productos } from './product.store.interface'
+import { mockProducts } from '#/components/ui/data/products.mock'
 
 const initialState: FilterStates = {
   search: '',
@@ -11,31 +9,28 @@ const initialState: FilterStates = {
   availability: 'all',
 }
 
-export const useProductFilters = (restaurantId: string) => {
+export const useProductFilter = () => {
   const [filters, setFilters] = useState<FilterStates>(initialState)
-  const [products, setProducts] = useState<Products[]>([])
   const [isPending, setIsPending] = useState(false)
 
-  useEffect(() => {
-    setIsPending(true)
-    productController
-      .list(restaurantId, {
-        categoryId: filters.categoryId ?? undefined,
-        isAvailable:
-          filters.availability === 'all'
-            ? undefined
-            : filters.availability === 'available',
-      })
-      .then((data) => setProducts(data))
-      .finally(() => setIsPending(false))
-  }, [restaurantId, filters.categoryId, filters.availability])
-
   const updateFilter = (key: keyof FilterStates, value: string | null) => {
+    setIsPending(true)
     setFilters((prev) => ({ ...prev, [key]: value }))
+    setTimeout(() => setIsPending(false), 300)
   }
 
   const filteredProducts = useMemo(() => {
-    let result = [...products]
+    let result = [...mockProducts] as Productos[]|
+
+    if (filters.categoryId) {
+      result = result.filter((p) => p.categoryId === filters.categoryId)
+    }
+
+    if (filters.availability !== 'all') {
+      result = result.filter(
+        (p) => p.isAvailable === (filters.availability === 'available'),
+      )
+    }
 
     if (filters.search) {
       const query = filters.search.toLowerCase()
@@ -60,12 +55,11 @@ export const useProductFilters = (restaurantId: string) => {
         )
         break
       default:
-        // 'relevance' → sin orden específico
         break
     }
 
     return result
-  }, [products, filters.search, filters.sort])
+  }, [filters])
 
   const clearAllFilters = () => setFilters(initialState)
 
@@ -73,8 +67,8 @@ export const useProductFilters = (restaurantId: string) => {
     filters,
     updateFilter,
     products: filteredProducts,
-    totalProducts: filteredProducts.length,
     isPending,
+    totalProducts: filteredProducts.length,
     clearAllFilters,
   }
 }

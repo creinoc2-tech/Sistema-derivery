@@ -9,9 +9,10 @@ import { toast } from 'sonner'
 import { ColorSwatch } from './color-redio-item'
 import PriceTag from './price-tag'
 import { Link } from '@tanstack/react-router'
+import type { Productos } from '#/lib/store/store/product/product.store.interface'
 
 interface ProductCardProps {
-  product: Product
+  product: Productos
   className?: string
   variant?: 'grid' | 'list'
 }
@@ -28,22 +29,7 @@ export default function ProductCard({
     e.preventDefault() // Prevent navigation if inside a link
     e.stopPropagation()
     setIsAddingThis(true)
-    try {
-      addItem({
-        productId: product.id,
-        name: product.name,
-        price: product.price.current,
-        quantity: 1,
-        image: product.images[0].url,
-        maxQuantity: product.stock.quantity,
-      })
-      toast.success('Added to cart', { position: 'top-center' })
-    } catch (error) {
-      console.error('Failed to add to cart:', error)
-      toast.error('Failed to add to cart', { position: 'top-center' })
-    } finally {
-      setIsAddingThis(false)
-    }
+    console.log('Adding product to cart:', product)
   }
   return (
     <div
@@ -55,13 +41,13 @@ export default function ProductCard({
     >
       <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-muted">
         <img
-          src={product.images[0].url}
+          src={product.imageUrl ?? ''}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
 
-        {/* Badges */}
+        {/* Badges
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.price.discountPercentage > 0 && (
             <Badge className="bg-red-500 hover:bg-red-600">
@@ -71,7 +57,7 @@ export default function ProductCard({
           {product.isNew && product.price.discountPercentage === 0 && (
             <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>
           )}
-        </div>
+        </div> */}
 
         {/* Hover Actions Overlay */}
         <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/20 opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:opacity-100">
@@ -88,7 +74,7 @@ export default function ProductCard({
             size="icon"
             className="h-10 w-10 rounded-full shadow-lg transition-transform hover:scale-110"
             title="Add to Cart"
-            onClick={handleAddToCart}
+            //onClick={handleAddToCart}
             disabled={isAddingThis}
           >
             {isAddingThis ? (
@@ -104,15 +90,15 @@ export default function ProductCard({
       <div className="mt-4  flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="rounded-full border border-muted-foreground/30 border-dashed bg-muted/50 px-3 py-1 font-medium text-muted-foreground text-xs">
-            {product.category.name}
+            {product.categoryId}
           </span>
           <div className="flex items-center gap-1 text-amber-500">
             <Star className="h-3.5 w-3.5 fill-current" />
             <span className="font-medium text-sm">
-              {product.rating.average}
+              {product.slug}
             </span>
             <span className="text-[10px] text-muted-foreground">
-              ({product.rating.count})
+              ({product.createdAt})
             </span>
           </div>
         </div>
@@ -135,13 +121,13 @@ export default function ProductCard({
           <div className="font-mono text-muted-foreground text-sm">
             <span className="font-medium text-base text-foreground">
               <PriceTag
-                price={product.price.current}
-                originalPrice={product.price.original}
+                price={Number(product.price)}
+                originalPrice={Number(product.price)}
               />
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
             {product.colors.slice(0, 3).map((color) => (
               <ColorSwatch key={color} color={color} className="h-4 w-4" />
             ))}
@@ -150,7 +136,8 @@ export default function ProductCard({
                 +{product.colors.length - 3}
               </span>
             )}
-          </div>
+          </div> */}
+
         </div>
       </div>
     </div>
