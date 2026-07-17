@@ -7,7 +7,7 @@ const initialState: FilterState = {
   sort: 'relevance',
   categories: [],
   brands: [],
-  priceRange: [0, 1000],
+  priceRange: [0, 100],
   colors: [],
   sizes: [],
   rating: null,

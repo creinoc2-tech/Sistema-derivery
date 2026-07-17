@@ -3,9 +3,10 @@ import ProductDetailsTabs from '#/components/containers/store/product-details/de
 import ProductMainSection from '#/components/containers/store/product-details/main-section'
 import SimilarProductsSection from '#/components/containers/store/product-details/similar-products-section'
 import type { Product } from '#/components/ui/data/products'
+import type { ProductModel } from '#/model/product.model'
 
 interface ProductDetailsTemplateProps {
-  product: Product
+  product: ProductModel
 }
 
 export default function ProductDetailsTemplate({

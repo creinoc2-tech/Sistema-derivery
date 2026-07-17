@@ -14,8 +14,7 @@ export type SortOption =
   | 'price-asc'
   | 'price-desc'
   | 'newest'
-  | 'rating'
-  | 'best-selling';
+   
  
 interface SortDropdownProps {
   value: SortOption;
@@ -38,8 +37,7 @@ export default function SortDropdown({
         <SelectItem value="price-asc">Price: Low to High</SelectItem>
         <SelectItem value="price-desc">Price: High to Low</SelectItem>
         <SelectItem value="newest">Newest Arrivals</SelectItem>
-        <SelectItem value="rating">Top Rated</SelectItem>
-        <SelectItem value="best-selling">Best Selling</SelectItem>
+        
       </SelectContent>
     </Select>
   );

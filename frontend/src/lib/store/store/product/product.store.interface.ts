@@ -9,6 +9,7 @@ export interface Productos {
   imageUrl?: string
   isAvailable: boolean
   createdAt: string
+  rating?: number
 }
 
 export interface ProductFilters {
@@ -23,4 +24,6 @@ export interface FilterStates {
   sort: SortOption
   categoryId: string | null
   availability: 'all' | 'available' | 'unavailable'
+  priceRange: [number, number]
+  rating: number | null
 }

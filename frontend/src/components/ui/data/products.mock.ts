@@ -7,6 +7,12 @@ const CATEGORY_IDS = {
   platosFuertes: 'cat-platos-fuertes',
   bebidas: 'cat-bebidas',
   postres: 'cat-postres',
+  ensaladas: 'cat-ensaladas',
+  sopas: 'cat-sopas',
+  pizzas: 'cat-pizzas',
+  pastas: 'cat-pastas',
+  sushi: 'cat-sushi',
+  desayunos: 'cat-desayunos',
 }
 
 const PRODUCT_NAMES: Record<keyof typeof CATEGORY_IDS, string[]> = {
@@ -19,17 +25,39 @@ const PRODUCT_NAMES: Record<keyof typeof CATEGORY_IDS, string[]> = {
   ],
   bebidas: ['Coca-Cola 500ml', 'Limonada Natural', 'Agua Mineral'],
   postres: ['Tiramisú', 'Cheesecake', 'Brownie con Helado'],
+  ensaladas: ['Ensalada César', 'Ensalada Griega', 'Ensalada de Quinoa'],
+  sopas: ['Sopa de Verduras', 'Crema de Champiñones', 'Sopa Wonton'],
+  pizzas: [
+    'Pizza Pepperoni',
+    'Pizza Hawaiana',
+    'Pizza Cuatro Quesos',
+    'Pizza Vegetariana',
+  ],
+  pastas: ['Fettuccine Alfredo', 'Ravioles de Ricotta', 'Spaghetti Bolognesa'],
+  sushi: ['Roll California', 'Roll Philadelphia', 'Nigiri Salmón', 'Uramaki Tempura'],
+  desayunos: ['Waffles con Miel', 'Huevos Benedictinos', 'Pancakes con Frutas'],
 }
 
-const FIXED_PRICES = [4.50, 8.90, 12.00, 6.75, 15.30, 3.20, 9.99, 7.40, 11.50, 5.60, 6.20, 10.10, 13.50]
+const FIXED_PRICES = [
+  4.5, 8.9, 12.0, 6.75, 15.3, 3.2, 9.99, 7.4, 11.5, 5.6, 6.2, 10.1, 13.5, 14.2,
+  9.3, 7.85, 16.0, 5.99, 8.25, 12.75,
+]
 
-const generateProducts = (): ProductModel[] => {
-  const products: ProductModel[] = []
+const FIXED_RATINGS = [5, 4, 3, 4, 5, 3, 4, 5, 4, 3, 5, 4]
+
+export interface ProductModelWithRating extends ProductModel {
+  rating: number
+}
+
+const generateProducts = (): ProductModelWithRating[] => {
+  const products: ProductModelWithRating[] = []
   let counter = 1
 
   ;(Object.keys(PRODUCT_NAMES) as (keyof typeof CATEGORY_IDS)[]).forEach(
     (categoryKey) => {
       PRODUCT_NAMES[categoryKey].forEach((name) => {
+        const valor = Boolean(Math.round(Math.random()));
+
         const slug = name
           .toLowerCase()
           .normalize('NFD')
@@ -45,8 +73,9 @@ const generateProducts = (): ProductModel[] => {
           description: `${name}, preparado con ingredientes frescos y de calidad.`,
           price: FIXED_PRICES[counter % FIXED_PRICES.length].toFixed(2),
           imageUrl: `https://placehold.co/600x600?text=${encodeURIComponent(name)}`,
-          isAvailable: true,
+          isAvailable:  valor,
           createdAt: '2026-01-01T00:00:00.000Z',
+          rating: FIXED_RATINGS[counter % FIXED_RATINGS.length],
         })
 
         counter++
@@ -57,4 +86,4 @@ const generateProducts = (): ProductModel[] => {
   return products
 }
 
-export const mockProducts: ProductModel[] = generateProducts()
+export const mockProducts: ProductModelWithRating[] = generateProducts()

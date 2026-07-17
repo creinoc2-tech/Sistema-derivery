@@ -1,6 +1,6 @@
 import ProductDetailsTemplate from '#/components/templat/store/product-details-template'
-import { mockProducts } from '#/components/ui/data/products'
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { mockProducts } from '#/components/ui/data/products.mock'
+ import { createFileRoute, notFound } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_layout/product/$productId')({
   loader: async ({ params }) => {

@@ -9,14 +9,14 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
-import type { FilterState } from '#/lib/store/product/product.store.interface'
 import FilterSidebar from './filter-sidebar'
+import type { FilterStates } from '#/lib/store/store/product/product.store.interface'
 
 interface MobileFilterDrawerProps {
-  filters: FilterState
-  updateFilter: (key: keyof FilterState, value: any) => void
+  filters: FilterStates
+  updateFilter: (key: keyof FilterStates, value: any) => void
   totalResults: number
-  // availableCategories: string[];
+  availableCategories: { id: string; name: string }[] // 👈 antes era string[]
   //availableBrands: string[];
   className?: string
 }
@@ -25,7 +25,7 @@ export default function MobileFilterDrawer({
   filters,
   updateFilter,
   totalResults,
-  // availableCategories,
+  availableCategories,
   // availableBrands,
   className,
 }: MobileFilterDrawerProps) {
@@ -50,7 +50,7 @@ export default function MobileFilterDrawer({
         <FilterSidebar
           filters={filters}
           updateFilter={updateFilter}
-          // availableCategories={availableCategories}
+          availableCategories={availableCategories}
           // availableBrands={availableBrands}
         />
 
