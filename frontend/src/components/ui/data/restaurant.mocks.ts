@@ -12,6 +12,7 @@ export const mockRestaurants: RestaurantModel[] = [
     status: 'approved',
     stripeAccountId: undefined,
     createdAt: '2026-01-01T00:00:00.000Z',
+    imageUrl: 'https://placehold.co/600x400?text=Sabor+Casero',
   },
   {
     id: 'resto-pizza-house',
@@ -22,6 +23,7 @@ export const mockRestaurants: RestaurantModel[] = [
     status: 'approved',
     stripeAccountId: undefined,
     createdAt: '2026-01-02T00:00:00.000Z',
+    imageUrl: 'https://placehold.co/600x400?text=Pizza+House',
   },
   {
     id: 'resto-sushi-zen',
@@ -32,5 +34,6 @@ export const mockRestaurants: RestaurantModel[] = [
     status: 'approved',
     stripeAccountId: undefined,
     createdAt: '2026-01-03T00:00:00.000Z',
+    imageUrl: 'https://placehold.co/600x400?text=Sushi+Zen',
   },
 ]

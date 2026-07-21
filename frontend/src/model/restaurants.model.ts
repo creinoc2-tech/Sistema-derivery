@@ -7,5 +7,6 @@ export interface RestaurantModel {
   status: "pending" | "approved" | "rejected";
   stripeAccountId?: string;
   createdAt: string;
+  imageUrl?: string;
 
 }

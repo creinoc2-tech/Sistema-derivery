@@ -9,11 +9,12 @@ const initialFilters: RestaurantFilters = {
   search: '',
   sortBy: 'newest',
   id: null,
+  isLoading: false,
 }
 
 export const useRestaurants = () => {
   const [filters, setFilters] = useState<RestaurantFilters>(initialFilters)
-
+             
   const updateFilter = (key: keyof RestaurantFilters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }))
   }

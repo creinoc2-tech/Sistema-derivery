@@ -17,10 +17,10 @@ export default function StoresListingTemplate() {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="mb-3 font-bold @2xl:text-4xl text-3xl tracking-tight">
-            All Stores
+             Todos los restaurantes  
           </h1>
           <p className="text-lg text-muted-foreground">
-            Discover and shop from our verified sellers
+            Descubre una variedad de restaurantes y explora sus menús para encontrar
           </p>
         </div>
         {/* Main Content */}
