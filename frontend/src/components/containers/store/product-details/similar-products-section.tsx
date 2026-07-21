@@ -3,9 +3,10 @@ import { useRef } from "react";
  import { Button } from "@/components/ui/button";
  import type { Product } from "#/components/ui/data/products";
 import ProductCardHorizontal from "#/components/base/products/details/product-card-horizontal";
+import type { ProductModel } from "#/model/product.model";
 
 interface SimilarProductsSectionProps {
-  products:  Product[];
+  products:  ProductModel[];
 }
 
 export default function SimilarProductsSection({
@@ -31,7 +32,7 @@ export default function SimilarProductsSection({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-2xl tracking-tight">Similar Products</h2>
+        <h2 className="font-bold text-2xl tracking-tight">Productos Similares</h2>
         <div className="flex gap-2">
           <Button
             variant="outline"

@@ -3,6 +3,7 @@ export interface RestaurantModel {
   ownerId: string;
   name: string;
   slug: string;
+  description?: string;
   status: "pending" | "approved" | "rejected";
   stripeAccountId?: string;
   createdAt: string;

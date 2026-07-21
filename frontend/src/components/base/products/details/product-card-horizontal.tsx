@@ -1,29 +1,27 @@
-import { Link } from "@tanstack/react-router";
-import { Star } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import type { Product } from "#/components/ui/data/products";
- 
+import { Link } from '@tanstack/react-router'
+import { Star } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import type { ProductModel } from '#/model/product.model'
+
 interface ProductCardHorizontalProps {
-   product: Product
-className?: string;
+  product: ProductModel
+  className?: string
 }
 
 export default function ProductCardHorizontal({
   product,
   className,
 }: ProductCardHorizontalProps) {
-  const mainImage = product.images[0]?.url || "https://placehold.co/300x300";
-  const regularPrice = product.price.original;
-  const sellingPrice = product.price.current;
-  const rating = product.rating.average || 0;
+  const mainImage = product.imageUrl[0] ?? 'https://placehold.co/300x300'
+  const price = Number(product.price)
+  const rating = product.rating ?? 0
 
   return (
     <Link
-      to="/product/$productId"
-      params={{ productId: product.id }}
+      to="/product/$slug"
+      params={{ slug: product.slug }}
       className={cn(
-        "group flex w-full min-w-70 max-w-[320px] flex-col gap-3 rounded-lg border bg-background p-4 transition-all hover:shadow-md",
+        'group flex w-full min-w-70 max-w-[320px] flex-col gap-3 rounded-lg border bg-background p-4 transition-all hover:shadow-md',
         className,
       )}
     >
@@ -34,49 +32,43 @@ export default function ProductCardHorizontal({
           className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
-        {regularPrice > sellingPrice && (
-          <Badge variant="destructive" className="absolute top-2 left-2">
-            Sale
-          </Badge>
+        {!product.isAvailable && (
+          <span className="absolute top-2 left-2 rounded-full bg-destructive px-2 py-1 text-destructive-foreground text-xs">
+            No disponible
+          </span>
         )}
       </div>
 
       <div className="space-y-1">
-        <p className="font-medium text-muted-foreground text-xs">
-          {product.brand || "Unknown Brand"}
-        </p>
         <h3 className="line-clamp-2 font-medium text-foreground text-sm group-hover:text-primary">
           {product.name}
         </h3>
 
-        <div className="flex items-center gap-1">
-          <div className="flex text-yellow-400">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className={cn(
-                  "h-3 w-3",
-                  i < Math.round(rating) ? "fill-current" : "text-muted",
-                )}
-              />
-            ))}
+        {product.rating !== undefined && (
+          <div className="flex items-center gap-1">
+            <div className="flex text-yellow-400">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className={cn(
+                    'h-3 w-3',
+                    i < Math.round(rating) ? 'fill-current' : 'text-muted',
+                  )}
+                />
+              ))}
+            </div>
+            <span className="text-muted-foreground text-xs">
+              {rating.toFixed(1)}
+            </span>
           </div>
-          <span className="text-muted-foreground text-xs">
-            ({product.rating.count || 0})
-          </span>
-        </div>
+        )}
 
         <div className="flex items-baseline gap-2 pt-1">
           <span className="font-bold text-foreground text-lg">
-            ${sellingPrice.toFixed(2)}
+            ${price.toFixed(2)}
           </span>
-          {regularPrice > sellingPrice && (
-            <span className="text-muted-foreground text-sm line-through">
-              ${regularPrice.toFixed(2)}
-            </span>
-          )}
         </div>
       </div>
     </Link>
-  );
+  )
 }

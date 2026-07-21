@@ -35,7 +35,7 @@ export default function ProductCard({
           name: product.name,
           price: Number(product.price),
           quantity: 1,
-          imageUrl: product.imageUrl,
+          imageUrl: product.imageUrl[0] ?? '',
         },
         product.restaurantId,
       )
@@ -56,7 +56,7 @@ export default function ProductCard({
     >
       <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-muted">
         <img
-          src={product.imageUrl ?? ''}
+          src={product.imageUrl[0] ?? ""}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
@@ -118,8 +118,8 @@ export default function ProductCard({
 
         {/* Title & Description */}
         <Link
-          to="/product/$productId"
-          params={{ productId: product.slug }}
+          to="/product/$slug"
+          params={{ slug: product.slug }}
           className="group/title"
         >
           <h3

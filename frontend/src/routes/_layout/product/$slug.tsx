@@ -2,10 +2,10 @@ import ProductDetailsTemplate from '#/components/templat/store/product-details-t
 import { mockProducts } from '#/components/ui/data/products.mock'
  import { createFileRoute, notFound } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_layout/product/$productId')({
+export const Route = createFileRoute('/_layout/product/$slug')({
   loader: async ({ params }) => {
     const product = mockProducts.find(
-      (product) => product.id === params.productId,
+      (product) => product.slug === params.slug,
     )
 
     if (!product) {

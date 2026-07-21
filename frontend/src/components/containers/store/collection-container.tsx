@@ -1,5 +1,5 @@
 import CollectionItem from '#/components/base/common/collection-item'
- import { useCartStores } from '#/lib/store/store/cart/cart.store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import { gridCellBorderClasses } from '#/lib/utils'
 import { mockProducts } from '#/components/ui/data/products.mock'
 import type { ProductModel } from '#/model/product.model'
@@ -7,7 +7,7 @@ import type { ProductModel } from '#/model/product.model'
 export default function CollectionContainer() {
   const columns2 = 2
   const columns3 = 3
-  const { addItem , items } = useCartStores()
+  const { addItem, items } = useCartStores()
 
   const handleAddCart = async (product: ProductModel) => {
     addItem(
@@ -16,7 +16,9 @@ export default function CollectionContainer() {
         name: product.name,
         price: Number(product.price),
         quantity: 1,
-        imageUrl: product.imageUrl,
+        imageUrl:
+          product.imageUrl[0] ||
+          'https://via.placeholder.com/300x300.png?text=No+Image',
       },
       product.restaurantId,
     )
@@ -27,7 +29,7 @@ export default function CollectionContainer() {
       {mockProducts.slice(0, 6).map((p, index) => (
         <CollectionItem
           key={p.id}
-          image={p.imageUrl  || 'https://via.placeholder.com/300x300.png?text=No+Image'}
+          image={p.imageUrl[0]}
           title={p.name}
           category={p.categoryId}
           fit={p.restaurantId}

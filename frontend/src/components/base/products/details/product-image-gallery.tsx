@@ -4,16 +4,11 @@ import { Maximize2 } from 'lucide-react'
 import { useState } from 'react'
 import ProductThumbnail from '../product-thumnail'
 
-interface ProductImage {
-  id: string
-  url: string
-  alt: string
-}
-
 interface ProductImageGalleryProps {
-  images: ProductImage[]
+  images?: string[]
   className?: string
 }
+
 export default function ProductImageGallery({
   images,
   className,
@@ -21,7 +16,7 @@ export default function ProductImageGallery({
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
-  const activeImage = images[activeImageIndex]
+  const activeImage = images?.[activeImageIndex]
 
   if (!images || images.length === 0) {
     return (
@@ -30,6 +25,7 @@ export default function ProductImageGallery({
       </div>
     )
   }
+
   return (
     <div className={cn('flex flex-col gap-4', className)}>
       {/* Main Image */}
@@ -41,8 +37,8 @@ export default function ProductImageGallery({
           aria-label={isZoomed ? 'Zoom out image' : 'Zoom in image'}
         >
           <img
-            src={activeImage.url}
-            alt={activeImage.alt}
+            src={activeImage}
+            alt=""
             className={cn(
               'h-full w-full object-cover object-center transition-transform duration-500',
               isZoomed ? 'scale-150 cursor-zoom-out' : 'cursor-zoom-in',
@@ -61,18 +57,17 @@ export default function ProductImageGallery({
         </Button>
       </div>
 
-
-       {images.length > 1 && (
+      {images.length > 1 && (
         <div className="grid grid-cols-5 gap-4">
           {images.map((image, index) => (
             <ProductThumbnail
-              key={image.id}
-              image={image.url}
-              alt={image.alt}
+              key={image}
+              image={image}
+              alt=""
               isActive={index === activeImageIndex}
               onClick={() => {
-                setActiveImageIndex(index);
-                setIsZoomed(false);
+                setActiveImageIndex(index)
+                setIsZoomed(false)
               }}
             />
           ))}

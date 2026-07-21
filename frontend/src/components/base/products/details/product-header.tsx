@@ -11,8 +11,7 @@ interface ProductHeaderProps {
   };
   rating: number;
   reviewCount: number;
-  isOnSale: boolean;
-  className?: string;
+   className?: string;
 }
 
 export default function ProductHeader({
@@ -20,16 +19,11 @@ export default function ProductHeader({
   category,
   rating,
   reviewCount,
-  isOnSale,
-  className,
+   className,
 }: ProductHeaderProps) {
   return (
     <div className={cn("space-y-4", className)}>
-      {isOnSale && (
-        <Badge variant="destructive" className="w-fit">
-          Sale
-        </Badge>
-      )}
+       
 
       <h1 className="font-bold @2xl:text-4xl text-3xl text-foreground tracking-tight">
         {title}

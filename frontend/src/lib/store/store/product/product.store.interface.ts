@@ -6,7 +6,7 @@ export interface Productos {
   slug: string
   description?: string
   price: string | number
-  imageUrl?: string
+  imageUrl: string[]
   isAvailable: boolean
   createdAt: string
   rating?: number

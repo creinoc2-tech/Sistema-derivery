@@ -1,41 +1,33 @@
-// src/lib/store/store/restaurants/restaurants.store.ts
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type {
   Restaurant,
   RestaurantFilters,
 } from './restaurants.store.interface'
-import { RestaurantsController } from '#/controllers/restaurants.controller'
- 
-const restaurantController = new RestaurantsController()
+import { mockRestaurants } from '#/components/ui/data/restaurant.mocks'
 
 const initialFilters: RestaurantFilters = {
   search: '',
   sortBy: 'newest',
+  id: null,
 }
 
 export const useRestaurants = () => {
   const [filters, setFilters] = useState<RestaurantFilters>(initialFilters)
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
-  const [isPending, setIsPending] = useState(false)
-
-  useEffect(() => {
-    setIsPending(true)
-    restaurantController
-      .list()
-      .then((data) => setRestaurants(data))
-      .finally(() => setIsPending(false))
-  }, [])
 
   const updateFilter = (key: keyof RestaurantFilters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }))
   }
 
   const filteredRestaurants = useMemo(() => {
-    let result = [...restaurants]
+    let result = [...mockRestaurants] as Restaurant[]
 
     if (filters.search) {
       const query = filters.search.toLowerCase()
       result = result.filter((r) => r.name.toLowerCase().includes(query))
+    }
+
+    if (filters.id) {
+      result = result.filter((r) => r.id === filters.id)
     }
 
     // solo mostrar restaurantes aprobados en el storefront público
@@ -55,7 +47,7 @@ export const useRestaurants = () => {
     }
 
     return result
-  }, [restaurants, filters.search, filters.sortBy])
+  }, [filters.search, filters.sortBy, filters.id])
 
   const clearFilters = () => setFilters(initialFilters)
 
@@ -64,7 +56,6 @@ export const useRestaurants = () => {
     updateFilter,
     restaurants: filteredRestaurants,
     totalRestaurants: filteredRestaurants.length,
-    isPending,
     clearFilters,
   }
 }

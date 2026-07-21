@@ -1,11 +1,10 @@
 import type { CategoryModel } from '#/model/category.model'
 
-const RESTAURANT_ID = 'resto-mock-1'
-
 export const mockCategories: CategoryModel[] = [
+  // Sabor Casero
   {
     id: 'cat-entradas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Entradas',
     slug: 'entradas',
     sortOrder: 1,
@@ -14,7 +13,7 @@ export const mockCategories: CategoryModel[] = [
   },
   {
     id: 'cat-platos-fuertes',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Platos Fuertes',
     slug: 'platos-fuertes',
     sortOrder: 2,
@@ -23,7 +22,7 @@ export const mockCategories: CategoryModel[] = [
   },
   {
     id: 'cat-bebidas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Bebidas',
     slug: 'bebidas',
     sortOrder: 3,
@@ -32,7 +31,7 @@ export const mockCategories: CategoryModel[] = [
   },
   {
     id: 'cat-postres',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Postres',
     slug: 'postres',
     sortOrder: 4,
@@ -41,7 +40,7 @@ export const mockCategories: CategoryModel[] = [
   },
   {
     id: 'cat-ensaladas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Ensaladas',
     slug: 'ensaladas',
     sortOrder: 5,
@@ -50,7 +49,7 @@ export const mockCategories: CategoryModel[] = [
   },
   {
     id: 'cat-sopas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sabor-casero',
     name: 'Sopas',
     slug: 'sopas',
     sortOrder: 6,
@@ -58,38 +57,42 @@ export const mockCategories: CategoryModel[] = [
     createdAt: new Date().toISOString(),
   },
   {
+    id: 'cat-desayunos',
+    restaurantId: 'resto-sabor-casero',
+    name: 'Desayunos',
+    slug: 'desayunos',
+    sortOrder: 7,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+  },
+
+  // Pizza House
+  {
     id: 'cat-pizzas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-pizza-house',
     name: 'Pizzas',
     slug: 'pizzas',
-    sortOrder: 7,
+    sortOrder: 1,
     isActive: true,
     createdAt: new Date().toISOString(),
   },
   {
     id: 'cat-pastas',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-pizza-house',
     name: 'Pastas',
     slug: 'pastas',
-    sortOrder: 8,
+    sortOrder: 2,
     isActive: true,
     createdAt: new Date().toISOString(),
   },
+
+  // Sushi Zen
   {
     id: 'cat-sushi',
-    restaurantId: RESTAURANT_ID,
+    restaurantId: 'resto-sushi-zen',
     name: 'Sushi',
     slug: 'sushi',
-    sortOrder: 9,
-    isActive: true,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'cat-desayunos',
-    restaurantId: RESTAURANT_ID,
-    name: 'Desayunos',
-    slug: 'desayunos',
-    sortOrder: 10,
+    sortOrder: 1,
     isActive: true,
     createdAt: new Date().toISOString(),
   },

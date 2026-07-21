@@ -4,34 +4,44 @@ import ProductImageGallery from '#/components/base/products/details/product-imag
 import ProductPrice from '#/components/base/products/details/product-price'
 import { QuantitySelector } from '#/components/base/products/details/quantity-selector'
 import ShippingInfoSection from '#/components/base/products/details/shipping-info-section'
-import StoreInfoCard from '#/components/base/products/details/store-info-card'
-import type { Product } from '#/components/ui/data/products'
+import RestaurantInfoCard from '#/components/base/products/details/store-info-card'
+import { mockCategories } from '#/components/ui/data/categories.mock'
+import { mockProducts } from '#/components/ui/data/products'
 import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
+import { useRestaurants } from '#/lib/store/store/restaurants/restaurants.store'
+import type { ProductModel } from '#/model/product.model'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
 interface ProductMainSectionProps {
-  product: Product
+  product: ProductModel
 }
 
 export default function ProductMainSection({
   product,
 }: ProductMainSectionProps) {
   const [quantity, setQuantity] = useState(1)
-  const { addItem } = useCartStore()
+  const { addItem } = useCartStores()
 
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [isCompareListed, setIsCompareListed] = useState(false)
+
   const handleAddToCart = () => {
-    addItem({
-      productId: product.id,
-      name: product.name,
-      price: product.price.current,
-      image: product.images[0].url,
-      quantity,
-      maxQuantity: product.stock.quantity,
-    })
-    toast.success(`${product.name} added to cart!`)
+    try {
+      addItem(
+        {
+          productId: product.id,
+          name: product.name,
+          price: Number(product.price),
+          quantity: 1,
+          imageUrl: product.imageUrl[0] ?? '',
+        },
+        product.restaurantId,
+      )
+     } catch (error) {
+      console.error('Error adding item to cart:', error)
+    }
   }
 
   const handleBuyNow = () => {
@@ -43,10 +53,20 @@ export default function ProductMainSection({
     )
   }
 
+  const categoria = mockCategories.find(
+    (category) => category.id === product.categoryId,
+  )
+
+  const { updateFilter, restaurants } = useRestaurants()
+
+  const restaurant = restaurants.find(
+    (restaurant) => restaurant.id === product.restaurantId,
+  )
+
   return (
     <div className="grid @5xl:grid-cols-12 grid-cols-1 @5xl:gap-12 gap-8">
       <div className="@5xl:col-span-7">
-        <ProductImageGallery images={product.images} />
+        <ProductImageGallery images={product.imageUrl} />
       </div>
 
       {/* Right Column - Product Details */}
@@ -54,18 +74,17 @@ export default function ProductMainSection({
         <div className="space-y-6">
           <ProductHeader
             title={product.name}
-            category={product.category}
-            rating={product.rating.average || 0}
-            reviewCount={product.rating.count || 0}
-            isOnSale={product.isOnSale}
+            category={{
+              name: categoria?.name || '',
+              slug: categoria?.slug || '',
+            }}
+            rating={product.rating || 0}
+            reviewCount={product.rating || 0}
           />
 
           <ProductPrice
-            currentPrice={product.price.current}
-            originalPrice={product.price.original}
-            currency={product.price.currency}
-            discountPercentage={product.price.discountPercentage}
-            inStock={product.stock.inStock}
+            price={Number(product.price)}
+            isAvailable={product.isAvailable}
           />
 
           <div className="space-y-4 border-t pt-6">
@@ -73,25 +92,33 @@ export default function ProductMainSection({
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
-                max={product.stock.quantity}
-                disabled={!product.stock.inStock}
+                max={10}
+                disabled={!product.isAvailable}
               />
             </div>
 
             <ProductActions
-              onAddToCart={handleAddToCart}
+              onAddToCart={() => handleAddToCart()}
               onBuyNow={handleBuyNow}
               onToggleWishlist={() => setIsWishlisted(!isWishlisted)}
               onToggleCompare={() => setIsCompareListed(!isCompareListed)}
               isWishlisted={isWishlisted}
               isCompareListed={isCompareListed}
-              disabled={product.stock.inStock}
+              disabled={!product.isAvailable}
             />
           </div>
         </div>
 
-        <StoreInfoCard store={product.store} />
-        <ShippingInfoSection shipping={product.shipping} />
+        {restaurant ? (
+          <>
+            <RestaurantInfoCard restaurant={restaurant} />
+            <ShippingInfoSection />
+          </>
+        ) : (
+          <p className="text-muted-foreground text-sm">
+            No se encontró información del restaurante.
+          </p>
+        )}
       </div>
     </div>
   )

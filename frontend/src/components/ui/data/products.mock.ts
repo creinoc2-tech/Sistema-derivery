@@ -1,6 +1,17 @@
 import type { ProductModel } from '#/model/product.model'
 
-const RESTAURANT_ID = 'resto-mock-1'
+const CATEGORY_TO_RESTAURANT = {
+  entradas: 'resto-sabor-casero',
+  platosFuertes: 'resto-sabor-casero',
+  bebidas: 'resto-sabor-casero',
+  postres: 'resto-sabor-casero',
+  ensaladas: 'resto-sabor-casero',
+  sopas: 'resto-sabor-casero',
+  desayunos: 'resto-sabor-casero',
+  pizzas: 'resto-pizza-house',
+  pastas: 'resto-pizza-house',
+  sushi: 'resto-sushi-zen',
+} as const
 
 const CATEGORY_IDS = {
   entradas: 'cat-entradas',
@@ -18,9 +29,7 @@ const CATEGORY_IDS = {
 const PRODUCT_NAMES: Record<keyof typeof CATEGORY_IDS, string[]> = {
   entradas: ['Nachos con Queso', 'Alitas BBQ', 'Rollitos Primavera'],
   platosFuertes: [
-    'Pizza Margarita',
     'Hamburguesa Clásica',
-    'Pasta Carbonara',
     'Lomo Saltado',
   ],
   bebidas: ['Coca-Cola 500ml', 'Limonada Natural', 'Agua Mineral'],
@@ -28,12 +37,13 @@ const PRODUCT_NAMES: Record<keyof typeof CATEGORY_IDS, string[]> = {
   ensaladas: ['Ensalada César', 'Ensalada Griega', 'Ensalada de Quinoa'],
   sopas: ['Sopa de Verduras', 'Crema de Champiñones', 'Sopa Wonton'],
   pizzas: [
+    'Pizza Margarita',
     'Pizza Pepperoni',
     'Pizza Hawaiana',
     'Pizza Cuatro Quesos',
     'Pizza Vegetariana',
   ],
-  pastas: ['Fettuccine Alfredo', 'Ravioles de Ricotta', 'Spaghetti Bolognesa'],
+  pastas: ['Pasta Carbonara', 'Fettuccine Alfredo', 'Ravioles de Ricotta', 'Spaghetti Bolognesa'],
   sushi: ['Roll California', 'Roll Philadelphia', 'Nigiri Salmón', 'Uramaki Tempura'],
   desayunos: ['Waffles con Miel', 'Huevos Benedictinos', 'Pancakes con Frutas'],
 }
@@ -56,8 +66,6 @@ const generateProducts = (): ProductModelWithRating[] => {
   ;(Object.keys(PRODUCT_NAMES) as (keyof typeof CATEGORY_IDS)[]).forEach(
     (categoryKey) => {
       PRODUCT_NAMES[categoryKey].forEach((name) => {
-        const valor = Boolean(Math.round(Math.random()));
-
         const slug = name
           .toLowerCase()
           .normalize('NFD')
@@ -66,14 +74,18 @@ const generateProducts = (): ProductModelWithRating[] => {
 
         products.push({
           id: `prod-${counter}`,
-          restaurantId: RESTAURANT_ID,
+          restaurantId: CATEGORY_TO_RESTAURANT[categoryKey],
           categoryId: CATEGORY_IDS[categoryKey],
           name,
           slug,
           description: `${name}, preparado con ingredientes frescos y de calidad.`,
           price: FIXED_PRICES[counter % FIXED_PRICES.length].toFixed(2),
-          imageUrl: `https://placehold.co/600x600?text=${encodeURIComponent(name)}`,
-          isAvailable:  valor,
+          imageUrl: [
+            `https://placehold.co/600x600?text=${encodeURIComponent(name)}+1`,
+            `https://placehold.co/600x600?text=${encodeURIComponent(name)}+2`,
+            `https://placehold.co/600x600?text=${encodeURIComponent(name)}+3`,
+          ],
+          isAvailable: counter % 3 !== 0,
           createdAt: '2026-01-01T00:00:00.000Z',
           rating: FIXED_RATINGS[counter % FIXED_RATINGS.length],
         })

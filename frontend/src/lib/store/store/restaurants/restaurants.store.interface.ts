@@ -3,6 +3,7 @@ export interface Restaurant {
   ownerId: string
   name: string
   slug: string
+  description?: string
   status: 'pending' | 'approved' | 'rejected'
   stripeAccountId?: string
   createdAt: string
@@ -11,5 +12,5 @@ export interface Restaurant {
 export interface RestaurantFilters {
   search: string
   sortBy: 'newest' | 'name'
+  id : string | null
 }
-
