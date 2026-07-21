@@ -13,5 +13,4 @@ export interface RestaurantFilters {
   search: string
   sortBy: 'newest' | 'name'
   id: string | null
-  isLoading: boolean
-}
+  }

@@ -1,25 +1,48 @@
-import { useMemo, useState } from 'react'
-import type {
-  Restaurant,
-  RestaurantFilters,
-} from './restaurants.store.interface'
+// restaurants.store.ts
+import { create } from 'zustand'
+import { useMemo } from 'react'
+import type { Restaurant, RestaurantFilters } from './restaurants.store.interface'
 import { mockRestaurants } from '#/components/ui/data/restaurant.mocks'
 
 const initialFilters: RestaurantFilters = {
   search: '',
   sortBy: 'newest',
   id: null,
-  isLoading: false,
+ }
+
+interface RestaurantsStore {
+  filters: RestaurantFilters
+  currentRestaurant: Restaurant | null       // ← agregar
+  updateFilter: (key: keyof RestaurantFilters, value: string) => void
+  clearFilters: () => void
+  setCurrentRestaurant: (slug: string) => void  // ← agregar
 }
 
-export const useRestaurants = () => {
-  const [filters, setFilters] = useState<RestaurantFilters>(initialFilters)
-             
-  const updateFilter = (key: keyof RestaurantFilters, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }))
-  }
+const useRestaurantsStore = create<RestaurantsStore>((set) => ({
+  filters: initialFilters,
+  currentRestaurant: null,                   // ← agregar
 
-  const filteredRestaurants = useMemo(() => {
+  updateFilter: (key, value) =>
+    set((state) => ({ filters: { ...state.filters, [key]: value } })),
+
+  clearFilters: () => set({ filters: initialFilters }),
+
+  setCurrentRestaurant: (slug) => {          // ← agregar
+    const found = mockRestaurants.find((r) => r.slug === slug) ?? null
+    set({ currentRestaurant: found })
+  },
+}))
+
+export const useRestaurants = () => {
+  const {
+    filters,
+    updateFilter,
+    clearFilters,
+    currentRestaurant,
+    setCurrentRestaurant,
+  } = useRestaurantsStore()
+
+  const restaurants = useMemo(() => {
     let result = [...mockRestaurants] as Restaurant[]
 
     if (filters.search) {
@@ -31,7 +54,6 @@ export const useRestaurants = () => {
       result = result.filter((r) => r.id === filters.id)
     }
 
-    // solo mostrar restaurantes aprobados en el storefront público
     result = result.filter((r) => r.status === 'approved')
 
     switch (filters.sortBy) {
@@ -50,13 +72,13 @@ export const useRestaurants = () => {
     return result
   }, [filters.search, filters.sortBy, filters.id])
 
-  const clearFilters = () => setFilters(initialFilters)
-
   return {
     filters,
     updateFilter,
-    restaurants: filteredRestaurants,
-    totalRestaurants: filteredRestaurants.length,
     clearFilters,
+    restaurants,
+    totalRestaurants: restaurants.length,
+    currentRestaurant,           // ← exponer
+    setCurrentRestaurant,        // ← exponer
   }
 }

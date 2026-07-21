@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import StoreProducts from '#/components/containers/store/storefront/store-product'
 import { StoreAbout } from '#/components/containers/store/storefront/store-about'
 import { StoreReviews } from '#/components/containers/store/storefront/store-reviews'
+import { useRestaurants } from '#/lib/store/store/restaurants/restaurants.store'
 
 interface StorePageTemplateProps {
   slug: string
@@ -20,27 +21,29 @@ interface StorePageTemplateProps {
 
 export default function StorePageTemplate({ slug }: StorePageTemplateProps) {
   const { currentStore, getStoreBySlug, isLoading } = useStoreFront()
-
+const { currentRestaurant, setCurrentRestaurant } = useRestaurants()
+ 
   useEffect(() => {
-    getStoreBySlug(slug)
-  }, [slug, getStoreBySlug])
+    setCurrentRestaurant(slug)
+  }, [slug, setCurrentRestaurant])
 
   if (isLoading) {
     return (
       <div className="@container container mx-auto px-4 py-8">
-        {/* Breadcrumbs Skeleton */}
+        Breadcrumbs Skeleton 
         <div className="mb-6">
           <Skeleton className="h-5 w-64" />
         </div>
 
-        {/* Store Header Skeleton */}
+     
         <StoreHeaderSkeleton />
 
-        {/* Tabs Skeleton */}
+        Tabs Skeleton 
         <div className="mt-8 space-y-6">
           <Skeleton className="h-10 w-full max-w-md" />
           <StoreProductsSkeleton />
         </div>
+         
       </div>
     )
   }
