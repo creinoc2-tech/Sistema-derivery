@@ -1,21 +1,18 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowRight, Package } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import type { Category } from "@/types/category-types";
+import { Link } from '@tanstack/react-router'
+import { ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+import type { CategoryModel } from '#/model/category.model'
 
 interface CategoryCardListProps {
-  category: Category;
-  className?: string;
-  showProductCount?: boolean;
+  category: CategoryModel
+  className?: string
 }
 
 export default function CategoryCardList({
   category,
   className,
-  showProductCount = true,
 }: CategoryCardListProps) {
   return (
     <Link
@@ -25,47 +22,45 @@ export default function CategoryCardList({
     >
       <Card
         className={cn(
-          "overflow-hidden py-0 transition-all hover:border-primary/50 hover:shadow-md",
-          className
+          'overflow-hidden py-0 transition-all hover:border-primary/50 hover:shadow-md',
+          className,
         )}
       >
         <CardContent className="flex items-center gap-4 p-4">
+          {/* Imagen */}
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
-            {category.image ? (
+            {category.imageUrl ? (
               <img
-                src={category.image}
+                src={category.imageUrl}
                 alt={category.name}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="text-2xl">{category.icon}</span>
+              <div className="flex h-full w-full items-center justify-center bg-secondary/20">
+                <span className="text-muted-foreground text-xs">
+                  Sin imagen
+                </span>
               </div>
             )}
           </div>
 
+          {/* Nombre */}
           <div className="min-w-0 flex-1">
-            <div className="mb-1 flex items-center gap-2">
-              <h3 className="truncate font-bold text-lg transition-colors group-hover:text-primary">
-                {category.name}
-              </h3>
-              {category.featured && (
-                <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
-                  Featured
-                </Badge>
-              )}
-            </div>
-            {category.description && (
-              <p className="mb-1 line-clamp-1 text-muted-foreground text-sm">
-                {category.description}
-              </p>
-            )}
-            {showProductCount && (
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Package className="h-3 w-3" />
-                <span>{category.productCount} products</span>
-              </div>
-            )}
+            <h3 className="truncate font-bold text-lg transition-colors group-hover:text-primary">
+              {category.name}
+            </h3>
+
+            <p
+              className={
+                'font-bold transition-colors group-hover:text-primary text-[12px] text-neutral-500'
+              }
+            >
+              {category.description}
+            </p>
+
+            <span className="text-muted-foreground text-xs">
+             {category.slug}
+            </span>
           </div>
 
           <Button
@@ -78,5 +73,5 @@ export default function CategoryCardList({
         </CardContent>
       </Card>
     </Link>
-  );
+  )
 }

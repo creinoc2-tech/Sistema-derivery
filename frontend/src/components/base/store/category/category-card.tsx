@@ -1,38 +1,28 @@
-import type { Category } from "@/types/category-types";
 import CategoryCardList from "./category-card-list";
 import CategoryCardGrid from "./category-card-grid";
- 
+import type { CategoryModel } from "#/model/category.model";
+import type { FC } from "react";
 
 interface CategoryCardProps {
-  category: Category;
+  category: CategoryModel;
   variant?: "default" | "compact" | "featured" | "list";
   className?: string;
-  showProductCount?: boolean;
 }
 
 export default function CategoryCard({
   category,
   variant = "default",
   className,
-  showProductCount = true,
 }: CategoryCardProps) {
-  const isList = variant === "list";
-
-  if (isList) {
-    return (
-      <CategoryCardList
-        category={category}
-        className={className}
-        showProductCount={showProductCount}
-      />
-    );
+  if (variant === "list") {
+    return <CategoryCardList category={category} className={className} />;
   }
+
   return (
     <CategoryCardGrid
       category={category}
-      variant={variant as "default" | "compact" | "featured"}
+      variant={variant }
       className={className}
-      showProductCount={showProductCount}
     />
   );
 }

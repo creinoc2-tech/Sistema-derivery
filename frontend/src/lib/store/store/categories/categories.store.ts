@@ -1,41 +1,33 @@
-// src/lib/store/store/categories/categories.store.ts
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { Categorias, CategoriasFilters } from './categories.store.interface'
-import { CategoryController } from '#/controllers/category.controller'
-
-const categoryController = new CategoryController()
+import { mockCategories } from '#/components/ui/data/categories.mock'
 
 const initialFilters: CategoriasFilters = {
   search: '',
+  isActive: undefined,
 }
 
-export const useCategories = (restaurantId: string) => {
+export const useCategories = () => {  // ← sin restaurantId
   const [filters, setFilters] = useState<CategoriasFilters>(initialFilters)
-  const [categories, setCategories] = useState<Categorias[]>([])
-  const [isPending, setIsPending] = useState(false)
-
-  useEffect(() => {
-    setIsPending(true)
-    categoryController
-      .list(restaurantId)
-      .then((data) => setCategories(data))
-      .finally(() => setIsPending(false))
-  }, [restaurantId])
 
   const updateFilter = (key: keyof CategoriasFilters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }))
   }
 
   const filteredCategories = useMemo(() => {
-    let result = [...categories]
+    let result = [...mockCategories] as Categorias[]
 
     if (filters.search) {
       const query = filters.search.toLowerCase()
       result = result.filter((c) => c.name.toLowerCase().includes(query))
     }
 
+    if (filters.isActive !== undefined) {
+      result = result.filter((c) => c.isActive === filters.isActive)
+    }
+
     return result.sort((a, b) => a.sortOrder - b.sortOrder)
-  }, [categories, filters.search])
+  }, [filters.search, filters.isActive])
 
   const clearFilters = () => setFilters(initialFilters)
 
@@ -44,7 +36,7 @@ export const useCategories = (restaurantId: string) => {
     updateFilter,
     categories: filteredCategories,
     totalCategories: filteredCategories.length,
-    isPending,
+    isPending: false,
     clearFilters,
   }
 }

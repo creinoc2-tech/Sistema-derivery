@@ -1,10 +1,11 @@
 import CategoryCard from '#/components/base/store/category/category-card'
+import type { CategoryModel } from '#/model/category.model'
 import type { Category } from '#/types/category-types'
 
 import { cn } from '@/lib/utils'
 
 interface CategoryGridProps {
-  categories: Category[]
+  categories: CategoryModel[]
   variant?: 'default' | 'compact' | 'featured' | 'list'
   columns?: {
     default?: number
@@ -47,7 +48,6 @@ export default function CategoryGrid({
           key={category.id}
           category={category}
           variant={variant}
-          showProductCount={showProductCount}
         />
       ))}
     </div>

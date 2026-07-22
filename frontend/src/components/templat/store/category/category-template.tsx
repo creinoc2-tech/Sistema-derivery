@@ -1,8 +1,8 @@
-import CategoryGrid from '#/components/containers/store/category/category-grid';
-import SidebarCategoryTree from '#/components/containers/store/category/sidebar-category-tree';
-import { Separator } from '#/components/ui/separator';
- import { getRootCategories } from '#/lib/helper/categories';
- import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CategoryGrid from '#/components/containers/store/category/category-grid'
+import SidebarCategoryTree from '#/components/containers/store/category/sidebar-category-tree'
+import { Separator } from '#/components/ui/separator'
+import { getRootCategories } from '#/lib/helper/categories'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import {
   Breadcrumb,
@@ -12,11 +12,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
- 
-export default function CategoryTemplate() {
+import { useCategories } from '#/lib/store/store/categories/categories.store'
+import { getActiveCategories } from '#/lib/mappers/category.active.mapper'
 
-   const rootCategories = getRootCategories() // Replace with actual categories
-     const featuredCategories =  rootCategories.filter((cat) => cat.featured) 
+export default function CategoryTemplate() {
+  const { categories, updateFilter, filters } = useCategories()
+  const activeCategories = getActiveCategories(categories)
+
   return (
     <div className="@container container mx-auto px-4 py-8">
       {/* Breadcrumb */}
@@ -33,29 +35,28 @@ export default function CategoryTemplate() {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="mt-4 font-bold text-3xl tracking-tight">
-          All Categories
+          Todas las Categorías
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Browse our wide range of product categories
+          Explora nuestra amplia gama de categorías de productos
         </p>
       </div>
 
-        <div className="grid @5xl:grid-cols-12 gap-8">
-            {/* Sidebar - Category Tree */}
+      <div className="grid @5xl:grid-cols-12 gap-8">
+        {/* Sidebar - Category Tree */}
         <div className="@5xl:col-span-3">
-            <SidebarCategoryTree />
+          <SidebarCategoryTree />
         </div>
 
         <div className="@5xl:col-span-9 space-y-8">
-
           {/* Featured Categories */}
-          {featuredCategories.length > 0 && (
+          {activeCategories.length > 0 && (
             <div>
               <h2 className="mb-4 font-semibold text-xl">
-                Featured Categories
+                Categorías Destacadas
               </h2>
               <CategoryGrid
-                categories={featuredCategories}
+                categories={activeCategories}
                 variant="featured"
                 columns={{
                   default: 4,
@@ -73,16 +74,16 @@ export default function CategoryTemplate() {
           {/* All Categories */}
           <Tabs defaultValue="grid" className="w-full">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-xl">All Categories</h2>
+              <h2 className="font-semibold text-xl">Todas las Categorías</h2>
               <TabsList>
-                <TabsTrigger value="grid">Grid View</TabsTrigger>
-                <TabsTrigger value="list">List View</TabsTrigger>
+                <TabsTrigger value="grid"> Cuadrícula</TabsTrigger>
+                <TabsTrigger value="list"> Lista</TabsTrigger>
               </TabsList>
             </div>
 
             <TabsContent value="grid" className="mt-6">
               <CategoryGrid
-                categories={rootCategories}
+                categories={categories}
                 variant="default"
                 columns={{
                   default: 2,
@@ -96,7 +97,7 @@ export default function CategoryTemplate() {
 
             <TabsContent value="list" className="mt-6">
               <CategoryGrid
-                categories={rootCategories}
+                categories={categories}
                 variant="list"
                 columns={{
                   default: 1,
@@ -108,12 +109,8 @@ export default function CategoryTemplate() {
               />
             </TabsContent>
           </Tabs>
-
-          
         </div>
-
-          
-        </div>
+      </div>
     </div>
   )
 }
