@@ -11,28 +11,37 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from '@/components/ui/input-group'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
+import { mockProducts } from '#/components/ui/data/products.mock'
 export default function CheckoutOrderSummary() {
-  const { items, subtotal, shippingCost } = useCartStore()
+  const { items, subtotal } = useCartStores()
   const estimatedTaxes = 0.5
+  const shippingCost = 5 // Add a default shipping cost
   const total = subtotal + shippingCost + estimatedTaxes
 
+  const productos = items.map((item) =>
+    mockProducts.find((c) => c.id === item.productId),
+  )
+
   if (items.length === 0) {
-    ;<div className="rounded-lg border bg-background p-6 shadow-sm">
-      <h2 className="mb-6 font-semibold text-xl">Your Cart</h2>
-      <EmptyState
-        icon={<ShoppingBag className="h-10 w-10 text-muted-foreground" />}
-        title="No items yet"
-        description="Add items to your cart to continue with checkout."
-        action={
-          <Link to="/product">
-            <Button variant="outline" className="rounded-full">
-              Browse Products
-            </Button>
-          </Link>
-        }
-        className="py-8"
-      />
-    </div>
+    return (
+      <div className="rounded-lg border bg-background p-6 shadow-sm">
+        <h2 className="mb-6 font-semibold text-xl">Your Cart</h2>
+        <EmptyState
+          icon={<ShoppingBag className="h-10 w-10 text-muted-foreground" />}
+          title="No items yet"
+          description="Add items to your cart to continue with checkout."
+          action={
+            <Link to="/product">
+              <Button variant="outline" className="rounded-full">
+                Browse Products
+              </Button>
+            </Link>
+          }
+          className="py-8"
+        />
+      </div>
+    )
   }
   return (
     <div className="space-y-6">
@@ -42,9 +51,9 @@ export default function CheckoutOrderSummary() {
           {items.map((item) => (
             <div key={item.id} className="flex gap-4">
               <div className="relative h-20 w-20 rounded-md border bg-muted">
-                {item.image ? (
+                {item.imageUrl ? (
                   <img
-                    src={item.image}
+                    src={item.imageUrl ?? ''}
                     alt={item.name}
                     className="h-full w-full rounded-md object-cover"
                   />
@@ -58,15 +67,19 @@ export default function CheckoutOrderSummary() {
                 </div>
               </div>
               <div className="flex flex-1 items-center justify-between">
-                <div className="space-y-1">
+                <div className="space-y-1 ">
                   <h3 className="font-medium text-base leading-tight">
                     {item.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {item.color || "Men's Black"}
+                  <p className="text-muted-foreground text-[14px] line-clamp-1">
+
+                    {
+                      productos.find((c) => c?.id === item.productId)
+                        ?.description
+                    }
                   </p>
                 </div>
-                <p className="font-semibold text-lg">
+                <p className="font-semibold text-lg ">
                   ${Number(item.price).toFixed(2)}
                 </p>
               </div>

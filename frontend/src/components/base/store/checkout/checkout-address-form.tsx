@@ -40,7 +40,7 @@ export default function ShippingAddressForm({
       className="space-y-6"
     >
       <div className="space-y-4">
-        <h2 className="text-lg font-medium">Shipping Address</h2>
+        <h2 className="text-lg font-medium"></h2>
         <ShippingAddressFields form={form as any} />
 
         <Button

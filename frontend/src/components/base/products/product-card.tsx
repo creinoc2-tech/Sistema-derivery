@@ -1,13 +1,12 @@
-
 import { cn } from '#/lib/utils'
 import { useState } from 'react'
 import { Button } from '#/components/ui/button'
 import { Eye, Loader2, ShoppingCart, Star } from 'lucide-react'
-
 import PriceTag from './price-tag'
 import { Link } from '@tanstack/react-router'
 import type { Productos } from '#/lib/store/store/product/product.store.interface'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
+import { mockCategories } from '#/components/ui/data/categories.mock'
 
 interface ProductCardProps {
   product: Productos
@@ -21,11 +20,13 @@ export default function ProductCard({
   variant = 'grid',
 }: ProductCardProps) {
   const [isAddingThis, setIsAddingThis] = useState(false)
-
   const { addItem } = useCartStores()
 
+  const categoryName =
+    mockCategories.find((c) => c.id === product.categoryId)?.name ?? 'Sin categoría'
+
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault() // Prevent navigation if inside a link
+    e.preventDefault()
     e.stopPropagation()
     setIsAddingThis(true)
     try {
@@ -39,13 +40,13 @@ export default function ProductCard({
         },
         product.restaurantId,
       )
-      // Log the current cart items after adding
       setIsAddingThis(false)
     } catch (error) {
       console.error('Error adding item to cart:', error)
       setIsAddingThis(false)
     }
   }
+
   return (
     <div
       className={cn(
@@ -54,27 +55,19 @@ export default function ProductCard({
         className,
       )}
     >
-      <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-muted">
+      <div
+        className={cn(
+          'relative overflow-hidden rounded-2xl bg-muted',
+          variant === 'grid' ? 'aspect-3/4' : '@2xl:h-40 @2xl:w-40 aspect-square',
+        )}
+      >
         <img
-          src={product.imageUrl[0] ?? ""}
+          src={product.imageUrl[0] ?? ''}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
 
-        {/* Badges
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {product.price.discountPercentage > 0 && (
-            <Badge className="bg-red-500 hover:bg-red-600">
-              -{product.price.discountPercentage}%
-            </Badge>
-          )}
-          {product.isNew && product.price.discountPercentage === 0 && (
-            <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>
-          )}
-        </div> */}
-
-        {/* Hover Actions Overlay */}
         <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/20 opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:opacity-100">
           <Button
             size="icon"
@@ -101,22 +94,20 @@ export default function ProductCard({
           </Button>
         </div>
       </div>
-      {/* Content Section */}
-      <div className="mt-4  flex flex-col gap-3">
+
+      <div className="mt-4 flex flex-1 flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="rounded-full border border-muted-foreground/30 border-dashed bg-muted/50 px-3 py-1 font-medium text-muted-foreground text-xs">
-            {product.categoryId}
+            {categoryName}
           </span>
-          <div className="flex items-center gap-1 text-amber-500">
-            <Star className="h-3.5 w-3.5 fill-current" />
-            <span className="font-medium text-sm">{product.rating ?? 0}</span>
-            <span className="text-[10px] text-muted-foreground">
-              ({product.slug})
-            </span>
-          </div>
+          {product.rating !== undefined && (
+            <div className="flex items-center gap-1 text-amber-500">
+              <Star className="h-3.5 w-3.5 fill-current" />
+              <span className="font-medium text-sm">{product.rating.toFixed(1)}</span>
+            </div>
+          )}
         </div>
 
-        {/* Title & Description */}
         <Link
           to="/product/$slug"
           params={{ slug: product.slug }}
@@ -130,21 +121,22 @@ export default function ProductCard({
           </h3>
         </Link>
 
-        <div className="flex items-center justify-between border-muted border-t border-dashed pt-3">
-          <div className="font-mono text-muted-foreground text-sm">
-            <span className="font-medium text-base text-foreground">
-              <PriceTag
-                price={Number(product.price)}
-                originalPrice={Number(product.price)}
-              />
-            </span>
-          </div>
+        {product.description && (
+          <p className="line-clamp-2 text-muted-foreground text-sm">
+            {product.description}
+          </p>
+        )}
 
-          <div className="flex items-center gap-1">
-            <span className="ml-1 font-medium text-[10px] text-muted-foreground">
-              +{product.restaurantId}
+        <div className="mt-auto flex items-center justify-between border-muted border-t border-dashed pt-3">
+          <PriceTag
+            price={Number(product.price)}
+            originalPrice={Number(product.price)}
+          />
+          {!product.isAvailable && (
+            <span className="text-destructive text-xs font-medium">
+              No disponible
             </span>
-          </div>
+          )}
         </div>
       </div>
     </div>
