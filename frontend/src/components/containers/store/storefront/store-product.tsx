@@ -10,12 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { mockProducts } from '#/components/ui/data/products'
-
+import { mockProducts } from '#/components/ui/data/products.mock'
+ 
 interface StoreProductsProps {
-  storeName: string
-  storeSlug?: string
-}
+  id: string
+ }
 
 const sortOptions = [
   { value: 'newest', label: 'Newest' },
@@ -26,52 +25,25 @@ const sortOptions = [
 ]
 
 export default function StoreProducts({
-  storeName,
-  storeSlug,
+  id,
 }: StoreProductsProps) {
   const [sortBy, setSortBy] = useState('newest')
 
   const storeProducts = mockProducts.filter(
-    (product) => product.store.name === storeName,
+    (product) => product.restaurantId=== id,
   )
 
-  // Sort products
-const sortedProducts = [...storeProducts].sort((a, b) => {
-  switch (sortBy) {
-    case 'price-low':
-      return a.price.current - b.price.current;
-    case 'price-high':
-      return b.price.current - a.price.current;
-    case 'rating':
-      return b.rating.average - a.rating.average;
-    case 'popular':
-      return b.rating.count - a.rating.count;
-    default:
-      return 0;
-  }
-});
-
-  if (sortedProducts.length === 0) {
-    return (
-      <NotFound
-        title="No Products Yet"
-        description="This store hasn't listed any products yet. Check back soon!"
-        icon={<PackageOpen className="size-12 text-muted-foreground" />}
-        className="py-12"
-      />
-    )
-  }
-
+  
   return <div className="space-y-6">
 
        {/* Header with count and sort */}
       <div className="flex @2xl:flex-row flex-col items-start @2xl:items-center justify-between gap-4">
         <div className="@2xl:items-center">
           <h2 className="font-semibold text-xl">
-            Products ({sortedProducts.length})
+            Products ({storeProducts.length})
           </h2>
           <p className="text-muted-foreground text-sm">
-            Browse all products from {storeName}
+            Browse all products from this store
           </p>
         </div>
 
@@ -94,7 +66,7 @@ const sortedProducts = [...storeProducts].sort((a, b) => {
 
        {/* Products Grid */}
       <div className="grid @2xl:grid-cols-2 @5xl:grid-cols-3 gap-6">
-        {sortedProducts.map((product) => (
+        {storeProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

@@ -1,48 +1,33 @@
 import { format } from "date-fns";
-import { Calendar, Package, Star, Users } from "lucide-react";
-import type { StoreStats as StoreStatsType } from "@/types/store-types";
+import { Calendar, CheckCircle2 } from "lucide-react";
+import type { RestaurantModel } from "#/model/restaurants.model";
 
 interface StoreStatsProps {
-  stats: StoreStatsType;
+  restaurant: RestaurantModel;
   className?: string;
 }
 
-export function StoreStats({ stats, className }: StoreStatsProps) {
-  const formattedDate = format(stats.memberSince, "MMMM yyyy");
+export function StoreStats({ restaurant, className }: StoreStatsProps) {
+  const formattedDate = format(new Date(restaurant.createdAt), "MMMM yyyy");
 
   const statsData = [
     {
-      icon: Package,
-      label: "Products",
-      value: stats.totalProducts.toLocaleString(),
-      color: "text-blue-500",
-    },
-    {
-      icon: Users,
-      label: "Followers",
-      value:
-        stats.followers >= 1000
-          ? `${(stats.followers / 1000).toFixed(1)}k`
-          : stats.followers.toString(),
-      color: "text-green-500",
-    },
-    {
-      icon: Star,
-      label: "Rating",
-      value: stats.rating.toFixed(1),
-      color: "text-yellow-500",
-    },
-    {
       icon: Calendar,
-      label: "Member Since",
+      label: "En Derivery desde",
       value: formattedDate,
       color: "text-purple-500",
+    },
+    {
+      icon: CheckCircle2,
+      label: "Estado",
+      value: restaurant.status === "approved" ? "Verificado" : "Pendiente",
+      color: "text-green-500",
     },
   ];
 
   return (
     <div className={className}>
-      <div className="grid @2xl:grid-cols-4 grid-cols-2 gap-4">
+      <div className="grid @2xl:grid-cols-2 grid-cols-2 gap-4">
         {statsData.map((stat) => (
           <div
             key={stat.label}

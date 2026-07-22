@@ -145,7 +145,7 @@ export function StoreReviews({
                       <AvatarFallback>
                         {review.userName
                           .split(" ")
-                          .map((n : amy) => n[0])
+                          .map((n : any) => n[0])
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
