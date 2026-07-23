@@ -1,9 +1,8 @@
 import EmptyState from '#/components/base/empty/empty-state'
 import { Button } from '#/components/ui/button'
 import { Separator } from '#/components/ui/separator'
-import { useCartStore } from '#/lib/store/cart/cart-store'
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, Loader2, ShoppingBag, Tag, X } from 'lucide-react'
+import { ShoppingBag, Tag } from 'lucide-react'
 
 import {
   InputGroup,

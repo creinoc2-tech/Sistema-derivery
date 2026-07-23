@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Loader2, ShoppingBag } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 import CartItem from '@/components/base/store/cart/cart-item'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -10,7 +10,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
- import { useCartStore } from '#/lib/store/cart/cart-store'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
 
 export default function CartSheet() {

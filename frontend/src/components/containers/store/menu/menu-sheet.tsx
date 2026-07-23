@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
-import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 
 import {
   CircleUserRound,
@@ -27,9 +27,9 @@ import {
 import { useAuth, useClerk, useUser } from '@clerk/react'
 
 export default function MenuSheet() {
-  const { isSignedIn, userId } = useAuth()
+  const { isSignedIn } = useAuth()
   const { user  } = useUser()
-  const { isOpenMenu, setIsOpenMenu, items, subtotal } = useCartStore()
+  const { isOpenMenu, setIsOpenMenu } = useCartStores()
   const { signOut } = useClerk()
 
 
@@ -66,49 +66,49 @@ export default function MenuSheet() {
                   <span>Pedidos</span>
                 </Link>
 
-                <Link
-                  to="/favorites"
+                <a
+                  href="/favorites"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Heart className="h-5 w-5" />
                   <span>Favoritos</span>
-                </Link>
+                </a>
 
-                <Link
-                  to="/wallet"
+                <a
+                  href="/wallet"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Wallet className="h-5 w-5" />
                   <span>Billetera</span>
-                </Link>
+                </a>
 
-                <Link
-                  to="/help"
+                <a
+                  href="/help"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <LifeBuoy className="h-5 w-5" />
                   <span>Ayuda</span>
-                </Link>
+                </a>
 
-                <Link
-                  to="/ride"
+                <a
+                  href="/ride"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Car className="h-5 w-5" />
                   <span>Solicitar un viaje</span>
                   <ExternalLink className="ml-auto h-4 w-4" />
-                </Link>
+                </a>
 
-                <Link
-                  to="/promotions"
+                <a
+                  href="/promotions"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Ticket className="h-5 w-5" />
                   <span>Promociones</span>
-                </Link>
+                </a>
 
-                <Link
-                  to="/uber-one"
+                <a
+                  href="/uber-one"
                   className="flex items-start gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Globe className="mt-1 h-5 w-5" />
@@ -119,10 +119,10 @@ export default function MenuSheet() {
                       Prueba sin costo por 4 semanas
                     </p>
                   </div>
-                </Link>
+                </a>
 
-                <Link
-                  to="/invite"
+                <a
+                  href="/invite"
                   className="flex items-start gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <Gift className="mt-1 h-5 w-5" />
@@ -133,15 +133,15 @@ export default function MenuSheet() {
                       Recibe $2 de descuento
                     </p>
                   </div>
-                </Link>
+                </a>
 
-                <Link
-                  to="/invoice"
+                <a
+                  href="/invoice"
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"
                 >
                   <FileText className="h-5 w-5" />
                   <span>Invoice Information</span>
-                </Link>
+                </a>
 
                 <button
                   className="flex items-center gap-4 px-6 py-4 hover:bg-gray-100"

@@ -6,13 +6,10 @@ import { QuantitySelector } from '#/components/base/products/details/quantity-se
 import ShippingInfoSection from '#/components/base/products/details/shipping-info-section'
 import RestaurantInfoCard from '#/components/base/products/details/store-info-card'
 import { mockCategories } from '#/components/ui/data/categories.mock'
-import { mockProducts } from '#/components/ui/data/products'
-import { useCartStore } from '#/lib/store/cart/cart-store'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import { useRestaurants } from '#/lib/store/store/restaurants/restaurants.store'
 import type { ProductModel } from '#/model/product.model'
 import { useState } from 'react'
-import { toast } from 'sonner'
 
 interface ProductMainSectionProps {
   product: ProductModel
@@ -57,10 +54,10 @@ export default function ProductMainSection({
     (category) => category.id === product.categoryId,
   )
 
-  const { updateFilter, restaurants } = useRestaurants()
+  const { restaurants } = useRestaurants()
 
   const restaurant = restaurants.find(
-    (restaurant) => restaurant.id === product.restaurantId,
+    (restaurantItem) => restaurantItem.id === product.restaurantId,
   )
 
   return (

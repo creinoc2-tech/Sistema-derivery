@@ -1,7 +1,5 @@
 import { Button } from '#/components/ui/button'
 import { Separator } from '#/components/ui/separator'
-import { Skeleton } from '#/components/ui/skeleton'
-import { useCartStore } from '#/lib/store/cart/cart-store'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import {
   InputGroup,
@@ -10,10 +8,10 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group'
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, CheckCircle2, Loader2, Tag, X } from 'lucide-react'
+import { ArrowRight, Tag } from 'lucide-react'
 
 export default function CartSummary() {
-  const { items, subtotal, clearCart } = useCartStores()
+  const { items, subtotal } = useCartStores()
 
   // Mock discount for now
   const discount = 0

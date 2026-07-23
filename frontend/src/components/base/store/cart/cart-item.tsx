@@ -1,10 +1,8 @@
 import { Button } from '#/components/ui/button'
  
 import { cn } from '#/lib/utils'
-import { Link } from '@tanstack/react-router'
-import { Loader2, Trash2 } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import { QuantitySelector } from '../../products/details/quantity-selector'
-import { useCartStore } from '#/lib/store/cart/cart-store'
  import type { CartItems } from '#/lib/store/store/cart/cart.store.interface'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
  interface CartItemProps {

@@ -1,4 +1,3 @@
-import { useCartStore } from '#/lib/store/cart/cart-store'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import CartItem from '@/components/base/store/cart/cart-item'
 

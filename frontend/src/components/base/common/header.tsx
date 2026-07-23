@@ -4,9 +4,9 @@ import { Link } from '@tanstack/react-router'
 import { Menu, ShoppingBag } from 'lucide-react'
 import Navbar from './navbar'
 import CartSheet from '#/components/containers/store/cart/cart-sheet'
-import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import { MobileMenu } from './mobile-menu'
-import { useAuth, UserButton, useUser } from '@clerk/react'
+import { useAuth, UserButton } from '@clerk/react'
 
 const navigationItems = [
   { to: '/', label: 'Home' },
@@ -15,9 +15,8 @@ const navigationItems = [
 ]
 
 export default function Header() {
-  const { totalItems, setIsOpen } = useCartStore()
-  const { isSignedIn, userId } = useAuth()
-  const { user } = useUser()
+  const { totalItems, setIsOpen } = useCartStores()
+  const { isSignedIn } = useAuth()
   return (
     <header className="@container sticky top-0 z-40 w-full border-b border-dashed bg-background backdrop-blur supports-filter:bg-background/80">
       <div className="@container container mx-auto grid @6xl:grid-cols-3 grid-cols-2 items-center px-4 py-7">

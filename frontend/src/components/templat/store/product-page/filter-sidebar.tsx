@@ -1,13 +1,8 @@
 import { Star } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { RadioGroup } from '@/components/ui/radio-group'
 import { Slider } from '@/components/ui/slider'
-import type { FilterState } from '#/lib/store/product/product.store.interface'
-import { COLORS, SIZES } from '#/components/ui/data/products'
 import FilterGroup from '#/components/base/products/filter-group'
-import { ColorRadioItem } from '#/components/base/products/color-redio-item'
 import type { FilterStates } from '#/lib/store/store/product/product.store.interface'
 
 interface FilterSidebarProps {
@@ -16,8 +11,8 @@ interface FilterSidebarProps {
     key: keyof FilterStates,
     value: string | number | string[] | [number, number] | null,
   ) => void
-  availableCategories: { id: string; name: string }[] // 👈 antes era string[]
-  //availableBrands: string[];
+  availableCategories: { id: string; name: string }[]
+  // availableBrands: string[];
   className?: string
 }
 

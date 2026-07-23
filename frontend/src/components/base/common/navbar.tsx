@@ -2,9 +2,8 @@ import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 import { Button } from '#/components/ui/button'
 import { Menu } from 'lucide-react'
-import { useState } from 'react'
 import MenuSheet from '#/components/containers/store/menu/menu-sheet'
-import { useCartStore } from '#/lib/store/cart/cart-store'
+import { useCartStores } from '#/lib/store/store/cart/cart.store'
 interface NavItem {
   label: string
   to: string
@@ -22,7 +21,7 @@ export default function Navbar({
   linkClassName = '',
   activeLinkClassName = '',
 }: NavBarProps) {
-    const { setIsOpenMenu } = useCartStore()
+  const { setIsOpenMenu } = useCartStores()
   return (
     <nav className={cn(className)}>
       <Button
@@ -44,12 +43,12 @@ export default function Navbar({
           key={item.to}
           to={item.to}
           className={cn(
-            'flex @7xl:h-16 items-center justify-center rounded-xl border border-dashed bg-transparent px-[30px] py-2 text-lg transition-all hover:border-transparent hover:bg-primary hover:text-background dark:text-body-70 dark:hover:text-background',
+            'flex @7xl:h-16 items-center justify-center rounded-xl border border-dashed bg-transparent px-7.5 py-2 text-lg transition-all hover:border-transparent hover:bg-primary hover:text-background dark:text-body-70 dark:hover:text-background',
             linkClassName,
           )}
           activeProps={{
             className: cn(
-              '@7xl:h-16 h-12 rounded-xl text-lg px-[30px] py-2 bg-foreground! text-background border-transparent dark:bg-body-10! hover:dark:text-foreground',
+              '@7xl:h-16 h-12 rounded-xl text-lg px-7.5 py-2 bg-foreground! text-background border-transparent dark:bg-body-10! hover:dark:text-foreground',
               activeLinkClassName,
             ),
           }}

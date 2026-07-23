@@ -1,25 +1,12 @@
-import ActiveFilterChips from '#/components/base/products/active-filter-chips'
 import SearchBar from '#/components/base/products/searchbar'
 import SortDropdown from '#/components/base/products/sort-dropdown'
 import ProductGrid from '#/components/containers/store/product-list/product-grid'
 import { mockCategories } from '#/components/ui/data/categories.mock'
-import { useProductFilters } from '#/lib/store/product/product-filters-store'
 import { useProductFilter } from '#/lib/store/store/product/product.store'
 import FilterSidebar from './filter-sidebar'
 import MobileFilterDrawer from './mobile-filter-drawer'
 
 export default function ProductListingTemplate() {
-  const {
-    filters,
-    updateFilter,
-    totalProducts,
-    activeFilters,
-    removeFilter,
-    clearAllFilters,
-    products,
-    isPending,
-  } = useProductFilters()
-
   const {
     filters: productFilter,
     updateFilter: updateProductFilter,
@@ -70,16 +57,9 @@ export default function ProductListingTemplate() {
                 id: cat.id,
                 name: cat.name,
               }))}
-            //availableBrands={availableBrands}
             />
           </aside>
           <main className="min-w-0 flex-1">
-            {/*<ActiveFilterChips
-              filters={activeFilters}
-              onRemove={removeFilter}
-              onClearAll={clearAllFilters}
-            /> */}
-
             <ProductGrid products={dataproduct} isLoading={isProductPending} />
           </main>
         </div>

@@ -1,7 +1,6 @@
 import CategoryGrid from '#/components/containers/store/category/category-grid'
 import SidebarCategoryTree from '#/components/containers/store/category/sidebar-category-tree'
 import { Separator } from '#/components/ui/separator'
-import { getRootCategories } from '#/lib/helper/categories'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import {
@@ -16,7 +15,7 @@ import { useCategories } from '#/lib/store/store/categories/categories.store'
 import { getActiveCategories } from '#/lib/mappers/category.active.mapper'
 
 export default function CategoryTemplate() {
-  const { categories, updateFilter, filters } = useCategories()
+  const { categories } = useCategories()
   const activeCategories = getActiveCategories(categories)
 
   return (

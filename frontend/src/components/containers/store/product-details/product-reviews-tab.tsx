@@ -1,14 +1,16 @@
 import RatingSummary from '#/components/base/products/details/review/rating-summary'
 import ReviewCard from '#/components/base/products/details/review/review-card'
 import ReviewFormCta from '#/components/base/products/details/review/review-form-cta'
-import type { Review } from '#/components/ui/data/products'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+
+interface Review {
+  id: string
+  userName: string
+  userAvatar?: string
+  date: string
+  rating: number
+  comment: string
+}
+
 interface ProductReviewsTabProps {
   productId: string
   reviews: Review[]
@@ -44,7 +46,7 @@ export default function ProductReviewsTab({
                 <ReviewCard
                   key={review.id}
                   userName={review.userName}
-                  userAvatar={review.userAvatar}
+                  userAvatar={review.userAvatar ?? ''}
                   date={review.date}
                   rating={review.rating}
                   reviewText={review.comment}

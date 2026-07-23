@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
  import { Button } from "@/components/ui/button";
- import type { Product } from "#/components/ui/data/products";
 import ProductCardHorizontal from "#/components/base/products/details/product-card-horizontal";
 import type { ProductModel } from "#/model/product.model";
 

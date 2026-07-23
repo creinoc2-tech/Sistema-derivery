@@ -1,10 +1,5 @@
 import NotFound from '#/components/base/empty/notfound'
 import { Button } from '#/components/ui/button'
-import {
-  getCategoryBreadcrumb,
-  getCategoryBySlug,
-  getSubcategories,
-} from '#/lib/helper/categories'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeft, Grid3x3, List, ShoppingBag } from 'lucide-react'
 import { useState } from 'react'
@@ -23,25 +18,6 @@ import ProductGrid from '#/components/containers/store/product-list/product-grid
 
 export default function CategoryDetailTemplate({ slug }: { slug: string }) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  /*const category = getCategoryBySlug(slug)
-  const subcategories = category ? getSubcategories(category.id) : []
-  const breadcrumb = category ? getCategoryBreadcrumb(category.id) : []
-  const categoryProducts = category
-    ? mockProducts.filter(
-        (p) =>
-          p.category.slug === category.slug ||
-          p.category.name.toLowerCase() === category.name.toLowerCase(),
-      )
-    : []
-
-  const displayProducts =
-    categoryProducts.length > 0 ? categoryProducts : mockProducts.slice(0, 8)
-  
-  
-  
-  
-  */
-
   const category = mockCategories.find((c) => c.slug === slug)
   const categoryProducts = category
     ? mockProducts.filter((p) => p.categoryId === category.id)
