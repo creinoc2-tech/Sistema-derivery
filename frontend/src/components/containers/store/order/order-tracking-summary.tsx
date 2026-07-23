@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
-import { ExternalLink, Mail } from "lucide-react";
+ import { ExternalLink, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 interface OrderTrackingSummaryProps {
   orderId: string;
@@ -42,7 +42,7 @@ export default function OrderTrackingSummary({
       </div>
 
       <div className="mt-6 flex flex-col gap-4">
-        <Link to="/order-confirmation">
+        <Link to="/store/order-confirmation">
           <Button variant="default" size="lg" className="w-full">
             <ExternalLink className="mr-2 h-4 w-4" />
             View Full Order

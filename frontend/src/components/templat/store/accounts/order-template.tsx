@@ -1,5 +1,6 @@
- 
-export default function OrderTemplate() {
+import OrdersTable from "./order-table";
+
+ export default function OrderTemplate() {
   return (
      
       <div className="space-y-6">
@@ -8,7 +9,7 @@ export default function OrderTemplate() {
         </div>
 
         <div className="rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
-         
+             <OrdersTable />
         </div>
       </div>
      

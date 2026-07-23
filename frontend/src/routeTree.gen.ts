@@ -13,6 +13,7 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as LayoutProfileRouteImport } from './routes/_layout/profile'
 import { Route as LayoutOrdersRouteImport } from './routes/_layout/orders'
 import { Route as LayoutOrderTrackingRouteImport } from './routes/_layout/order-tracking'
 import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
@@ -44,6 +45,11 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LayoutProfileRoute = LayoutProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutOrdersRoute = LayoutOrdersRouteImport.update({
   id: '/orders',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof LayoutCheckoutRoute
   '/order-tracking': typeof LayoutOrderTrackingRoute
   '/orders': typeof LayoutOrdersRoute
+  '/profile': typeof LayoutProfileRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/category/$slug': typeof LayoutCategorySlugRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof LayoutCheckoutRoute
   '/order-tracking': typeof LayoutOrderTrackingRoute
   '/orders': typeof LayoutOrdersRoute
+  '/profile': typeof LayoutProfileRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/': typeof LayoutIndexRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/_layout/checkout': typeof LayoutCheckoutRoute
   '/_layout/order-tracking': typeof LayoutOrderTrackingRoute
   '/_layout/orders': typeof LayoutOrdersRoute
+  '/_layout/profile': typeof LayoutProfileRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/order-tracking'
     | '/orders'
+    | '/profile'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/category/$slug'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/order-tracking'
     | '/orders'
+    | '/profile'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/_layout/checkout'
     | '/_layout/order-tracking'
     | '/_layout/orders'
+    | '/_layout/profile'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/_layout/'
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_layout/profile': {
+      id: '/_layout/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof LayoutProfileRouteImport
+      parentRoute: typeof LayoutRoute
     }
     '/_layout/orders': {
       id: '/_layout/orders'
@@ -344,6 +363,7 @@ interface LayoutRouteChildren {
   LayoutCheckoutRoute: typeof LayoutCheckoutRoute
   LayoutOrderTrackingRoute: typeof LayoutOrderTrackingRoute
   LayoutOrdersRoute: typeof LayoutOrdersRoute
+  LayoutProfileRoute: typeof LayoutProfileRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategorySlugRoute: typeof LayoutCategorySlugRoute
   LayoutProductSlugRoute: typeof LayoutProductSlugRoute
@@ -360,6 +380,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCheckoutRoute: LayoutCheckoutRoute,
   LayoutOrderTrackingRoute: LayoutOrderTrackingRoute,
   LayoutOrdersRoute: LayoutOrdersRoute,
+  LayoutProfileRoute: LayoutProfileRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategorySlugRoute: LayoutCategorySlugRoute,
   LayoutProductSlugRoute: LayoutProductSlugRoute,
