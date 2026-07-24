@@ -1,14 +1,13 @@
 import NotFound from '#/components/base/empty/notfound'
 import StoreCard from '#/components/base/store/storefront/store-card'
 import { StoreListSkeleton } from '#/components/base/store/storefront/store-card-skeleton'
+import { RestaurantsController } from '#/controllers/restaurants.controller'
 import { useStoreFront } from '#/lib/helper/store'
 import { useRestaurants } from '#/lib/store/store/restaurants/restaurants.store'
 
 export default function StoreList() {
   const { getFilteredStores, isLoading } = useStoreFront()
-  const {restaurants  } = useRestaurants()
-
- 
+  const { restaurants } = useRestaurants()
 
   if (isLoading) {
     return <StoreListSkeleton />

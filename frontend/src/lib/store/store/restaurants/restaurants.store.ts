@@ -43,6 +43,7 @@ export const useRestaurants = () => {
   } = useRestaurantsStore()
 
   const restaurants = useMemo(() => {
+    
     let result = [...mockRestaurants] as Restaurant[]
 
     if (filters.search) {
