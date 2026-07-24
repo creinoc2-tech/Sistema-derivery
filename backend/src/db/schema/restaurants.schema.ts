@@ -8,6 +8,8 @@ export const restaurants = pgTable("restaurants", {
   ownerId: text("owner_id").notNull().references(() => users.id),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
+  description: text("description"),
+  imageUrl: text("image_url"),
   status: approvalStatusEnum("status").notNull().default("pending"),
   stripeAccountId: text("stripe_account_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

@@ -7,6 +7,8 @@ export const createRestaurantSchema = z.object({
     .min(2)
     .max(100)
     .regex(/^[a-z0-9-]+$/, "Solo minúsculas, números y guiones"),
+  description: z.string().max(500).optional(),
+  imageUrl: z.string().url().optional(),
 });
 
 export const updateRestaurantSchema = createRestaurantSchema.partial();
@@ -16,7 +18,7 @@ export const approveRestaurantSchema = z.object({
 });
 
 export const restaurantParamsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
 });
 
 export type CreateRestaurantInput = z.infer<typeof createRestaurantSchema>;

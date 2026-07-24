@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createProductSchema = z.object({
-  categoryId: z.string().uuid(),
+  categoryId: z.string(),
   name: z.string().min(2).max(100),
   slug: z.string()
     .min(2)
@@ -9,7 +9,7 @@ export const createProductSchema = z.object({
     .regex(/^[a-z0-9-]+$/, "Solo minúsculas, números y guiones"),
   description: z.string().max(500).optional(),
   price: z.coerce.number().positive().multipleOf(0.01),
-  imageUrl: z.string().url().optional(),
+  imageUrl: z.array(z.string().url()).default([]),
 });
 
 export const updateProductSchema = createProductSchema.partial();
@@ -19,11 +19,11 @@ export const toggleAvailabilitySchema = z.object({
 });
 
 export const productParamsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
 });
 
  export const listProductsQuerySchema = z.object({
-  categoryId: z.string().uuid().optional(),
+  categoryId: z.string().optional(),
   isAvailable: z
     .preprocess((val) => {
       if (val === "true") return true;

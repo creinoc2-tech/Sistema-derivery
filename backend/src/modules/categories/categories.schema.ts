@@ -7,13 +7,15 @@ export const createCategorySchema = z.object({
     .min(2)
     .max(50)
     .regex(/^[a-z0-9-]+$/, "Solo minúsculas, números y guiones"),
+  description: z.string().max(300).optional(),
+  imageUrl: z.string().url().optional(),
   sortOrder: z.number().int().min(0).default(0),
 });
 
 export const updateCategorySchema = createCategorySchema.partial();
 
 export const categoryParamsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
 });
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;

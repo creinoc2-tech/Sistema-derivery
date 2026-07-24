@@ -1,5 +1,5 @@
 // db/schema/products.schema.ts (antes menu.schema.ts)
-import { pgTable, text, timestamp, integer, boolean, numeric } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, numeric, json } from "drizzle-orm/pg-core";
 import { restaurants } from "./restaurants.schema";
 import { categories } from "./categories.schema";
 
@@ -11,7 +11,7 @@ export const products = pgTable("products", {
   slug: text("slug").notNull(),
   description: text("description"),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
-  imageUrl: text("image_url"),
+  imageUrl: json("image_url").$type<string[]>().default([]),
   isAvailable: boolean("is_available").notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
