@@ -1,13 +1,12 @@
-import ProfileTemplate from '#/components/templat/store/accounts/profile/profile-template'
 import { useUser } from '@clerk/react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
-export const Route = createFileRoute('/_layout/profile')({
-  component: RouteComponent,
+export const Route = createFileRoute('/_layout/_protected/protected')({
+  component: ProtectedLayout,
 })
 
-function RouteComponent() {
+function ProtectedLayout() {
   const { isSignedIn, isLoaded } = useUser()
   const navigate = useNavigate()
 
@@ -20,5 +19,5 @@ function RouteComponent() {
   if (!isLoaded) return null
   if (!isSignedIn) return null
 
-  return <ProfileTemplate />
+  return <Outlet />
 }
