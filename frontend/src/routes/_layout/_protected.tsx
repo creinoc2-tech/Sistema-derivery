@@ -2,7 +2,7 @@ import { useUser } from '@clerk/react'
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
-export const Route = createFileRoute('/_layout/_protected/protected')({
+export const Route = createFileRoute('/_layout/_protected')({
   component: ProtectedLayout,
 })
 
