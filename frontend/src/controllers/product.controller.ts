@@ -19,6 +19,10 @@ export class ProductController {
     return this.productService.getOne(restaurantId, id)
   }
 
+  async listAll() : Promise<ProductModel[] | null> {
+    return this.productService.listAll()
+  }
+
   async update(restaurantId: string, id: string, payload: Partial<ProductModel>) {
     return this.productService.update(restaurantId, id, payload)
   }

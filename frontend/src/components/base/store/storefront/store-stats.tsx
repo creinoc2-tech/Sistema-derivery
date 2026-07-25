@@ -37,8 +37,8 @@ export function StoreStats({ restaurant, className }: StoreStatsProps) {
               <stat.icon className="size-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-bold text-lg leading-none">{stat.value}</p>
               <p className="text-muted-foreground text-sm">{stat.label}</p>
+              <p className="font-bold text-lg leading-none">{stat.value}</p>
             </div>
           </div>
         ))}

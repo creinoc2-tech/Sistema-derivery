@@ -32,7 +32,9 @@ export default function ProductGrid({
           : 'flex flex-col',
       )}
     >
+       
       {products.map((product) => (
+        console.log('product', product),
         <ProductCard
           key={product.id}
           product={product}

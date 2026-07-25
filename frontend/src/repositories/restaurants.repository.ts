@@ -19,7 +19,7 @@ export class RestaurantsRepository {
   }
 
   async getBySlug(slug: string) {
-    return httpClient.get<RestaurantModel>(`/restaurants/${slug}`)
+    return httpClient.get<RestaurantModel>(`/restaurants/slug/${slug}`)
   }
 
   async update(id: string, payload: Partial<RestaurantModel>) {

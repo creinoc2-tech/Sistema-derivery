@@ -101,9 +101,7 @@ export default function StoreCard({ store, className }: StoreCardProps) {
 
         {/* Footer */}
         <div className="flex items-center justify-between gap-3 border-muted border-t pt-5">
-          <span className="text-muted-foreground text-xs truncate">
-            ID: {store.slug}
-          </span>
+          
           <Button size="sm" className="shrink-0" asChild>
             <Link to="/store/$slug" params={{ slug: store.slug }}>
               Ver restaurante

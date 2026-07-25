@@ -53,4 +53,8 @@ export class ProductRepository {
       `/restaurants/${restaurantId}/products/${id}`,
     )
   }
+
+  async listAll() : Promise<ProductModel[] | null> {
+    return httpClient.get<ProductModel[]>(`/products/all`)
+  }
 }

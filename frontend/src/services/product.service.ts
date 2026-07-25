@@ -18,6 +18,10 @@ export class ProductService {
     return this.productRepository.getOne(restaurantId, id)
   }
 
+  async listAll() : Promise<ProductModel[] | null> {
+    return this.productRepository.listAll()
+  }
+
   async update(restaurantId: string, id: string, payload: Partial<ProductModel>) {
     return this.productRepository.update(restaurantId, id, payload)
   }

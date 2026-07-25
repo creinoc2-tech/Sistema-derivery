@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { FilterStates, Productos } from './product.store.interface'
-import { mockProducts } from '#/components/ui/data/products.mock'
+ import { ProductController } from '#/controllers/product.controller'
+
+const productoController = new ProductController()
 
 const initialState: FilterStates = {
   search: '',
@@ -14,6 +16,7 @@ const initialState: FilterStates = {
 export const useProductFilter = () => {
   const [filters, setFilters] = useState<FilterStates>(initialState)
   const [isPending, setIsPending] = useState(false)
+  const [allProducts, setAllProducts] = useState<Productos[]>([])
 
   const updateFilter = (
     key: keyof FilterStates,
@@ -24,8 +27,17 @@ export const useProductFilter = () => {
     setTimeout(() => setIsPending(false), 300)
   }
 
+
+   useEffect(() => {
+      setIsPending(true)
+      productoController.listAll()
+        .then((data) => setAllProducts(data as Productos[]))
+        .finally(() => setIsPending(false))
+    }, [])
+ 
   const filteredProducts = useMemo(() => {
-    let result = [...mockProducts] as Productos[]
+    
+    let result = [...allProducts] as Productos[]
 
     if (filters.categoryId) {
       result = result.filter((p) => p.categoryId === filters.categoryId)
