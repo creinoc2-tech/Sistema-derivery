@@ -22,7 +22,7 @@ export const restaurantsHandlers = {
 
    async getBySlug(c: Context) {
     const { slug } = c.req.valid("param" as never);
-    const restaurant = await restaurantsService.findBySlug(slug);
+     const restaurant = await restaurantsService.findBySlug(slug);
     return c.json(restaurant);
   } ,
 

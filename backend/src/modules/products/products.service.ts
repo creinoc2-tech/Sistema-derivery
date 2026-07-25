@@ -79,4 +79,8 @@ export const productsService = {
 
     return productsRepository.delete(id);
   },
+
+    listAll() {
+    return   productsRepository.findAll();
+  },
 };

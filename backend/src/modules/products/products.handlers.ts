@@ -16,6 +16,11 @@ export const productsHandlers = {
     return c.json(list);
   },
 
+  async listAll(c: Context) {
+    const list = await productsService.listAll();
+    return c.json(list);
+  },
+
   async get(c: Context) {
     const { id } = c.req.valid("param" as never);
     const product = await productsService.findById(id);
@@ -32,7 +37,11 @@ export const productsHandlers = {
   async toggleAvailability(c: Context) {
     const { restaurantId, id } = c.req.param()!;
     const { isAvailable } = c.req.valid("json" as never) as any;
-    const product = await productsService.toggleAvailability(id!, restaurantId!, isAvailable);
+    const product = await productsService.toggleAvailability(
+      id!,
+      restaurantId!,
+      isAvailable,
+    );
     return c.json(product);
   },
 

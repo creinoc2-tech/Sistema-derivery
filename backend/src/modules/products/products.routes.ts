@@ -13,6 +13,7 @@ const products = new Hono();
 
 products.post("/", zValidator("json", createProductSchema), productsHandlers.create);
 products.get("/", zValidator("query", listProductsQuerySchema), productsHandlers.list);
+products.get("/all", productsHandlers.listAll);
 products.get("/:id", zValidator("param", productParamsSchema), productsHandlers.get);
 products.patch("/:id", zValidator("param", productParamsSchema), zValidator("json", updateProductSchema), productsHandlers.update);
 products.patch("/:id/availability", zValidator("param", productParamsSchema), zValidator("json", toggleAvailabilitySchema), productsHandlers.toggleAvailability);

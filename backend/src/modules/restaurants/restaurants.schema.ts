@@ -20,6 +20,9 @@ export const approveRestaurantSchema = z.object({
 export const restaurantParamsSchema = z.object({
   id: z.string(),
 });
+export const restaurantSlugParamsSchema = z.object({
+  slug: z.string(),
+});
 
 export type CreateRestaurantInput = z.infer<typeof createRestaurantSchema>;
 export type UpdateRestaurantInput = z.infer<typeof updateRestaurantSchema>;

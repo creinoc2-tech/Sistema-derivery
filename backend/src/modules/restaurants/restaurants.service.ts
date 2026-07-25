@@ -9,6 +9,7 @@ export const restaurantsService = {
   async create(ownerId: string, input: CreateRestaurantInput) {
     const existing = await restaurantsRepository.findBySlug(input.slug);
 
+
     if (existing) throw new AppError("SLUG_ALREADY_EXISTS", 409);
 
     const [restaurant] = await restaurantsRepository.create({
@@ -24,9 +25,9 @@ export const restaurantsService = {
 
   async findBySlug(slug: string) {
     const restaurant = await restaurantsRepository.findBySlug(slug);
-    if (!restaurant) throw new AppError("RESTAURANT_NOT_FOUND", 404);
+    //if (!restaurant) throw new AppError(slug + " RESTAURANT_NOT_FOUND", 404);
     return restaurant;
-  } ,
+  },
 
   async findById(id: string) {
     const restaurant = await restaurantsRepository.findById(id);

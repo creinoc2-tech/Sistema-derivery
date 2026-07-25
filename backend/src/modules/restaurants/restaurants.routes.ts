@@ -6,6 +6,7 @@ import {
   updateRestaurantSchema,
   approveRestaurantSchema,
   restaurantParamsSchema,
+  restaurantSlugParamsSchema,
 } from "./restaurants.schema";
 
 const restaurants = new Hono();
@@ -22,8 +23,8 @@ restaurants.get(
   restaurantsHandlers.get,
 );
 restaurants.get(
-  "/:slug",
-  zValidator("param", restaurantParamsSchema),
+  "/slug/:slug",
+  zValidator("param", restaurantSlugParamsSchema),
   restaurantsHandlers.getBySlug,
 );
 

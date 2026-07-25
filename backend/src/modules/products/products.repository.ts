@@ -39,6 +39,10 @@ export const productsRepository = {
       .then((rows) => rows[0]);
   },
 
+  findAll() {
+    return db.select().from(products);
+  },
+
   findBySlugAndRestaurant(slug: string, restaurantId: string) {
     return db
       .select()
