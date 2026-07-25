@@ -22,6 +22,12 @@ export const restaurantsService = {
     return restaurantsRepository.findAll();
   },
 
+  async findBySlug(slug: string) {
+    const restaurant = await restaurantsRepository.findBySlug(slug);
+    if (!restaurant) throw new AppError("RESTAURANT_NOT_FOUND", 404);
+    return restaurant;
+  } ,
+
   async findById(id: string) {
     const restaurant = await restaurantsRepository.findById(id);
     if (!restaurant) throw new AppError("RESTAURANT_NOT_FOUND", 404);

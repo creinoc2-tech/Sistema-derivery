@@ -1,36 +1,37 @@
-// restaurants.store.ts
 import { create } from 'zustand'
-import { useMemo } from 'react'
-import type { Restaurant, RestaurantFilters } from './restaurants.store.interface'
-import { mockRestaurants } from '#/components/ui/data/restaurant.mocks'
+import { useEffect, useMemo, useState } from 'react'
+import type {
+  Restaurant,
+  RestaurantFilters,
+} from './restaurants.store.interface'
+import { RestaurantsController } from '#/controllers/restaurants.controller'
+
+const restaurantsController = new RestaurantsController()
 
 const initialFilters: RestaurantFilters = {
   search: '',
   sortBy: 'newest',
   id: null,
- }
+}
 
 interface RestaurantsStore {
   filters: RestaurantFilters
-  currentRestaurant: Restaurant | null       // ← agregar
+  currentRestaurant: Restaurant | null
   updateFilter: (key: keyof RestaurantFilters, value: string) => void
   clearFilters: () => void
-  setCurrentRestaurant: (slug: string) => void  // ← agregar
+  setCurrentRestaurant: (restaurant: Restaurant | null) => void
 }
 
 const useRestaurantsStore = create<RestaurantsStore>((set) => ({
   filters: initialFilters,
-  currentRestaurant: null,                   // ← agregar
+  currentRestaurant: null,
 
   updateFilter: (key, value) =>
     set((state) => ({ filters: { ...state.filters, [key]: value } })),
 
   clearFilters: () => set({ filters: initialFilters }),
 
-  setCurrentRestaurant: (slug) => {          // ← agregar
-    const found = mockRestaurants.find((r) => r.slug === slug) ?? null
-    set({ currentRestaurant: found })
-  },
+  setCurrentRestaurant: (restaurant) => set({ currentRestaurant: restaurant }),
 }))
 
 export const useRestaurants = () => {
@@ -42,9 +43,19 @@ export const useRestaurants = () => {
     setCurrentRestaurant,
   } = useRestaurantsStore()
 
+  const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([])
+  const [isPending, setIsPending] = useState(false)
+
+  useEffect(() => {
+    setIsPending(true)
+    restaurantsController
+      .list()
+      .then((data) => setAllRestaurants(data as Restaurant[]))
+      .finally(() => setIsPending(false))
+  }, [])
+
   const restaurants = useMemo(() => {
-    
-    let result = [...mockRestaurants] as Restaurant[]
+    let result = [...allRestaurants]
 
     if (filters.search) {
       const query = filters.search.toLowerCase()
@@ -71,7 +82,14 @@ export const useRestaurants = () => {
     }
 
     return result
-  }, [filters.search, filters.sortBy, filters.id])
+  }, [allRestaurants, filters.search, filters.sortBy, filters.id])
+
+  // busca por slug SOBRE los datos ya traídos por list() — no llama a getOne
+  const getRestaurantBySlug = (slug: string) => {
+    const found = allRestaurants.find((r) => r.slug === slug) ?? null
+    setCurrentRestaurant(found)
+    return found
+  }
 
   return {
     filters,
@@ -79,7 +97,8 @@ export const useRestaurants = () => {
     clearFilters,
     restaurants,
     totalRestaurants: restaurants.length,
-    currentRestaurant,           // ← exponer
-    setCurrentRestaurant,        // ← exponer
+    currentRestaurant,
+    getRestaurantBySlug,
+    isPending,
   }
 }

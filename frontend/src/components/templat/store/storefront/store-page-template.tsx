@@ -15,14 +15,16 @@ import { StoreAbout } from '#/components/containers/store/storefront/store-about
 import { StoreReviews } from '#/components/containers/store/storefront/store-reviews'
 import { useRestaurants } from '#/lib/store/store/restaurants/restaurants.store'
 import { mockRestaurants } from '#/components/ui/data/restaurant.mocks'
+import { RestaurantsController } from '#/controllers/restaurants.controller'
+import type { RestaurantModel } from '#/model/restaurants.model'
 
 interface StorePageTemplateProps {
-  slug: string
+  restaurant : RestaurantModel | null
 }
 
-export default function StorePageTemplate({ slug }: StorePageTemplateProps) {
-  const restaurant = mockRestaurants.find((r) => r.slug === slug)
-
+export default async function StorePageTemplate({
+  restaurant,
+}: StorePageTemplateProps) {
   {
     /* if (!restaurant) {
     return (

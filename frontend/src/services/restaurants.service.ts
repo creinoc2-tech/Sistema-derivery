@@ -19,6 +19,10 @@ export class RestaurantsService {
     return this.restaurantsRepository.getOne(id)
   }
 
+  async getBySlug(slug: string) {
+    return this.restaurantsRepository.getBySlug(slug)
+  }
+
   async update(id: string, payload: Partial<RestaurantModel>) {
     return this.restaurantsRepository.update(id, payload)
   }

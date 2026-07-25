@@ -10,12 +10,16 @@ export class RestaurantsController {
     return this.restaurantsService.createOne(payload)
   }
 
-  async list() {
+  async list()  : Promise<RestaurantModel[] | null> {
     return this.restaurantsService.list()
   }
 
-  async getOne(id: string) {
+  async getOne(id: string) : Promise<RestaurantModel | null> {
     return this.restaurantsService.getOne(id)
+  }
+
+  async getBySlug(slug: string) : Promise<RestaurantModel | null> {
+    return this.restaurantsService.getBySlug(slug)
   }
 
   async update(id: string, payload: Partial<RestaurantModel>) {
