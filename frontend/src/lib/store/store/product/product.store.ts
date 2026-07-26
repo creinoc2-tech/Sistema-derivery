@@ -32,16 +32,16 @@ export const useProductFilter = () => {
       setIsPending(true)
       productoController.listAll()
         .then((data) => setAllProducts(data as Productos[]))
-        .finally(() => setIsPending(false))
+        .finally(() => setIsPending(false)) 
     }, [])
  
   const filteredProducts = useMemo(() => {
     
-    let result = [...allProducts] as Productos[]
+    let result = [...allProducts] as Productos[] 
 
     if (filters.categoryId) {
       result = result.filter((p) => p.categoryId === filters.categoryId)
-    }
+    } 
 
     if (filters.availability !== 'all') {
       result = result.filter(
