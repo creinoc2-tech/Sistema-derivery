@@ -26,4 +26,5 @@ export interface FilterStates {
   availability: 'all' | 'available' | 'unavailable'
   priceRange: [number, number]
   rating: number | null
+  
 }

@@ -11,6 +11,7 @@ const initialState: FilterStates = {
   availability: 'all',
   priceRange: [0, 100],
   rating: null,
+  
 }
 
 export const useProductFilter = () => {

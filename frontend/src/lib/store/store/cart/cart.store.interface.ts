@@ -1,5 +1,3 @@
-
-
 export interface CartItems {
   id: string
   productId: string
@@ -10,7 +8,7 @@ export interface CartItems {
 }
 
 export interface CartStates {
-  restaurantId: string | null    
+  restaurantId: string | null
   items: CartItems[]
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
@@ -19,14 +17,15 @@ export interface CartStates {
 
   totalItems: number
   subtotal: number
-  deliveryFee: number             
-  deliveryAddressId: string | null  
+  deliveryFee: number
+  deliveryAddressId: string | null
 
   addItem: (item: Omit<CartItems, 'id'>, restaurantId: string) => void
   removeItem: (id: string) => void
-  updateQuantity: (id: string, quantity: number) => void
-  clearCart: () => void
+   clearCart: () => void
   toggleOpen: () => void
   setDeliveryFee: (fee: number) => void
   setDeliveryAddressId: (addressId: string | null) => void
+   increment: (id: string) => void
+  decrement: (id: string) => void
 }

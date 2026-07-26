@@ -31,7 +31,9 @@ export const useCartStores = create<CartStates>()(
             ? []
             : get().items
 
-        const existingItem = currentItems.find((i) => i.productId === item.productId)
+        const existingItem = currentItems.find(
+          (i) => i.productId === item.productId,
+        )
         let newItems: CartItems[]
 
         if (existingItem) {
@@ -61,10 +63,18 @@ export const useCartStores = create<CartStates>()(
         })
       },
 
-      updateQuantity: (id, quantity) => {
-        if (quantity < 1) return
+      increment: (id) => {
         const newItems = get().items.map((i) =>
-          i.id === id ? { ...i, quantity } : i,
+          i.id === id ? { ...i, quantity: i.quantity + 1 } : i,
+        )
+        set({ items: newItems, ...calculateTotals(newItems) })
+      },
+
+      decrement: (id) => {
+        const newItems = get().items.map((i) =>
+          i.id === id && i.quantity > 1
+            ? { ...i, quantity: i.quantity - 1 }
+            : i,
         )
         set({ items: newItems, ...calculateTotals(newItems) })
       },
@@ -77,11 +87,15 @@ export const useCartStores = create<CartStates>()(
       toggleOpen: () => set({ isOpen: !get().isOpen }),
 
       setDeliveryFee: (fee) => set({ deliveryFee: fee }),
-      setDeliveryAddressId: (addressId) => set({ deliveryAddressId: addressId }),
+      setDeliveryAddressId: (addressId) =>
+        set({ deliveryAddressId: addressId }),
     }),
     {
       name: 'carts-storage',
-      partialize: (state) => ({ items: state.items, restaurantId: state.restaurantId }),
+      partialize: (state) => ({
+        items: state.items,
+        restaurantId: state.restaurantId,
+      }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           const { totalItems, subtotal } = calculateTotals(state.items)

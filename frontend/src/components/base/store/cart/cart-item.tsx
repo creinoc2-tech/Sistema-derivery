@@ -1,9 +1,9 @@
 import { Button } from '#/components/ui/button'
- 
+
 import { cn } from '#/lib/utils'
 import { Trash2 } from 'lucide-react'
 import { QuantitySelector } from '../../products/details/quantity-selector'
- import type { CartItems } from '#/lib/store/store/cart/cart.store.interface'
+import type { CartItems } from '#/lib/store/store/cart/cart.store.interface'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
  interface CartItemProps {
   item: CartItems
@@ -11,8 +11,8 @@ import { useCartStores } from '#/lib/store/store/cart/cart.store'
 }
 
 export default function CartItem({ item, isCompact = false }: CartItemProps) {
-  const { updateQuantity, removeItem } = useCartStores()
-  return (
+  const { removeItem , increment, decrement } = useCartStores()
+   return (
     <div
       className={`flex gap-4 py-4 ${isCompact ? 'items-start' : 'items-center'} `}
     >
@@ -32,13 +32,6 @@ export default function CartItem({ item, isCompact = false }: CartItemProps) {
         <div className="flex justify-between gap-2">
           <div className="space-y-1">
             <h4 className="font-medium leading-none">{item.name}</h4>
-            { /* (item.size || item.color) && (
-              <p className="text-muted-foreground text-sm">
-                {item.size && `Size: ${item.size}`}
-                {item.size && item.color && ' | '}
-                {item.color && `Color: ${item.color}`}
-              </p>
-            ) */}
           </div>
           {!isCompact && (
             <Button
@@ -58,8 +51,9 @@ export default function CartItem({ item, isCompact = false }: CartItemProps) {
             <div className="flex items-center gap-2">
               <QuantitySelector
                 value={item.quantity}
-                onChange={(value) => updateQuantity(item.id, value)}
-                 className="@7xl:h-9"
+                increment={() => increment(item.id)}
+                decrement={() => decrement(item.id)}
+                className="@7xl:h-9"
                 size="sm"
               />
               {isCompact && (

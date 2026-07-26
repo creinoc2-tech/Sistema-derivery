@@ -14,7 +14,7 @@ import { useCartStores } from '#/lib/store/store/cart/cart.store'
 
 export default function CartSheet() {
   const { isOpen, setIsOpen, totalItems, items, subtotal } = useCartStores()
-
+ 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent className="flex w-full flex-col sm:max-w-lg">

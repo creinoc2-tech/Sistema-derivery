@@ -19,11 +19,11 @@ export default function ProductMainSection({
   product,
 }: ProductMainSectionProps) {
   const [quantity, setQuantity] = useState(1)
-  const { addItem } = useCartStores()
+  const { addItem  , increment, decrement   } = useCartStores()
 
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [isCompareListed, setIsCompareListed] = useState(false)
-
+  
   const handleAddToCart = () => {
     try {
       addItem(
@@ -31,7 +31,7 @@ export default function ProductMainSection({
           productId: product.id,
           name: product.name,
           price: Number(product.price),
-          quantity: 1,
+          quantity: quantity,
           imageUrl: product.imageUrl[0] ?? '',
         },
         product.restaurantId,
@@ -88,7 +88,8 @@ export default function ProductMainSection({
             <div className="flex items-center gap-4">
               <QuantitySelector
                 value={quantity}
-                onChange={setQuantity}
+                increment={() => increment(product.id)}
+                decrement={() => decrement(product.id)}
                 max={10}
                 disabled={!product.isAvailable}
               />

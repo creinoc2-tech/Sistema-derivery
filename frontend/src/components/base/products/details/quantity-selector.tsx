@@ -1,14 +1,15 @@
-import { cn } from "#/lib/utils"
-import { Minus, Plus } from "lucide-react";
+import { cn } from '#/lib/utils'
+import { Minus, Plus } from 'lucide-react'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from '@/components/ui/input-group'
 interface QuantitySelectorProps {
   value: number
-  onChange: (value: number) => void
+  increment: () => void
+  decrement: () => void
   min?: number
   max?: number
   disabled?: boolean
@@ -17,7 +18,8 @@ interface QuantitySelectorProps {
 }
 export function QuantitySelector({
   value,
-  onChange,
+  increment,
+  decrement,
   min = 1,
   max = 99,
   disabled = false,
@@ -27,22 +29,27 @@ export function QuantitySelector({
   const buttonSize = size === 'sm' ? 'icon-xs' : 'icon-sm'
   const containerHeight = size === 'sm' ? 'h-8' : 'h-10'
   const iconSize = size === 'sm' ? 'h-3 w-3' : 'h-4 w-4'
+ 
 
   const handleIncrement = () => {
     if (value < max) {
-      onChange(value + 1)
+      increment()
     }
   }
 
   const handleDecrement = () => {
     if (value > min) {
-      onChange(value - 1)
+      decrement()
     }
   }
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value, 10)
     if (!Number.isNaN(newValue) && newValue >= min && newValue <= max) {
-      onChange(newValue)
+      if (newValue > value) {
+        increment()
+      } else if (newValue < value) {
+        decrement()
+      }
     }
   }
 
@@ -59,6 +66,7 @@ export function QuantitySelector({
           <Minus className={iconSize} />
         </InputGroupButton>
       </InputGroupAddon>
+
       <InputGroupInput
         type="number"
         value={value}
@@ -72,6 +80,7 @@ export function QuantitySelector({
         disabled={disabled}
         aria-label="Quantity"
       />
+
       <InputGroupAddon align="inline-end">
         <InputGroupButton
           variant="default"
