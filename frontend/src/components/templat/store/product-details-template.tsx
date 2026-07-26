@@ -24,9 +24,10 @@ export default function ProductDetailsTemplate({
       <ProductBreadcrumb items={breadcrumbs} />
 
       <div className="space-y-16">
+        
         <ProductMainSection product={product} />
         <ProductDetailsTabs product={product} />
-        <SimilarProductsSection products={similarProducts} />
+        {/* <SimilarProductsSection products={similarProducts} /> */}
       </div>
     </div>
   )

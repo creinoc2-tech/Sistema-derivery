@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "rating" numeric(2, 1) DEFAULT '5.0';

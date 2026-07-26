@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FilterStates, Productos } from './product.store.interface'
- import { ProductController } from '#/controllers/product.controller'
+import { ProductController } from '#/controllers/product.controller'
 
 const productoController = new ProductController()
 
@@ -27,21 +27,19 @@ export const useProductFilter = () => {
     setTimeout(() => setIsPending(false), 300)
   }
 
+  useEffect(() => {
+    productoController
+      .listAll()
+      .then((data) => setAllProducts(data as Productos[]))
+      .finally(() => setIsPending(false))
+  }, [])
 
-   useEffect(() => {
-      setIsPending(true)
-      productoController.listAll()
-        .then((data) => setAllProducts(data as Productos[]))
-        .finally(() => setIsPending(false)) 
-    }, [])
- 
   const filteredProducts = useMemo(() => {
-    
-    let result = [...allProducts] as Productos[] 
+    let result = [...allProducts]
 
     if (filters.categoryId) {
       result = result.filter((p) => p.categoryId === filters.categoryId)
-    } 
+    }
 
     if (filters.availability !== 'all') {
       result = result.filter(
@@ -88,7 +86,16 @@ export const useProductFilter = () => {
     }
 
     return result
-  }, [filters])
+  }, [
+    filters,
+    allProducts,
+    filters.categoryId,
+    filters.availability,
+    filters.rating,
+    filters.search,
+    filters.priceRange,
+    filters.sort,
+  ])
 
   const clearAllFilters = () => setFilters(initialState)
 

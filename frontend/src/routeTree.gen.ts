@@ -24,7 +24,7 @@ import { Route as LayoutProductIndexRouteImport } from './routes/_layout/product
 import { Route as LayoutCategoryIndexRouteImport } from './routes/_layout/category/index'
 import { Route as LayoutStoreOrderConfirmationRouteImport } from './routes/_layout/store/order-confirmation'
 import { Route as LayoutStoreSlugRouteImport } from './routes/_layout/store/$slug'
-import { Route as LayoutProductSlugRouteImport } from './routes/_layout/product/$slug'
+import { Route as LayoutProductIdRouteImport } from './routes/_layout/product/$id'
 import { Route as LayoutCategorySlugRouteImport } from './routes/_layout/category/$slug'
 import { Route as LayoutProtectedProfileRouteImport } from './routes/_layout/_protected/profile'
 
@@ -102,9 +102,9 @@ const LayoutStoreSlugRoute = LayoutStoreSlugRouteImport.update({
   path: '/store/$slug',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutProductSlugRoute = LayoutProductSlugRouteImport.update({
-  id: '/product/$slug',
-  path: '/product/$slug',
+const LayoutProductIdRoute = LayoutProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutCategorySlugRoute = LayoutCategorySlugRouteImport.update({
@@ -129,7 +129,7 @@ export interface FileRoutesByFullPath {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/profile': typeof LayoutProtectedProfileRoute
   '/category/$slug': typeof LayoutCategorySlugRoute
-  '/product/$slug': typeof LayoutProductSlugRoute
+  '/product/$id': typeof LayoutProductIdRoute
   '/store/$slug': typeof LayoutStoreSlugRoute
   '/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
   '/category/': typeof LayoutCategoryIndexRoute
@@ -147,7 +147,7 @@ export interface FileRoutesByTo {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/profile': typeof LayoutProtectedProfileRoute
   '/category/$slug': typeof LayoutCategorySlugRoute
-  '/product/$slug': typeof LayoutProductSlugRoute
+  '/product/$id': typeof LayoutProductIdRoute
   '/store/$slug': typeof LayoutStoreSlugRoute
   '/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
   '/category': typeof LayoutCategoryIndexRoute
@@ -168,7 +168,7 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/_protected/profile': typeof LayoutProtectedProfileRoute
   '/_layout/category/$slug': typeof LayoutCategorySlugRoute
-  '/_layout/product/$slug': typeof LayoutProductSlugRoute
+  '/_layout/product/$id': typeof LayoutProductIdRoute
   '/_layout/store/$slug': typeof LayoutStoreSlugRoute
   '/_layout/store/order-confirmation': typeof LayoutStoreOrderConfirmationRoute
   '/_layout/category/': typeof LayoutCategoryIndexRoute
@@ -188,7 +188,7 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/profile'
     | '/category/$slug'
-    | '/product/$slug'
+    | '/product/$id'
     | '/store/$slug'
     | '/store/order-confirmation'
     | '/category/'
@@ -206,7 +206,7 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/profile'
     | '/category/$slug'
-    | '/product/$slug'
+    | '/product/$id'
     | '/store/$slug'
     | '/store/order-confirmation'
     | '/category'
@@ -226,7 +226,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/_protected/profile'
     | '/_layout/category/$slug'
-    | '/_layout/product/$slug'
+    | '/_layout/product/$id'
     | '/_layout/store/$slug'
     | '/_layout/store/order-confirmation'
     | '/_layout/category/'
@@ -347,11 +347,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutStoreSlugRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/product/$slug': {
-      id: '/_layout/product/$slug'
-      path: '/product/$slug'
-      fullPath: '/product/$slug'
-      preLoaderRoute: typeof LayoutProductSlugRouteImport
+    '/_layout/product/$id': {
+      id: '/_layout/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof LayoutProductIdRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/category/$slug': {
@@ -392,7 +392,7 @@ interface LayoutRouteChildren {
   LayoutOrdersRoute: typeof LayoutOrdersRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCategorySlugRoute: typeof LayoutCategorySlugRoute
-  LayoutProductSlugRoute: typeof LayoutProductSlugRoute
+  LayoutProductIdRoute: typeof LayoutProductIdRoute
   LayoutStoreSlugRoute: typeof LayoutStoreSlugRoute
   LayoutStoreOrderConfirmationRoute: typeof LayoutStoreOrderConfirmationRoute
   LayoutCategoryIndexRoute: typeof LayoutCategoryIndexRoute
@@ -409,7 +409,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutOrdersRoute: LayoutOrdersRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCategorySlugRoute: LayoutCategorySlugRoute,
-  LayoutProductSlugRoute: LayoutProductSlugRoute,
+  LayoutProductIdRoute: LayoutProductIdRoute,
   LayoutStoreSlugRoute: LayoutStoreSlugRoute,
   LayoutStoreOrderConfirmationRoute: LayoutStoreOrderConfirmationRoute,
   LayoutCategoryIndexRoute: LayoutCategoryIndexRoute,

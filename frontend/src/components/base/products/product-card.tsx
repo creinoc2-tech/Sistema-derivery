@@ -103,14 +103,14 @@ export default function ProductCard({
           {product.rating !== undefined && (
             <div className="flex items-center gap-1 text-amber-500">
               <Star className="h-3.5 w-3.5 fill-current" />
-              <span className="font-medium text-sm">{product.rating.toFixed(1)}</span>
+              <span className="font-medium text-sm">{product.rating}</span>
             </div>
           )}
         </div>
 
         <Link
-          to="/product/$slug"
-          params={{ slug: product.slug }}
+          to="/product/$id"
+          params={{ id: product.id }}
           className="group/title"
         >
           <h3

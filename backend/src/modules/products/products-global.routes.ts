@@ -6,6 +6,6 @@ import { listProductsQuerySchema, productParamsSchema } from "./products.schema"
 const productsGlobal = new Hono();
 
 productsGlobal.get("/all", productsHandlers.listAll);
-productsGlobal.get("/:id", zValidator("param", productParamsSchema), productsHandlers.get);
+productsGlobal.get("/:slug", zValidator("param", productParamsSchema), productsHandlers.get);
 
 export { productsGlobal as productsGlobalRoutes };

@@ -57,4 +57,9 @@ export class ProductRepository {
   async listAll() : Promise<ProductModel[] | null> {
     return httpClient.get<ProductModel[]>(`/products/all`)
   }
+
+  
+  async getOneProducto(id: string): Promise<ProductModel | null> {
+    return httpClient.get<ProductModel>(`/products/${id}`)
+  }
 }

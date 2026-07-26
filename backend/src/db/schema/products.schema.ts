@@ -10,6 +10,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   slug: text("slug").notNull(),
   description: text("description"),
+  rating: numeric("rating", { precision: 2, scale: 1 }).default("5.0"),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
   imageUrl: json("image_url").$type<string[]>().default([]),
   isAvailable: boolean("is_available").notNull().default(true),

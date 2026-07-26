@@ -10,6 +10,7 @@ export const productsRepository = {
       .values({
         ...data,
         price: data.price.toString(),
+        rating: data.rating?.toString() || "5.0",
         restaurantId,
       })
       .returning();
@@ -54,13 +55,17 @@ export const productsRepository = {
   },
 
   update(id: string, data: Partial<UpdateProductInput>) {
-    const { price, ...rest } = data;
+    const { price, rating, ...rest } = data;
     return db
-      .update(products)
-      .set({ ...rest, ...(price !== undefined && { price: price.toString() }) })
-      .where(eq(products.id, id))
-      .returning();
-  },
+    .update(products)
+    .set({
+      ...rest,
+      ...(price !== undefined && { price: price.toString() }),
+      ...(rating !== undefined && { rating: rating.toString() }),
+    })
+    .where(eq(products.id, id))
+    .returning();
+},
 
   updateAvailability(id: string, isAvailable: boolean) {
     return db

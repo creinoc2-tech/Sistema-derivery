@@ -34,4 +34,9 @@ export class ProductController {
   async delete(restaurantId: string, id: string) {
     return this.productService.delete(restaurantId, id)
   }
+
+   async getOneProducto(id: string): Promise<ProductModel | null> {
+    return this.productService.getOneProducto(id)
+  }
+
 }

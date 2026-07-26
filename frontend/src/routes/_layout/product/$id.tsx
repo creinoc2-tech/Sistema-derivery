@@ -1,12 +1,11 @@
 import ProductDetailsTemplate from '#/components/templat/store/product-details-template'
 import { mockProducts } from '#/components/ui/data/products.mock'
- import { createFileRoute, notFound } from '@tanstack/react-router'
+import { ProductController } from '#/controllers/product.controller'
+import { createFileRoute, notFound } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_layout/product/$slug')({
+export const Route = createFileRoute('/_layout/product/$id')({
   loader: async ({ params }) => {
-    const product = mockProducts.find(
-      (product) => product.slug === params.slug,
-    )
+    const product = await new ProductController().getOneProducto(params.id)
 
     if (!product) {
       throw notFound()
@@ -19,5 +18,6 @@ export const Route = createFileRoute('/_layout/product/$slug')({
 
 function RouteComponent() {
   const { product } = Route.useLoaderData()
+  console.log('Product data loaded:', product) // Debugging log
   return <ProductDetailsTemplate product={product} />
 }
