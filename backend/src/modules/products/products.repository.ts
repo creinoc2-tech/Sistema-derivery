@@ -44,6 +44,14 @@ export const productsRepository = {
     return db.select().from(products);
   },
 
+  findByCategoryId(categoryId: string) {
+    return db
+      .select()
+      .from(products)
+      .where(eq(products.categoryId, categoryId))
+      .then((rows) => rows);
+  },
+
   findBySlugAndRestaurant(slug: string, restaurantId: string) {
     return db
       .select()
@@ -57,15 +65,15 @@ export const productsRepository = {
   update(id: string, data: Partial<UpdateProductInput>) {
     const { price, rating, ...rest } = data;
     return db
-    .update(products)
-    .set({
-      ...rest,
-      ...(price !== undefined && { price: price.toString() }),
-      ...(rating !== undefined && { rating: rating.toString() }),
-    })
-    .where(eq(products.id, id))
-    .returning();
-},
+      .update(products)
+      .set({
+        ...rest,
+        ...(price !== undefined && { price: price.toString() }),
+        ...(rating !== undefined && { rating: rating.toString() }),
+      })
+      .where(eq(products.id, id))
+      .returning();
+  },
 
   updateAvailability(id: string, isAvailable: boolean) {
     return db

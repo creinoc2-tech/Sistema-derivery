@@ -38,5 +38,8 @@ export class ProductController {
    async getOneProducto(id: string): Promise<ProductModel | null> {
     return this.productService.getOneProducto(id)
   }
+  async getByCategoryId(categoryId: string): Promise<ProductModel[] | null> {
+    return this.productService.getByCategoryId(categoryId)
+  }
 
 }

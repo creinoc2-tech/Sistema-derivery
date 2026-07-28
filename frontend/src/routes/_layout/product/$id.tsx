@@ -18,6 +18,5 @@ export const Route = createFileRoute('/_layout/product/$id')({
 
 function RouteComponent() {
   const { product } = Route.useLoaderData()
-  console.log('Product data loaded:', product) // Debugging log
-  return <ProductDetailsTemplate product={product} />
+   return <ProductDetailsTemplate product={product} />
 }

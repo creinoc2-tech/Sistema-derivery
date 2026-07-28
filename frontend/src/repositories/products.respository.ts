@@ -62,4 +62,8 @@ export class ProductRepository {
   async getOneProducto(id: string): Promise<ProductModel | null> {
     return httpClient.get<ProductModel>(`/products/${id}`)
   }
+
+  async getByCategoryId(categoryId: string): Promise<ProductModel[] | null> {
+    return httpClient.get<ProductModel[]>(`/products/category/${categoryId}`)
+  }
 }

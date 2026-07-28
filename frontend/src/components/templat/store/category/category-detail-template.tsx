@@ -2,7 +2,7 @@ import NotFound from '#/components/base/empty/notfound'
 import { Button } from '#/components/ui/button'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeft, Grid3x3, List, ShoppingBag } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,17 +12,27 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
  
-import { mockCategories } from '#/components/ui/data/categories.mock'
-import { mockProducts } from '#/components/ui/data/products.mock'
-import ProductGrid from '#/components/containers/store/product-list/product-grid'
+ import ProductGrid from '#/components/containers/store/product-list/product-grid'
+ import { getSimilarProducts } from '#/lib/mappers/similar-products.mapper'
+ import type { ProductModel } from '#/model/product.model'
 
-export default function CategoryDetailTemplate({ slug }: { slug: string }) {
+interface CategoryDetailTemplateProps {
+   category : any
+}
+
+export default function CategoryDetailTemplate({ category }: CategoryDetailTemplateProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const category = mockCategories.find((c) => c.slug === slug)
-  const categoryProducts = category
-    ? mockProducts.filter((p) => p.categoryId === category.id)
-    : []
 
+
+
+ // dentro del componente
+  const [categoryProducts, setCategoryProducts] = useState<ProductModel[]>([])
+
+
+  useEffect(() => {
+    getSimilarProducts(category.id).then(setCategoryProducts)
+  }, [category.id])
+   
   if (!category) {
     return (
       <div className="@container container mx-auto px-4 py-8">

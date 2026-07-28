@@ -8,6 +8,7 @@ export const createProductSchema = z.object({
     .max(100)
     .regex(/^[a-z0-9-]+$/, "Solo minúsculas, números y guiones"),
   description: z.string().max(500).optional(),
+  isAvailable: z.boolean().optional(),
   price: z.coerce.number().positive().multipleOf(0.01),
   imageUrl: z.array(z.string().url()).default([]),
   rating: z.number().min(0).max(5).optional(),
@@ -22,7 +23,9 @@ export const toggleAvailabilitySchema = z.object({
 export const productParamsSchema = z.object({
   id: z.string(),
 });
-
+export const productCategoryParamsSchema = z.object({
+  categoryId: z.string(),
+});
  export const listProductsQuerySchema = z.object({
   categoryId: z.string().optional(),
   isAvailable: z

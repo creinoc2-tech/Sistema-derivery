@@ -83,4 +83,8 @@ export const productsService = {
     listAll() {
     return   productsRepository.findAll();
   },
+
+   findByCategoryId(categoryId: string) {
+    return productsRepository.findByCategoryId(categoryId);
+  }
 };

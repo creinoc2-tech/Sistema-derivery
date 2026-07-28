@@ -26,6 +26,10 @@ export class ProductService {
     return this.productRepository.listAll()
   }
 
+  async getByCategoryId(categoryId: string): Promise<ProductModel[] | null> {
+    return this.productRepository.getByCategoryId(categoryId)
+  }
+
 
 
   

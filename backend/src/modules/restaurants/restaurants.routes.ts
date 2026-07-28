@@ -17,8 +17,9 @@ restaurants.post(
   restaurantsHandlers.create,
 );
 restaurants.get("/", restaurantsHandlers.list);
-restaurants.get(
-  "/:id",
+
+
+restaurants.get( "/:id",
   zValidator("param", restaurantParamsSchema),
   restaurantsHandlers.get,
 );

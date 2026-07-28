@@ -32,16 +32,13 @@ export function QuantitySelector({
  
 
   const handleIncrement = () => {
-    if (value < max) {
-      increment()
-    }
+     increment()
   }
 
   const handleDecrement = () => {
-    if (value > min) {
+    
       decrement()
-    }
-  }
+   }
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value, 10)
     if (!Number.isNaN(newValue) && newValue >= min && newValue <= max) {

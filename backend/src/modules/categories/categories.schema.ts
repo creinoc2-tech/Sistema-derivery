@@ -18,5 +18,9 @@ export const categoryParamsSchema = z.object({
   id: z.string(),
 });
 
+export const categorySlugSchema = z.object({
+  slug: z.string(),
+});
+
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;

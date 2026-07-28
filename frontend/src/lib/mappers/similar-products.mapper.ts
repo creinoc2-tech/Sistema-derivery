@@ -1,12 +1,9 @@
 // lib/mappers/similar-products.mapper.ts
+import { ProductController } from '#/controllers/product.controller'
 import type { ProductModel } from '#/model/product.model'
+const productController = new ProductController()
 
-export function getSimilarProducts(
-  product: ProductModel,
-  allProducts: ProductModel[],
-  limit = 6,
-): ProductModel[] {
-  return allProducts
-    .filter((p) => p.categoryId === product.categoryId && p.id !== product.id)
-    .slice(0, limit)
+export async function getSimilarProducts(categoryId: string): Promise<ProductModel[]> {
+  const products = await productController.getByCategoryId(categoryId)
+  return products ?? []
 }

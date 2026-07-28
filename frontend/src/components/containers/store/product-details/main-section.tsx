@@ -19,11 +19,11 @@ export default function ProductMainSection({
   product,
 }: ProductMainSectionProps) {
   const [quantity, setQuantity] = useState(1)
-  const { addItem  , increment, decrement   } = useCartStores()
+  const { addItem } = useCartStores()
 
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [isCompareListed, setIsCompareListed] = useState(false)
-  
+
   const handleAddToCart = () => {
     try {
       addItem(
@@ -36,7 +36,7 @@ export default function ProductMainSection({
         },
         product.restaurantId,
       )
-     } catch (error) {
+    } catch (error) {
       console.error('Error adding item to cart:', error)
     }
   }
@@ -88,8 +88,8 @@ export default function ProductMainSection({
             <div className="flex items-center gap-4">
               <QuantitySelector
                 value={quantity}
-                increment={() => increment(product.id)}
-                decrement={() => decrement(product.id)}
+                increment={() => setQuantity((q) => Math.min(q + 1, 10))}
+                decrement={() => setQuantity((q) => Math.max(q - 1, 1))}
                 max={10}
                 disabled={!product.isAvailable}
               />

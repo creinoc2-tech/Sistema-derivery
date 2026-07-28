@@ -72,7 +72,7 @@ export const useCartStores = create<CartStates>()(
 
       decrement: (id) => {
         const newItems = get().items.map((i) =>
-          i.id === id && i.quantity > 1
+          i.id === id 
             ? { ...i, quantity: i.quantity - 1 }
             : i,
         )

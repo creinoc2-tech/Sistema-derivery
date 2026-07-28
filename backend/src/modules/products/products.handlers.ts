@@ -27,6 +27,8 @@ export const productsHandlers = {
     return c.json(product);
   },
 
+ 
+
   async update(c: Context) {
     const { restaurantId, id } = c.req.param();
     const input = c.req.valid("json" as never);
@@ -50,4 +52,10 @@ export const productsHandlers = {
     await productsService.delete(id!, restaurantId!);
     return c.body(null, 204);
   },
+
+   async getByCategoryId(c: Context) {
+    const { categoryId } = c.req.param()!;
+    const products = await productsService.findByCategoryId(categoryId!);
+    return c.json(products);
+  }
 };

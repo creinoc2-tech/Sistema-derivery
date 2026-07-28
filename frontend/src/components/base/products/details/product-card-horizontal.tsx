@@ -14,12 +14,12 @@ export default function ProductCardHorizontal({
 }: ProductCardHorizontalProps) {
   const mainImage = product.imageUrl[0] ?? 'https://placehold.co/300x300'
   const price = Number(product.price)
-  const rating = product.rating ?? 0
+  const rating = product.rating 
 
   return (
     <Link
-      to="/product/$slug"
-      params={{ slug: product.slug }}
+      to="/product/$id"
+      params={{ id: product.id }}
       className={cn(
         'group flex w-full min-w-70 max-w-[320px] flex-col gap-3 rounded-lg border bg-background p-4 transition-all hover:shadow-md',
         className,
@@ -44,7 +44,7 @@ export default function ProductCardHorizontal({
           {product.name}
         </h3>
 
-        {product.rating !== undefined && (
+        {String(product.rating) !== 'undefined' && (
           <div className="flex items-center gap-1">
             <div className="flex text-yellow-400">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -58,7 +58,7 @@ export default function ProductCardHorizontal({
               ))}
             </div>
             <span className="text-muted-foreground text-xs">
-              {rating.toFixed(1)}
+              {rating }
             </span>
           </div>
         )}

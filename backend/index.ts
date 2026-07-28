@@ -7,6 +7,7 @@ import { restaurantsRoutes } from "./src/modules/restaurants/restaurants.routes"
 import { productsRoutes  } from "./src/modules/products/products.routes";
 import { productsGlobalRoutes } from "./src/modules/products/products-global.routes";
 import { corsMiddleware } from "./src/middlewares/cors";
+import { categoriesGlobalRoutes } from "./src/modules/categories/categori-global.routes";
 
 const app = new Hono();
 app.use("*", corsMiddleware);  
@@ -16,6 +17,7 @@ app.route("/restaurants/:restaurantId/categories", categoriesRoutes);
 app.route("/restaurants", restaurantsRoutes);
 app.route("/restaurants/:restaurantId/products", productsRoutes);
 app.route("/products", productsGlobalRoutes);
+app.route("/categories",  categoriesGlobalRoutes);
 
 
 export default {

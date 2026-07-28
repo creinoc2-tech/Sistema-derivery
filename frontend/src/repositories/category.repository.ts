@@ -35,4 +35,13 @@ export class CategoryRepository {
       `/restaurants/${restaurantId}/categories/${id}`,
     )
   }
+
+  async listAll(): Promise<CategoryModel[] | null> {
+    return httpClient.get<CategoryModel[]>(`/categories/all`)
+  }
+
+  async getBySlug(slug: string): Promise<CategoryModel | null> {
+    return httpClient.get<CategoryModel>(`/categories/${slug}`)
+  }
+
 }

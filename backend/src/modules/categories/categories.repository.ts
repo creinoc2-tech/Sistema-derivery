@@ -53,4 +53,17 @@ export const categoriesRepository = {
    delete(id: string) {
     return db.delete(categories).where(eq(categories.id, id));
   },
+
+  findAll() {
+      return db.select().from(categories);
+    },
+
+  findBySlug(slug: string) {
+    return db
+      .select()
+      .from(categories)
+      .where(eq(categories.slug, slug))
+      .then((rows) => rows[0]);
+  },
+  
 };

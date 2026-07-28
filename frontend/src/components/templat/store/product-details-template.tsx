@@ -8,6 +8,7 @@ import { toProductBreadcrumbs } from '#/lib/mappers/product-breadcrumbs.mapper'
 import { getSimilarProducts } from '#/lib/mappers/similar-products.mapper'
 import { useProductFilter } from '#/lib/store/store/product/product.store'
 import type { ProductModel } from '#/model/product.model'
+import { useEffect, useState } from 'react'
 
 interface ProductDetailsTemplateProps {
   product: ProductModel
@@ -18,16 +19,21 @@ export default function ProductDetailsTemplate({
 }: ProductDetailsTemplateProps) {
   const category = mockCategories.find((c) => c.id === product.categoryId)
   const breadcrumbs = toProductBreadcrumbs(product, category)
-  const similarProducts = getSimilarProducts(product, mockProducts)
+  // dentro del componente
+  const [similarProducts, setSimilarProducts] = useState<ProductModel[]>([])
+
+  useEffect(() => {
+    getSimilarProducts(product.categoryId).then(setSimilarProducts)
+  }, [product.id])
+
   return (
     <div className="@container container mx-auto @4xl:px-6 px-4 @5xl:py-12 py-8">
       <ProductBreadcrumb items={breadcrumbs} />
 
       <div className="space-y-16">
-        
         <ProductMainSection product={product} />
         <ProductDetailsTabs product={product} />
-        {/* <SimilarProductsSection products={similarProducts} /> */}
+        <SimilarProductsSection products={similarProducts} />
       </div>
     </div>
   )

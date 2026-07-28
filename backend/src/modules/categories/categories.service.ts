@@ -43,4 +43,14 @@ export const categoriesService = {
 
     return categoriesRepository.delete(id);
   },
+
+  listAll() {
+    return categoriesRepository.findAll();
+  },
+
+  async findBySlug(slug: string) {
+    const category = await categoriesRepository.findBySlug(slug);
+    if (!category) throw new AppError("CATEGORY_NOT_FOUND", 404);
+    return category;
+  }
 };

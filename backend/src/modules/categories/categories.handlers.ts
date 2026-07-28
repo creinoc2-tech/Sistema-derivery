@@ -3,7 +3,7 @@ import { categoriesService } from "./categories.service";
 
 export const categoriesHandlers = {
   async create(c: Context) {
-  const { restaurantId } = c.req.param();
+    const { restaurantId } = c.req.param();
     const input = c.req.valid("json" as never);
     const category = await categoriesService.create(restaurantId!, input);
     return c.json(category, 201);
@@ -15,9 +15,17 @@ export const categoriesHandlers = {
     return c.json(list);
   },
 
-    async get(c: Context) {
+  async get(c: Context) {
     const { id } = c.req.valid("param" as never);
     const category = await categoriesService.findById(id);
+    if (!category) return c.json({ error: "CATEGORY_NOT_FOUND" }, 404);
+    return c.json(category);
+  },
+
+
+  async getBySlug(c: Context) {
+    const { slug } = c.req.valid("param" as never);
+    const category = await categoriesService.findBySlug(slug);
     if (!category) return c.json({ error: "CATEGORY_NOT_FOUND" }, 404);
     return c.json(category);
   },
@@ -35,5 +43,10 @@ export const categoriesHandlers = {
     const { id } = c.req.valid("param" as never);
     await categoriesService.delete(id, restaurantId!);
     return c.body(null, 204);
+  },
+
+  async listAll(c: Context) {
+    const list = await categoriesService.listAll();
+    return c.json(list);
   },
 };

@@ -25,4 +25,12 @@ export class CategoryController {
   async delete(restaurantId: string, id: string) {
     return this.categoryService.delete(restaurantId, id)
   }
+
+  async listAll(): Promise<CategoryModel[] | null> {
+    return this.categoryService.listAll()
+  }
+
+  async getBySlug(slug: string): Promise<CategoryModel | null> {
+    return this.categoryService.getBySlug(slug)
+  }
 }

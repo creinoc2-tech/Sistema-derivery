@@ -2,6 +2,7 @@ import SearchBar from '#/components/base/products/searchbar'
 import SortDropdown from '#/components/base/products/sort-dropdown'
 import ProductGrid from '#/components/containers/store/product-list/product-grid'
 import { mockCategories } from '#/components/ui/data/categories.mock'
+import { useCategories } from '#/lib/store/store/categories/categories.store'
 import { useProductFilter } from '#/lib/store/store/product/product.store'
 import FilterSidebar from './filter-sidebar'
 import MobileFilterDrawer from './mobile-filter-drawer'
@@ -14,7 +15,10 @@ export default function ProductListingTemplate() {
     isPending: isProductPending,
     totalProducts: totalProductCount,
   } = useProductFilter()
-  return (
+  
+    const {categories: allCategories} =  useCategories()
+
+   return (
     <div className="@container container mx-auto px-4 py-8">
       <div className="flex flex-col gap-6">
         {/* Header Section */}
@@ -29,7 +33,7 @@ export default function ProductListingTemplate() {
               filters={productFilter}
               updateFilter={updateProductFilter}
               totalResults={totalProductCount}
-              availableCategories={mockCategories.map((cat) => ({
+              availableCategories={allCategories.map((cat) => ({
                 id: cat.id,
                 name: cat.name,
               }))}
@@ -50,14 +54,14 @@ export default function ProductListingTemplate() {
         <div className="@container flex items-start gap-8">
           {/* Desktop Sidebar */}
           <aside className="sticky top-24 @5xl:block hidden w-64 shrink-0">
-            <FilterSidebar
+           {  <FilterSidebar
               filters={productFilter}
               updateFilter={updateProductFilter}
-              availableCategories={mockCategories.map((cat) => ({
+              availableCategories={allCategories.map((cat) => ({
                 id: cat.id,
                 name: cat.name,
               }))}
-            />
+            />}
           </aside>
           <main className="min-w-0 flex-1">
             <ProductGrid products={dataproduct} isLoading={isProductPending} />

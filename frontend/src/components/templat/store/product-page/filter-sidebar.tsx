@@ -52,6 +52,8 @@ export default function FilterSidebar({
               </div>
             ))}
           </div>
+
+          
         </FilterGroup>
       )}
 
