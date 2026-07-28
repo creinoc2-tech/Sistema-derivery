@@ -33,4 +33,8 @@ export class CategoryController {
   async getBySlug(slug: string): Promise<CategoryModel | null> {
     return this.categoryService.getBySlug(slug)
   }
+
+  async getById(id: string): Promise<CategoryModel | null> {
+    return this.categoryService.getById(id)
+  }
 }

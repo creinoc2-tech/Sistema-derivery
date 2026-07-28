@@ -1,5 +1,5 @@
 import { cn } from '#/lib/utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '#/components/ui/button'
 import { Eye, Loader2, ShoppingCart, Star } from 'lucide-react'
 import PriceTag from './price-tag'
@@ -7,6 +7,8 @@ import { Link } from '@tanstack/react-router'
 import type { Productos } from '#/lib/store/store/product/product.store.interface'
 import { useCartStores } from '#/lib/store/store/cart/cart.store'
 import { mockCategories } from '#/components/ui/data/categories.mock'
+import { CategoryController } from '#/controllers/category.controller'
+import type { CategoryModel } from '#/model/category.model'
 
 interface ProductCardProps {
   product: Productos
@@ -22,8 +24,13 @@ export default function ProductCard({
   const [isAddingThis, setIsAddingThis] = useState(false)
   const { addItem } = useCartStores()
 
-  const categoryName =
-    mockCategories.find((c) => c.id === product.categoryId)?.name ?? 'Sin categoría'
+  const categoryController = new CategoryController()
+
+const [category, setCategory] = useState<CategoryModel | null>(null)
+
+useEffect(() => {
+  categoryController.getById(product.categoryId).then(setCategory)
+}, [product.categoryId])
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -58,7 +65,9 @@ export default function ProductCard({
       <div
         className={cn(
           'relative overflow-hidden rounded-2xl bg-muted',
-          variant === 'grid' ? 'aspect-3/4' : '@2xl:h-40 @2xl:w-40 aspect-square',
+          variant === 'grid'
+            ? 'aspect-3/4'
+            : '@2xl:h-40 @2xl:w-40 aspect-square',
         )}
       >
         <img
@@ -98,7 +107,7 @@ export default function ProductCard({
       <div className="mt-4 flex flex-1 flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="rounded-full border border-muted-foreground/30 border-dashed bg-muted/50 px-3 py-1 font-medium text-muted-foreground text-xs">
-            {categoryName}
+            {category?.name ?? 'Categoría desconocida'}
           </span>
           {product.rating !== undefined && (
             <div className="flex items-center gap-1 text-amber-500">

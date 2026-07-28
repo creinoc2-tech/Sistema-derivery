@@ -44,4 +44,8 @@ export class CategoryRepository {
     return httpClient.get<CategoryModel>(`/categories/${slug}`)
   }
 
+   async getById( id: string): Promise<CategoryModel | null> {
+    return httpClient.get<CategoryModel>(`/categories/producto/${id}`)
+   }
+
 }
