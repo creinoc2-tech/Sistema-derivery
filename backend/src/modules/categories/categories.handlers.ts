@@ -18,7 +18,6 @@ export const categoriesHandlers = {
   async get(c: Context) {
   
     const { id } = c.req.valid("param" as never);
-    console.log("ID:", id); // Log the ID to check its value
     const category = await categoriesService.findById(id);
     if (!category) return c.json({ error: "CATEGORY_NOT_FOUND" }, 404);
     return c.json(category);

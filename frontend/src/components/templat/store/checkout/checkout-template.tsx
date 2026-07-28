@@ -2,8 +2,7 @@ import { BreadcrumbNav } from '#/components/base/common/breadcrumb-nav'
 import ShippingAddressForm from '#/components/base/store/checkout/checkout-address-form'
 import CheckoutOrderSummary from '#/components/containers/store/checkout/checkout-order-summary'
 import ShippingMethodSelector from '#/components/containers/store/checkout/shipping-method-selector'
-import { Skeleton } from '#/components/ui/skeleton'
-export default function CheckoutTemplate() {
+ export default function CheckoutTemplate() {
   const checkoutSteps = [
     { label: 'Cart', href: '/cart' },
     { label: 'Shipping', href: '#', isActive: true },
