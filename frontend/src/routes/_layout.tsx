@@ -4,15 +4,15 @@ import { ThemeProvider } from '#/components/provider/theme-provider'
 import { Toaster } from 'sonner'
 import Brand from '#/components/base/store/brand'
 import Footer from '#/components/templat/store/footer'
-import { useAuth } from '@clerk/react'
-import { useEffect } from 'react'
+
+import { useSyncClerkUser } from '#/hooks/useSyncClerkUser'
 
 export const Route = createFileRoute('/_layout')({
   component: LayoutComponent,
 })
 
 function LayoutComponent() {
-
+  useSyncClerkUser()
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
