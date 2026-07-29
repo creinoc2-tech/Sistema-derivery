@@ -1,7 +1,7 @@
 import CheckoutTemplate from '#/components/templat/store/checkout/checkout-template'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_layout/checkout')({
+export const Route = createFileRoute('/_layout/_protected/checkout')({
   component: RouteComponent,
 })
 

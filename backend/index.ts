@@ -9,6 +9,7 @@ import { productsGlobalRoutes } from "./src/modules/products/products-global.rou
 import { corsMiddleware } from "./src/middlewares/cors";
 import { categoriesGlobalRoutes } from "./src/modules/categories/categori-global.routes";
 import { addressesRoutes } from "./src/modules/address/address.routes";
+import { usersRoutes } from "./src/modules/users/user.route";
 
 const app = new Hono();
 app.use("*", corsMiddleware);  
@@ -19,6 +20,7 @@ app.route("/restaurants", restaurantsRoutes);
 app.route("/restaurants/:restaurantId/products", productsRoutes);
 app.route("/products", productsGlobalRoutes);
 app.route("/categories",  categoriesGlobalRoutes);
+app.route("/users", usersRoutes);
 app.route("/users/:userId/addresses", addressesRoutes);
 
 
