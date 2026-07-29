@@ -1,8 +1,12 @@
-import { FormTextareaField, FormTextField } from '#/components/base/forms/form-field'
+import {
+  FormTextareaField,
+  FormTextField,
+} from '#/components/base/forms/form-field'
 import { PhoneInput } from '#/components/base/forms/phone-input'
 import type { ShippingAddressInput } from '#/lib/store/validators/shipping-address'
 import { FieldGroup } from '@/components/ui/field'
- 
+import { useUser } from '@clerk/react'
+
 interface ShippingAddressFieldsProps {
   form: {
     Field: (props: {
@@ -13,89 +17,56 @@ interface ShippingAddressFieldsProps {
 }
 
 export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
+  const { user } = useUser()
+
   return (
     <FieldGroup className="gap-8">
+      <div className="grid @4xl:grid-cols-1 grid-cols-2 gap-6">
+        <FormTextField
+          label="Name"
+          value={user?.fullName || user?.username || 'Usuario'}
+          disabled
+          className="text-[rgba(130,130,130,1)]"
+          onChange={() => {}}
+        />
 
-
+        <FormTextField
+          label="Email"
+          value={user?.primaryEmailAddress?.emailAddress || 'user@example.com'}
+          disabled
+          className="text-[rgba(130,130,130,1)]"
+          onChange={() => {}}
+        />
+      </div>
       <div className="grid @4xl:grid-cols-1 grid-cols-2 gap-6">
         <form.Field
-          name="firstName"
+          name="label"
           children={(field) => (
             <FormTextField
-              label="First Name"
+              label="Label"
               required
-              placeholder="John"
-              autoComplete="given-name"
+              placeholder="Home"
+              autoComplete="off"
               field={field}
             />
           )}
         />
+
         <form.Field
-          name="lastName"
+          name="street"
           children={(field) => (
             <FormTextField
-              label="Last Name"
+              label="Street Address"
               required
-              placeholder="Doe"
-              autoComplete="family-name"
+              placeholder="123 Main St"
+              autoComplete="street-address"
               field={field}
             />
           )}
         />
       </div>
 
-      <div className="grid @4xl:grid-cols-1 grid-cols-2 gap-6">
-        <form.Field
-          name="email"
-          children={(field) => (
-            <FormTextField
-              label="Email"
-              required
-              type="email"
-              placeholder="john.doe@example.com"
-              autoComplete="email"
-              field={field}
-            />
-          )}
-        />
-        <form.Field name="phone">
-          {(phoneField) => (
-            <form.Field name="countryCode">
-              {(countryCodeField) => (
-                <PhoneInput
-                  phoneValue={phoneField.state.value}
-                  countryCodeValue={countryCodeField.state.value}
-                  onPhoneChange={(value) => phoneField.handleChange(value)}
-                  onCountryCodeChange={(value) =>
-                    countryCodeField.handleChange(value)
-                  }
-                  error={
-                    phoneField.state.meta.isTouched &&
-                    !phoneField.state.meta.isValid
-                      ? phoneField.state.meta.errors[0]
-                      : undefined
-                  }
-                />
-              )}
-            </form.Field>
-          )}
-        </form.Field>
-      </div>
-
-       <form.Field
-        name="street"
-        children={(field) => (
-          <FormTextField
-            label="Street Address"
-            required
-            placeholder="123 Main St"
-            autoComplete="street-address"
-            field={field}
-          />
-        )}
-      />
-
-      <div className="grid @4xl:grid-cols-1 grid-cols-3 gap-6">
+      <div className="grid @4xl:grid-cols-1  gap-6">
         <form.Field
           name="city"
           children={(field) => (
@@ -108,47 +79,21 @@ export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
             />
           )}
         />
-        <form.Field
-          name="state"
-          children={(field) => (
-            <FormTextField
-              label="State"
-              required
-              placeholder="Dhaka Division"
-              autoComplete="address-level1"
-              field={field}
-            />
-          )}
-        />
-        <form.Field
-          name="zipCode"
-          children={(field) => (
-            <FormTextField
-              label="Zip Code"
-              required
-              placeholder="1200"
-              autoComplete="postal-code"
-              field={field}
-            />
-          )}
-        />
+
       </div>
 
       <form.Field
-        name="description"
+        name="reference"
         children={(field) => (
           <FormTextareaField
-            label="Description"
-            placeholder="Add any special delivery instructions..."
-            description="Optional: Add any special delivery instructions or notes."
+            label=" Delivery Instructions"
+            placeholder=" e.g., Leave at the front door, call upon arrival, etc."
+            description="Provide any specific instructions for the delivery person to ensure a smooth delivery process."
             field={field}
             className="min-h-24"
           />
         )}
       />
-
-
-
     </FieldGroup>
   )
 }

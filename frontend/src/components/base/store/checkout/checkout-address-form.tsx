@@ -5,6 +5,7 @@ import {
 import { useForm } from '@tanstack/react-form'
 import { ShippingAddressFields } from '../../../containers/store/checkout/shipping-address-fields'
 import { Button } from '#/components/ui/button'
+import { useUser } from '@clerk/react'
 interface ShippingAddressFormProps {
   onSubmit?: (data: ShippingAddressInput) => void
 }
@@ -13,16 +14,14 @@ export default function ShippingAddressForm({
 }: ShippingAddressFormProps) {
   const form = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      countryCode: 'BD',
+      label: '',
+      street: '',
       city: '',
-      state: '',
-      zipCode: '',
-      description: '',
-    } as ShippingAddressInput,
+      reference: '',
+      latitude: '',
+      longitude: '',
+      isDefault: false,
+    },
     validators: {
       onSubmit: shippingAddressSchema,
     },
@@ -41,12 +40,8 @@ export default function ShippingAddressForm({
     >
       <div className="space-y-4">
         <h2 className="text-lg font-medium"></h2>
-        <ShippingAddressFields form={form as any} />
-
-        <Button
-          type="submit"
-          className="w-full py-5"
-         >
+        <ShippingAddressFields form={form as any} />  
+        <Button type="submit" className="w-full py-5">
           Save & Continue
         </Button>
       </div>
