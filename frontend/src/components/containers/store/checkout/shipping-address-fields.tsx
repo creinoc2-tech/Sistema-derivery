@@ -3,9 +3,13 @@ import {
   FormTextField,
 } from '#/components/base/forms/form-field'
 import { PhoneInput } from '#/components/base/forms/phone-input'
+import { Button } from '#/components/ui/button'
 import type { ShippingAddressInput } from '#/lib/store/validators/shipping-address'
 import { FieldGroup } from '@/components/ui/field'
 import { useUser } from '@clerk/react'
+import { Label } from '@/components/ui/label'
+import { useLocationStore } from '#/lib/store/store/location/location'
+import LocationSheet from '../location/LocationSheet'
 
 interface ShippingAddressFieldsProps {
   form: {
@@ -18,6 +22,7 @@ interface ShippingAddressFieldsProps {
 
 export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
   const { user } = useUser()
+  const { setIsOpen } = useLocationStore()
 
   return (
     <FieldGroup className="gap-8">
@@ -66,7 +71,43 @@ export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
         />
       </div>
 
-      <div className="grid @4xl:grid-cols-1  gap-6">
+      <div className="grid grid-cols-2 @4xl:grid-cols-1 gap-6 items-center">
+        <div className="flex flex-col gap-2">
+          <Label
+            htmlFor="use-current-location"
+            className="text-sm font-medium text-[rgba(130,130,130,1)]"
+          >
+            Location
+          </Label>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full py-5 h-11 flex items-center justify-center"
+            id="use-current-location"
+            onClick={() => setIsOpen(true)}
+          >
+            <svg
+              className="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            Use Current Location
+          </Button>
+        </div>
         <form.Field
           name="city"
           children={(field) => (
@@ -79,7 +120,6 @@ export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
             />
           )}
         />
-
       </div>
 
       <form.Field
@@ -94,6 +134,7 @@ export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
           />
         )}
       />
+      <LocationSheet />
     </FieldGroup>
   )
 }
