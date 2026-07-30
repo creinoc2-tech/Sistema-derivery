@@ -28,9 +28,14 @@ const markerIcon = new L.Icon({
 })
 
 export default function LocationSheet() {
-  const { isOpen, setIsOpen } = useLocationStore()
+  const { isOpen, setIsOpen ,  addItem } = useLocationStore()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchLocation, setSearchLocation] = useState<boolean>(false)
+
+  const [addressData, setAddressData] = useState<{
+    street: string
+    city: string
+  } | null>(null)
 
   const [position, setPosition] = useState<[number, number] | null>(null)
   useEffect(() => {
@@ -50,22 +55,26 @@ export default function LocationSheet() {
   }, [isOpen])
 
   useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        if (!position) return
-        const result = await axios.get(
-          `https://nominatim.openstreetmap.org/reverse?lat=${position[0]}&lon=${position[1]}&format=json`,
-        )
-        console.log('Address info: county ', result.data.address.county)
-        console.log('Address info: state ', result.data.address.state)
-        console.log('Address info: display_name ', result.data.display_name)
-      } catch (error) {
-        console.error('Error fetching address info: ', error)
-      }
-    }
-    fetchAddress()
-  }, [position])
+  const fetchAddress = async () => {
+    try {
+      if (!position) return
+      const result = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?lat=${position[0]}&lon=${position[1]}&format=json`,
+      )
+      const address = result.data.address || {}
 
+      setAddressData({
+        street: address.road || result.data.display_name || 'Dirección sin nombre',
+        city: address.city || address.county || address.state || '',
+      })
+    } catch (error) {
+      console.error('Error fetching address info: ', error)
+    }
+  }
+  fetchAddress()
+
+  
+}, [position])
   const DraggableMarker: React.FC = () => {
     const map = useMap()
     useEffect(() => {
@@ -165,7 +174,6 @@ export default function LocationSheet() {
           )}
 
           <Button
-            whileTap={{ scale: 0.9 }}
             className="absolute bottom-4 right-4 bg-green-600
                              text-white shadow-lg rounded-full p-3 hover:bg-green-700 
                              transition-all flex items-center justify-center z-999"
