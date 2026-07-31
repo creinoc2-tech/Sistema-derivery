@@ -17,7 +17,6 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch'
 
 import { useLocationStore } from '#/lib/store/store/location/location'
 import { useState, useEffect } from 'react'
-import type { LatLngExpression } from 'leaflet'
 import L from 'leaflet'
 import { LocateFixed } from 'lucide-react'
 
@@ -28,7 +27,7 @@ const markerIcon = new L.Icon({
 })
 
 export default function LocationSheet() {
-  const { isOpen, setIsOpen ,  addItem } = useLocationStore()
+  const { isOpen, setIsOpen, addItem } = useLocationStore()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchLocation, setSearchLocation] = useState<boolean>(false)
 
@@ -75,15 +74,17 @@ export default function LocationSheet() {
 
   
 }, [position])
-  const DraggableMarker: React.FC = () => {
+  const DraggableMarker: React.FC<{ position: [number, number] }> = ({
+    position,
+  }) => {
     const map = useMap()
     useEffect(() => {
-      map.setView((position as LatLngExpression) || null, 15, { animate: true })
+      map.setView(position, 15, { animate: true })
     }, [map, position])
 
     return (
       <Marker
-        position={position as LatLngExpression}
+        position={position}
         icon={markerIcon}
         draggable={true}
         eventHandlers={{
@@ -122,10 +123,22 @@ export default function LocationSheet() {
       setSearchLocation(false)
       setPosition([results[0].y, results[0].x])
       const address = (results[0].raw as any).address || {}
-      console.log(address.county || '..... Cargando.....')
-      console.log(address.state || '..... Cargando.....')
-      console.log(address.postcode || '..... Cargando.....')
+      
     }
+  }
+
+  const handleConfirmLocation = () => {
+    if (!position || !addressData) return
+
+    addItem({
+      street: addressData.street,
+      city: addressData.city,
+      latitude: position[0],
+      longitude: position[1],
+      isDefault: true,
+      createdAt: new Date().toISOString(),
+    })
+    setIsOpen(false)
   }
 
   return (
@@ -160,7 +173,7 @@ export default function LocationSheet() {
         >
           {position && (
             <MapContainer
-              center={position as LatLngExpression}
+              center={position}
               zoom={13}
               scrollWheelZoom={true}
               style={{ height: '430px', width: '100%' }}
@@ -169,7 +182,7 @@ export default function LocationSheet() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <DraggableMarker />
+              <DraggableMarker position={position} />
             </MapContainer>
           )}
 
@@ -182,6 +195,21 @@ export default function LocationSheet() {
             <LocateFixed size={20} />
           </Button>
         </div>
+
+        {addressData && (
+          <p className="mt-3 text-sm text-muted-foreground">
+            📍 {addressData.street}
+            {addressData.city ? `, ${addressData.city}` : ''}
+          </p>
+        )}
+
+        <Button
+          onClick={handleConfirmLocation}
+          disabled={!position || !addressData}
+          className="mt-3 w-full bg-green-600 text-white py-5 rounded-lg hover:bg-green-700 transition-all font-medium disabled:opacity-50"
+        >
+          Confirmar ubicación
+        </Button>
       </DialogContent>
     </Dialog>
   )

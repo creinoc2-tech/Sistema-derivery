@@ -11,14 +11,14 @@ export const useLocationStore = create<LocationStates>()(
 
       clearLocation: () => set({ items: [] }),
 
-      addItem: (item ) => {
+      addItem: (item) => {
         const newItem: LocationItems = {
           ...item,
         }
 
-        set((state) => ({
-          items: [...state.items, newItem],
-        }))
+        // Reemplaza la ubicación activa en vez de acumular: este store
+        // guarda UNA sola ubicación seleccionada, no un address book.
+        set({ items: [newItem] })
       },
     }),
 

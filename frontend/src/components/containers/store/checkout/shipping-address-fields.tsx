@@ -10,6 +10,7 @@ import { useUser } from '@clerk/react'
 import { Label } from '@/components/ui/label'
 import { useLocationStore } from '#/lib/store/store/location/location'
 import LocationSheet from '../location/LocationSheet'
+import { useEffect } from 'react'
 
 interface ShippingAddressFieldsProps {
   form: {
@@ -17,12 +18,21 @@ interface ShippingAddressFieldsProps {
       name: keyof ShippingAddressInput
       children: (field: any) => React.ReactNode
     }) => React.ReactNode
+    setFieldValue: (name: keyof ShippingAddressInput, value: unknown) => void
   } & Record<string, unknown>
 }
 
 export function ShippingAddressFields({ form }: ShippingAddressFieldsProps) {
   const { user } = useUser()
-  const { setIsOpen } = useLocationStore()
+  const { setIsOpen , items } = useLocationStore()
+  useEffect(() => {
+    if (items.length === 0) return
+    const location = items[0]
+
+    form.setFieldValue('street', location.street)
+    form.setFieldValue('city', location.city)
+    if (location.label) form.setFieldValue('label', location.label)
+  }, [items])
 
   return (
     <FieldGroup className="gap-8">
